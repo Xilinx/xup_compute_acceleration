@@ -1,0 +1,8 @@
+docs_list_title: appendix_sidebar
+docs:
+  
+- title: Create an AFI
+  url: Creating_AFI.html
+
+- title: Report an Issue
+  url: report_issues.html

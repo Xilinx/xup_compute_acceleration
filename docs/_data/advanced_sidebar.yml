@@ -1,0 +1,8 @@
+docs_list_title: advanced_sidebar
+docs:
+  
+- title: RTL Kernel
+  url: rtl_kernel_lab.html
+  
+- title: Hardware Debugging
+  url: debug_lab.html

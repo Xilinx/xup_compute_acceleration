@@ -1,0 +1,15 @@
+docs_list_title: setup_sidebar
+docs:
+  
+- title: XUP Workshop
+  url: setup_xup_aws_workshop.html
+
+- title: AWS F1
+  url: setup_aws.html
+  
+- title: Nimbix
+  url: setup_nimbix.html
+  
+- title: Local Computer
+  url: setup_local_computer.html
+

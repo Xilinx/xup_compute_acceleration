@@ -1,0 +1,17 @@
+docs_list_title: labs_sidebar
+docs:
+  
+- title: Vitis Intro 1
+  url: Vitis_intro-1.html
+  
+- title: Vitis Intro 2
+  url: Vitis_intro-2.html
+
+- title: Improving Performance
+  url: Improving_Performance_lab.html
+
+- title: Optimization
+  url: Optimization_lab.html
+  
+- title: Vision Lab
+  url: Vision_lab.html
