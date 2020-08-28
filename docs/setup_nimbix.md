@@ -4,7 +4,7 @@ layout: default
 
 # Connecting to Nimbix
 
-* Log in to Nimbix: https://platform.jarvice.com/
+* Log in to Nimbix: [https://platform.jarvice.com/](https://platform.jarvice.com/)
 
 * Click Compute in the top left menu to select a compute instance
 
@@ -51,9 +51,6 @@ Nimbix provides up to 100 hours of free time on the Nimbix Cloud using Xilinx To
 * After that, you will get another email to complete the registration.
 
 * Finally, you can log in https://platform.jarvice.com/
-
---------------
-Continue with [Getting started with the tutorials](setup_vitis.md#getting-started-with-the-tutorials)
 
 ---------------------------------------
 Copyright&copy; 2020 Xilinx

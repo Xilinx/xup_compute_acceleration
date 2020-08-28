@@ -20,8 +20,5 @@ source $XILINX_VITIS/settings64.(c)sh
 export PLATFORM_REPO_PATHS=$ALVEO_PLATFORM_INSTALLATION_DIRECTORY
 ```
 
---------------
-Continue with [Getting started with the tutorials](setup_vitis.md#getting-started-with-the-tutorials)
-
 ---------------------------------------
 Copyright&copy; 2020 Xilinx

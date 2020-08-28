@@ -1,8 +1,8 @@
----
-layout: default
----
+<!-- 
+DO NOT add layout, it will prevent README.md to be render as index.html by GitHub pages
+-->
 
-# Xilinx Vitis Tutorial
+# Xilinx University Program Vitis Tutorial
 
 ## Introduction
 
@@ -48,6 +48,14 @@ The Xilinx Vitis tools and Alveo U200 hardware is available in the Nimbix cloud.
 
 To use your own computer, [install and set up Vitis and install the Alveo U200 packages](./setup_local_computer.md)
 
+### Clone repository 
+
+You also need to clone this repository to get a copy of the source code, the lab steps consider that this repository is cloned directly in the home directory (\~).
+
+```sh
+git clone git@github.com:Xilinx/xup_compute_acceleration.git ~
+```
+
 ## Tutorial overview
 
 The complete set of labs includes the following modules; it is recommended to complete each lab before proceeding to the next
@@ -68,7 +76,7 @@ The complete set of labs includes the following modules; it is recommended to co
     In this lab you will create a Vitis design using the command line. The design uses two kernels from the [Vitis Accelerated Libraries](https://xilinx.github.io/Vitis_Libraries/), **image resize** and **image resize & blur**. You will run software emulation and test the kernels in hardware.
 
 1. [**PYNQ Labs**](pynq_labs.md):
-	In this series of labs you will learn how to use PYNQ for easier user of compute acceleration platforms.
+	In this series of labs you will learn how to use PYNQ for easier user of Xilinx compute acceleration platforms.
 
 ### Advanced labs
 

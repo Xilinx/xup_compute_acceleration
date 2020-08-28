@@ -111,8 +111,5 @@ source ~/.bashrc
 
 For more details see: https://github.com/aws/aws-fpga/blob/master/Vitis/README.md
 
---------------
-Continue with [Getting started with the tutorials](setup_vitis.md#getting-started-with-the-tutorials)
-
 ---------------------------------------
 Copyright&copy; 2020 Xilinx
