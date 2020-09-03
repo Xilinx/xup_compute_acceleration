@@ -1,3 +1,7 @@
+---
+layout: default
+---
+
 # PYNQ for Compute Acceleration
 
 ## What is PYNQ?

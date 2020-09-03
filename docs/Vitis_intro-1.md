@@ -80,13 +80,13 @@ After completing Introduction to Vitis Part 1 and 2, you will learn to:
 
     ![](./images/Vitis_intro/template.png)
 
-1. The project is generated. Notice that the *Hardware Function* in the *Project Editor* view is automatically set up to *krnl_vadd*
+1. The project is generated. Notice that the *Hardware Function* in the *Application Project Settings* view is automatically set up to *krnl_vadd*
 
     ![](./images/Vitis_intro/project_dashboard.png)
 
 ### Build and Run Software Emulation
 
-1. Set `Active build configuration:` to `Emulation-SW` on the upper right corner of *Project Editor* view
+1. Set `Active build configuration:` to `Emulation-SW` on the upper right corner of *Application Project Settings* view
 
 1. Begin build by clicking the hammer icon on top icon bar, or right click `vadd` and select `Build Project`
 

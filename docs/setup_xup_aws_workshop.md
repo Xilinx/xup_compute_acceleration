@@ -18,6 +18,7 @@ After completing this lab, you will be able to:
 - Start an instance
 - Connect to a remote desktop using one of the different options (NICE DCV, noVNC or RDP)
 - Stop the instance
+- [Pre lab setup](#lab-setup), make AWS-FPGA and XRT available in the instance
 
 ## Steps
 Each registered participant to Xilinx workshop/webinar has been allocated a pre-configured EC2 F1 instance and should have received an email with the following details:  

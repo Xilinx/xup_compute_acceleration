@@ -1,3 +1,7 @@
+---
+layout: default
+---
+
 # Report an Issue
 
 This page covers the basics to report an issue either to your instructor or using the built-in GitHub Issues tracker

@@ -26,7 +26,7 @@ This lab is a continuation of previous *Introduction to Vitis* lab. You ended th
 
 ### Build and run hardware emulation
 
-1. Set `Active build configuration:` to `Emulation-HW` on the upper right corner of *Project Editor* view
+1. Set `Active build configuration:` to `Emulation-HW` on the upper right corner of *Application Project Settings* view
 
     ![](./images/Vitis_intro/hw_emu_setup.png)
 
@@ -79,7 +79,7 @@ This lab is a continuation of previous *Introduction to Vitis* lab. You ended th
 
 ### Build System hardware with profiling and timing analysis options
 
-1. Set `Active build configuration:` to `Hardware` on the upper right corner of *Project Editor* view
+1. Set `Active build configuration:` to `Hardware` on the upper right corner of *Application Project Settings* view
 
     ![](./images/Vitis_intro/hardware.png)
 

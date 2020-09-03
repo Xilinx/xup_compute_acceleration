@@ -47,7 +47,7 @@ After completing this lab, you will learn to:
 1. Import all `*.cpp` and `*.hpp` files in `~/xup_compute_acceleration/sources/improving_performance_lab/` 
     These files include both host code and hardware accelerator
 
-1. Within *Project Editor* view click on ![](./images/Fig-hw_button.png) in the *Hardware Functions* window and add **wide_vadd** function as a *Hardware Function* (kernel)
+1. Within *Application Project Settings* view click on ![](./images/Fig-hw_button.png) in the *Hardware Functions* window and add **wide_vadd** function as a *Hardware Function* (kernel)
 
 ### Analyze the kernel code
 
@@ -114,7 +114,7 @@ DDR controllers have a 512-bit wide interface internally. If we parallelize the 
 
     - Select **Platform Diagram** in the left panel
 
-    Observe that there are four DDR4 memory banks and two PLRAM banks. In this design `bank1` is used for all operands, which is located in SLR2. Also notice that `bank0` and `bank2` are located in SLR1  
+    Observe that there are four DDR4 memory banks and three PLRAM banks. In this design `bank1` is used for all operands, which is located in SLR2. Also notice that `bank0` and `bank2` are located in SLR1  
 
 	![](./images/improving_performance/platform_diagram.png)
 
@@ -136,13 +136,9 @@ This will provide the ability to perform high-bandwidth transactions simultaneou
 external memory banks. Remember, long bursts are generally better for performance than many small reads
 and writes, but you cannot fundamentally perform two operations on the memory at the same time.
 
-To connect a kernel to multiple memory banks, you need to
+To connect a kernel to multiple memory banks, you need to: Assign the kernel's interface to a memory controller and Assign the kernel to an SLR region. 
 
- 1. Assign the kernel's interface to a memory controller
-
- 1. Assign the kernel to an SLR region
-
-    Please note that since the DDR controllers are constrained to different SLR (Super Logic Region), the routing between two SLR may have some challenges in timing closure when the design is compiled for bitstream. This technique is valuable in the cases where one SLR has two DDR controllers.
+Please note that since the DDR controllers are constrained to different SLR (Super Logic Region), the routing between two SLR may have some challenges in timing closure when the design is compiled for bitstream. This technique is valuable in the cases where one SLR has two DDR controllers.
 
 1. Assign memory banks as shown in figure below
 

@@ -1,3 +1,7 @@
+---
+layout: default
+---
+
 # Presentations
 
 ## Video Presentations

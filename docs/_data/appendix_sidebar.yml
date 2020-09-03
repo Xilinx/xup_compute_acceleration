@@ -4,5 +4,8 @@ docs:
 - title: Create an AFI
   url: Creating_AFI.html
 
+- title: Resources
+  url: resources.html
+
 - title: Report an Issue
   url: report_issues.html
