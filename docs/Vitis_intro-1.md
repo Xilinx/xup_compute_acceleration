@@ -66,21 +66,45 @@ After completing Introduction to Vitis Part 1 and 2, you will learn to:
 
     ![](./images/Vitis_intro/new_application.png)
 
+1. Click **Next >** in the first window
+
+    ![New Application Project Name](./images/Vitis_intro/project_wizard.png)
+
+1. Select `xilinx_aws-vu9p-f1_shell-v04261818_201920_2` platform and click **Next >**
+
+    ![New Application Project Platform](./images/Vitis_intro/select_platform.png)
+
+    If you do not see this platform, make sure to [set up](setup_xup_aws_workshop.md#lab-setup) `PLATFORM_REPO_PATHS` variable. Or you can include the platform manually by clicking `+` button and browse to `/home/centos/src/project_data/aws-fpga/Vitis/aws_platform/` and select `xilinx_aws-vu9p-f1_shell-v04261818_201920_2`
+
 1. Name the project `vadd` and click **Next >**
 
     ![New Application Project Name](./images/Vitis_intro/project_name.png)
 
-1. Select `xilinx_aws-vu9p-f1_shell-v04261818_201920_2` platform and click **Next >**
-
-    ![New Application Project Platform](./images/Vitis_intro/add_platform.png)
-
-    If you do not see this platform, make sure to [set up](setup_xup_aws_workshop.md#lab-setup) `PLATFORM_REPO_PATHS` variable. Or you can include the platform manually by clicking `+` button and browse to `/home/centos/src/project_data/aws-fpga/Vitis/aws_platform/` and select `xilinx_aws-vu9p-f1_shell-v04261818_201920_2`
-
-1. Select `Vector Addition` in the *Template* window and click **Finish**
+1. Select `Empty Application` in the *Template* window and click **Finish**
 
     ![](./images/Vitis_intro/template.png)
 
-1. The project is generated. Notice that the *Hardware Function* in the *Application Project Settings* view is automatically set up to *krnl_vadd*
+1. The project is generated.
+
+1. In the `Explorer` view right-click on `src` under *vadd* and select **Import Sources...**
+
+    ![](./images/Vitis_intro/import_sources.png)
+
+1. In the new window, click *Browse* and navigate to `~/xup_compute_acceleration/sources/vadd_lab/` and click OK. Then select the **vadd_lab** folder. Finally click *Finish*
+
+    ![](./images/Vitis_intro/add_sources.png)
+
+    Expand the `src` folder in the `Explorer` view to verify that the files were added
+
+1. In the `Application Project Setting` view click `Add Hardware function` (thunder icon)
+
+    ![](./images/Vitis_intro/add_hw_function.png)
+
+1. The window *Add Hardware Functions* will pop up, select `krnl_vadd(int *, int *, int *, unsigned int) - krnl_vadd.cpp` and click **OK*
+
+    ![](./images/Vitis_intro/select_hw_function.png)
+
+1. Verify that *krnl_vadd* is added as a *Hardware Function*
 
     ![](./images/Vitis_intro/project_dashboard.png)
 
@@ -94,14 +118,28 @@ After completing Introduction to Vitis Part 1 and 2, you will learn to:
 
 1. Run Software Emulation in GUI Mode
 
-    To launch software emulation in GUI mode, first select the application in *Explorer* view, then click run icon ![](images/Fig-run.png) on icon bar. Or right click on *vadd[x86_0]* in *Explorer* view and select `Run As > 1 OpenCL Application`
+    To launch software emulation in GUI mode, first select the application in *Explorer* view, right click on *vadd[x86]* in *Explorer* view and select `Run As > Run Configurations...`
 
     ![](./images/Vitis_intro/sw_emu_run.png)
+
+1. In the *Run configurations* window select *(x)= Arguments* tab and make sure `Automatically add binary container(s) to arguments` is selected. Finally, click **Apply** and then click **Run**
+
+    ![](./images/Vitis_intro/args_sw_emu.png)
+
+    Note that the host code also supports other two arguments, number of elements in the vector and debug (prints results)
 
 1. Observe the application has run and the output is displayed in the *Console* view
 
     ```
+    Found Platform
+    Platform Name: Xilinx
+    INFO: Reading ../binary_container_1.xclbin
     Loading: '../binary_container_1.xclbin'
+    Trying to program device[0]: xilinx_aws-vu9p-f1_shell-v04261818_201920_2
+    Device[0]: program successful!
+    Running Vector add with 32768 elements
+    Launching Hardware Kernel...
+    Getting Hardware Results...
     TEST PASSED
     ```
 
@@ -110,4 +148,4 @@ After completing Introduction to Vitis Part 1 and 2, you will learn to:
 In this lab, you used Vitis IDE to create a project using one of the application templates. You then ran the design using the software emulation flows.
 
 ---------------------------------------
-Copyright&copy; 2020 Xilinx
+<p align="center">Copyright&copy; 2020 Xilinx</p>

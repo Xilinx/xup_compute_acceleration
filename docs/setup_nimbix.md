@@ -12,7 +12,7 @@ layout: default
 
 ![](./images/connecting_lab/nimbix/select_instance.png)
 
-* Select the *Xilinx Vitis Unified Software Platform 2019.2* instance
+* Select the *Xilinx Vitis Unified Software Platform 2020.1* instance
 
 * Click on Desktop mode with FPGA
 
@@ -53,4 +53,4 @@ Nimbix provides up to 100 hours of free time on the Nimbix Cloud using Xilinx To
 * Finally, you can log in https://platform.jarvice.com/
 
 ---------------------------------------
-Copyright&copy; 2020 Xilinx
+<p align="center">Copyright&copy; 2020 Xilinx</p>

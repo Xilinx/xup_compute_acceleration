@@ -8,7 +8,7 @@ To get started with AWS, you will need an Amazon account. You will also need AWS
 
 ## Set up an AWS instance
 
-Use [this guide](https://docs.aws.amazon.com/efs/latest/ug/gs-step-one-create-ec2-resources.html) to setup and AWS instance. Make sure to use the [FPGA Developer AMI version 1.8.1](https://aws.amazon.com/marketplace/pp/B06VVYBLZZ/ref=portal_asin_url) which includes Xilinx Vitis 2019.2 tools that this tutorial is based on.
+Use [this guide](https://docs.aws.amazon.com/efs/latest/ug/gs-step-one-create-ec2-resources.html) to setup and AWS instance. Make sure to use the [FPGA Developer AMI version 1.9.0](https://aws.amazon.com/marketplace/pp/B06VVYBLZZ/ref=portal_asin_url) which includes Xilinx Vitis 2020.1 tools that this tutorial is based on.
 
 ### Login into the AWS and starting an F1 instance
 
@@ -88,7 +88,7 @@ source ~/.bashrc
 1. Execute the following to clone the *aws-fpga* repository and setup the Xilinx tools. `aws-fpga` includes the AWS F1 tools, Hardware Development Kit (HDK) and documentation
 
     ```sh
-    git clone https://github.com/aws/aws-fpga $AWS_FPGA_REPO_DIR -b v1.4.14
+    git clone https://github.com/aws/aws-fpga $AWS_FPGA_REPO_DIR -b v1.4.16
     echo "export PLATFORM_REPO_PATHS=$AWS_FPGA_REPO_DIR/Vitis/aws_platform/xilinx_aws-vu9p-f1_shell-v04261818_201920_2/" >> ~/.bashrc
     echo "source /opt/xilinx/xrt/setup.sh" >> ~/.bashrc
     git clone https://github.com/Xilinx/xup_compute_acceleration.git
@@ -112,4 +112,4 @@ source ~/.bashrc
 For more details see: https://github.com/aws/aws-fpga/blob/master/Vitis/README.md
 
 ---------------------------------------
-Copyright&copy; 2020 Xilinx
+<p align="center">Copyright&copy; 2020 Xilinx</p>

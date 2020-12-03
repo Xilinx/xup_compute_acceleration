@@ -1,5 +1,5 @@
 /**********
-Copyright (c) 2018, Xilinx, Inc.
+Copyright (c) 2018-2020, Xilinx, Inc.
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification,
@@ -113,7 +113,13 @@ extern "C"
 #pragma HLS LOOP_TRIPCOUNT min = 1 max = 64
                 uint512_dt tmpV1 = v1_local[j];
                 uint512_dt tmpV2 = v2_local[j];
-                out[i + j]       = tmpV1 + tmpV2; // Vector Addition Operation
+                uint512_dt tmpV3 = 0;
+                vec_sum: for (unsigned int s = 0; s < DATAWIDTH; s+= 32){
+#pragma HLS unroll
+                    // add the 32-bit elements individually and compose the output vector
+                    tmpV3(s + 31, s) = tmpV1(s + 31, s) + tmpV2(s + 31, s);
+                }
+                out[i + j] = tmpV3;
             }
         }
     }

@@ -1,5 +1,5 @@
 /**********
-Copyright (c) 2019, Xilinx, Inc.
+Copyright (c) 2019-2020, Xilinx, Inc.
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification,
@@ -49,11 +49,11 @@ void idctSoft(const int16_t block[64], const uint16_t q[64], int16_t outp[64], b
 
 aligned_allocator
 
-This struct provides an 4k alligned memory allocator. Using this
+This structure provides an 4k aligned memory allocator. Using this
 allocator allows data objects to be aligned for efficient data
 transfer to the kernel.
 
-The struct provides an allocate and deallocate function
+The structure provides an allocate and deallocate function
 
 *************************************************************************** */
 template <typename T>
@@ -77,7 +77,7 @@ struct aligned_allocator
 
 smalloc
 
-Simple helper function to malloc memory of a specifc size. The
+Simple helper function to malloc memory of a specific size. The
 function will throw an error if the memory can not be successfully
 allocated.
 
@@ -433,7 +433,7 @@ main
 This function is the main function of the idct program. It illustrates
 the basic opencl hostcode setup, followed by the idct execution on
 host (CPU) and an accelerated flow (FPGA). With a functional
-comparison between host and fpga exectuion.
+comparison between host and fpga execution.
 
 *************************************************************************** */
 int main(int argc, char* argv[]) {
@@ -481,7 +481,7 @@ int main(int argc, char* argv[]) {
   int banks = 1;
   const size_t cus = banks;
   const size_t threads = cus;
-  size_t numBlocks64 = 2048;
+  size_t numBlocks64 = 16384;
 
   if (xcl_mode != NULL) {
     numBlocks64 = 256;

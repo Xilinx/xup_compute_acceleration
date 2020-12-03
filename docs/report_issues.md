@@ -28,4 +28,4 @@ Report the issue to your instructor or open a [new issue](https://github.com/Xil
 It is always a good idea to check previous issues to in case that it has been already resolved.
 
 ---------------------------------------
-Copyright&copy; 2020 Xilinx
+<p align="center">Copyright&copy; 2020 Xilinx</p>

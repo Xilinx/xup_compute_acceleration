@@ -6,3 +6,6 @@ docs:
   
 - title: Hardware Debugging
   url: debug_lab.html
+
+- title: Streaming
+  url: streaming_lab.html

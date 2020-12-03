@@ -1,5 +1,5 @@
 /**********
-Copyright (c) 2019, Xilinx, Inc.
+Copyright (c) 2019-2020, Xilinx, Inc.
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification,
@@ -220,7 +220,7 @@ channels.
 *************************************************************************** */
 template<typename out_t>
 void read_blocks(const out_t *in, hls::stream<out_t> &out, unsigned int blocks) {
-    for(unsigned int i = 0; i < blocks*2; i++) {
+    loop_rd_blocks: for(unsigned int i = 0; i < blocks*2; i++) {
     #pragma HLS loop_tripcount min=2048 max=2048
     #pragma HLS PIPELINE II=1
         out.write(in[i]);
@@ -243,7 +243,7 @@ void execute(hls::stream<int512_t> &iblock,
          hls::stream<int512_t> &ivoutp, 
          bool ignore_dc, 
          unsigned int blocks) {
-  for(unsigned int i = 0; i < blocks; i++) {
+  loop_execute: for(unsigned int i = 0; i < blocks; i++) {
     /* Use II=2 here as we this will equalize all the dataflow processes and
      * save resources */
   #pragma HLS loop_tripcount min=1024 max=1024
@@ -294,7 +294,7 @@ output memory.
 
 *************************************************************************** */
 void write_blocks(ap_int<512> *out, hls::stream<int512_t> &in, unsigned int blocks) {
-  for(unsigned int i = 0; i < blocks*2; i++) {
+  loop_wr_blocks: for(unsigned int i = 0; i < blocks*2; i++) {
   #pragma HLS loop_tripcount min=2048 max=2048
   #pragma HLS PIPELINE II=1
     out[i] = in.read();

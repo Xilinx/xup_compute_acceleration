@@ -30,7 +30,7 @@ After completing this lab, you will learn to:
 
     Continue with the workspace you have used in previous lab  
 
-1. Create a new acceleration project giving **wide_vadd** as the project name, and click **Next >**
+1. Create a new application project giving **wide_vadd** as the project name, and click **Next >**
 
     You should see `xilinx_aws-vu9p-f1_shell-v04261818_201920_2` as one of the platforms if you are continuing with previous lab, otherwise add it from `/home/centos/src/project_data/aws-fpga/Vitis/aws_platform/`
 
@@ -47,7 +47,9 @@ After completing this lab, you will learn to:
 1. Import all `*.cpp` and `*.hpp` files in `~/xup_compute_acceleration/sources/improving_performance_lab/` 
     These files include both host code and hardware accelerator
 
-1. Within *Application Project Settings* view click on ![](./images/Fig-hw_button.png) in the *Hardware Functions* window and add **wide_vadd** function as a *Hardware Function* (kernel)
+1. Within *Application Project Settings* view, click on ![](./images/Fig-hw_button.png) in the *Hardware Functions* window and add **wide_vadd** function as a *Hardware Function* (kernel)
+    
+    ![](./images/improving_performance/add_kernel.png)
 
 ### Analyze the kernel code
 
@@ -83,6 +85,8 @@ DDR controllers have a 512-bit wide interface internally. If we parallelize the 
 1. Set dedicated location of kernel and memory interface
   - Right click on `wide_vadd > Emulation-HW` in *Assistant* view, select `Settings`
   - Navigate to *wide_vadd* kernel, adjust memory and SLR settings according to the screenshot below
+  - Click *Refresh* if you do not see the ports
+  - Enable `Counter + Trace` in the Data Transfer column
   - Click Apply and Close
 
 	![](./images/improving_performance/kernel_slr_setting.png)
@@ -93,19 +97,46 @@ DDR controllers have a 512-bit wide interface internally. If we parallelize the 
 
     This will take about 10 minutes
 
-1. After build completes, right click on **wide_vadd** * Run as > Run Configurations...* window
+1. After build completes, right click on **wide_vadd** *Run as > Run Configurations...*
 
 1. Navigate to *Arguments* tab. Make sure *Automatically add binary container(s) to arguments* is checked
 
 1. Click **Apply** and then **Run**  
 
-    Notice the kernel wait time is about 12 seconds.
+    Notice the kernel wait time is about 13 seconds.
 
-	![](./images/improving_performance/perf_single_bank.png)
+    ```
+    -- Parallelizing the Data Path --
+
+    Loading ../binary_container_1.xclbin to program the board
+
+    INFO: [HW-EM 01] Hardware emulation runs simulation underneath....
+    Running kernel test XRT-allocated buffers and wide data path:
+
+
+    OCL-mapped contiguous buffer example complete successfully!
+
+    --------------- Key execution times ---------------
+    OpenCL Initialization              : 27773.988 ms
+    Allocate contiguous OpenCL buffers :   15.034 ms
+    Set kernel arguments               :    0.101 ms
+    Map buffers to user space pointers :    0.832 ms
+    Populating buffer inputs           :    0.476 ms
+    Software VADD run                  :    0.215 ms
+    Memory object migration enqueue    :    4.431 ms
+    OCL Enqueue task                   :    2.819 ms
+    Wait for kernel to complete        : 13002.250 ms
+    Read back computation results      :    1.993 ms
+    INFO::[ Vitis-EM 22 ] [Time elapsed: 0 minute(s) 35 seconds, Emulation time: 0.0805678 ms]
+    Data transfer between kernel(s) and global memory(s)
+    wide_vadd_1:m_axi_gmem-DDR[1]          RD = 128.000 KB             WR = 0.000 KB        
+    wide_vadd_1:m_axi_gmem1-DDR[1]          RD = 128.000 KB             WR = 0.000 KB        
+    wide_vadd_1:m_axi_gmem2-DDR[1]          RD = 0.000 KB               WR = 128.000 KB
+    ```
 
 1. Check generated kernel interface
 
-    - Open Run Summary with Vitis Analyzer by double-clicking on `Emulation-HW > wide_vadd-Default > Run Summary (xclbin)` in the *Assistant* view
+    - Open Run Summary with Vitis Analyzer by double-clicking on `Emulation-HW > wide_vadd-Default > Run Summary (binary_container_1.xclbin)` in the *Assistant* view
     - Select **System Diagram**. Notice that all ports (in1, in2, and out) are using one bank
     - Click **Kernels** tab
     - Check the `Port Data Width` parameter. All input and output ports are 512 bits wide whereas size (scalar) port is 32 bits wide
@@ -114,7 +145,7 @@ DDR controllers have a 512-bit wide interface internally. If we parallelize the 
 
     - Select **Platform Diagram** in the left panel
 
-    Observe that there are four DDR4 memory banks and three PLRAM banks. In this design `bank1` is used for all operands, which is located in SLR2. Also notice that `bank0` and `bank2` are located in SLR1  
+    Observe that there are four DDR4 memory banks and three PLRAM banks. In this design `DDR[0]` is used for all operands, which is located in SLR2. Also notice that `DDR[0]` and `DDR[2]` are located in SLR1  
 
 	![](./images/improving_performance/platform_diagram.png)
 
@@ -128,13 +159,11 @@ DDR controllers have a 512-bit wide interface internally. If we parallelize the 
 
 ### Use multiple memory banks
 
-There are four DDR4 memory banks available on the accelerator card. In the previous section, we used only one bank. As we have three operands (two read and one write) it may be possible to improve performance if more memory banks are used simultaneously, providing maximize the bandwidth available to each of the interfaces. So it is possible to use the topology shown in following Figure.
+There are four DDR4 memory banks available on the accelerator card. In the previous section, we used only one bank. As we have three operands (two read and one write) it may be possible to improve performance if more memory banks are used simultaneously, maximizing the bandwidth available for each of the interfaces. So it is possible to use the topology shown in following Figure.
 
 ![](./images/improving_performance/multi_banks.png)
 
-This will provide the ability to perform high-bandwidth transactions simultaneously with different
-external memory banks. Remember, long bursts are generally better for performance than many small reads
-and writes, but you cannot fundamentally perform two operations on the memory at the same time.
+This will provide the ability to perform high-bandwidth transactions simultaneously with different external memory banks. Remember, long bursts are generally better for performance than many small reads and writes, but you cannot fundamentally perform two operations on the memory at the same time.
 
 To connect a kernel to multiple memory banks, you need to: Assign the kernel's interface to a memory controller and Assign the kernel to an SLR region. 
 
@@ -154,13 +183,42 @@ Please note that since the DDR controllers are constrained to different SLR (Sup
 
 1. Click **Run**  
 
-    Notice that the kernel wait time has reduced from about 12 seconds (single memory bank) to 9 seconds (three memory banks) indicating performance improvement
+    Notice that the kernel wait time has reduced from about 13 seconds (single memory bank) to 10 seconds (three memory banks) indicating performance improvement
 
 	![](./images/improving_performance/perf_multi_bank.png)
 
+    ```
+    -- Parallelizing the Data Path --
+
+    Loading ../binary_container_1.xclbin to program the board
+
+    INFO: [HW-EM 01] Hardware emulation runs simulation underneath....
+    Running kernel test XRT-allocated buffers and wide data path:
+
+
+    OCL-mapped contiguous buffer example complete successfully!
+
+    --------------- Key execution times ---------------
+    OpenCL Initialization              : 27536.041 ms
+    Allocate contiguous OpenCL buffers :    7.757 ms
+    Set kernel arguments               :   11.418 ms
+    Map buffers to user space pointers :    1.573 ms
+    Populating buffer inputs           :    0.497 ms
+    Software VADD run                  :    0.236 ms
+    Memory object migration enqueue    :    4.287 ms
+    OCL Enqueue task                   :    2.996 ms
+    Wait for kernel to complete        : 10001.946 ms
+    Read back computation results      :    1.815 ms
+    INFO::[ Vitis-EM 22 ] [Time elapsed: 0 minute(s) 32 seconds, Emulation time: 0.0747283 ms]
+    Data transfer between kernel(s) and global memory(s)
+    wide_vadd_1:m_axi_gmem-DDR[0]          RD = 128.000 KB             WR = 0.000 KB        
+    wide_vadd_1:m_axi_gmem1-DDR[2]          RD = 128.000 KB             WR = 0.000 KB        
+    wide_vadd_1:m_axi_gmem2-DDR[1]          RD = 0.000 KB               WR = 128.000 KB  
+    ```
+
 1. Check generated kernel interface
 
-    - Open Run Summary with Vitis Analyzer by double-clicking on `Emulation-HW > wide_vadd-Default > Run Summary (xclbin)` in the *Assistant* view
+    - Open Run Summary with Vitis Analyzer by double-clicking on `Emulation-HW > wide_vadd-Default > Run Summary (binary_container_1.xclbin)` in the *Assistant* view
     - Select System Diagram
     - Click **Kernels** tab
 
@@ -184,4 +242,4 @@ From a simple vadd application, we explored several steps to increase system per
 - Use Vitis Analyzer to view the result
 
 ---------------------------------------
-Copyright&copy; 2020 Xilinx
+<p align="center">Copyright&copy; 2020 Xilinx</p>

@@ -15,7 +15,8 @@ This lab is a continuation of previous *Introduction to Vitis* lab. You ended th
 
     ![](images/Vitis_intro/sw_emu_run_profile.png)
 
-1. Vitis Analyzer shows **Profile Summary** and **Application Timeline** tabs on the left-hand side. Click **Application Timeline**
+1. Vitis Analyzer shows **Summary**, **Profile Summary** and **Application Timeline** tabs on the left-hand side. Click **Application Timeline**
+
 1. Scroll right, click on the graph at around 75 ms (you may see different timeline depending on what else was executed earlier), then using the mouse cursor, select an area of interest
 
     Observe the various events at different time intervals  
@@ -30,6 +31,18 @@ This lab is a continuation of previous *Introduction to Vitis* lab. You ended th
 
     ![](./images/Vitis_intro/hw_emu_setup.png)
 
+    In order to collect the profiling data and run Timing Analyzer on the application run in hardware, we need to setup some options.
+
+1. Right-click on Emulation-HW in *Assistant* view and then click on *Settings*
+
+    ![](images/Vitis_intro/hw_emu_settings_invoke.png)
+
+1. Expand Emulation-HW in the left panel to see *binary_container_1* and *krnl_vadd* entries. Select *krnl_vadd* on the left-hand side, click on the *Data Transfer* drop-down button in krnl_vadd row and select *Counters+Trace* option. Notice the same monitoring options will be applied to all items in the hierarchy under the top level selection. Click **Apply and Close**
+
+    At this point the settings should look like shown below
+
+    ![](images/Vitis_intro/hw_emu_krnl_profile_settings.png)
+
 1. Build the project. This may take about 10 minutes
 
 1. Run Hardware Emulation in GUI mode
@@ -40,39 +53,66 @@ This lab is a continuation of previous *Introduction to Vitis* lab. You ended th
 
 1. Observe the application has run, and the output is displayed in the *Console* view. Compared to software emulation, the output also shows data transfer information. Notice the data transfer between kernel and global memory is 16 KB on each port
 
-    ![](./images/Vitis_intro/hw_emu_run_output.png)
+    ```
+    Found Platform
+    Platform Name: Xilinx
+    INFO: Reading ../binary_container_1.xclbin
+    Loading: '../binary_container_1.xclbin'
+    Trying to program device[0]: xilinx_aws-vu9p-f1_shell-v04261818_201920_2
+    INFO: [HW-EM 01] Hardware emulation runs simulation underneath. Using a large data set will result in ...
+    Device[0]: program successful!
+    Running Vector add with 4096 elements
+    Launching Hardware Kernel...
+    Getting Hardware Results...
+    TEST PASSED
+    INFO::[ Vitis-EM 22 ] [Time elapsed: 0 minute(s) 34 seconds, Emulation time: 0.08413 ms]
+    Data transfer between kernel(s) and global memory(s)
+    krnl_vadd_1:m_axi_gmem-DDR[1]          RD = 32.000 KB              WR = 16.000 KB       
 
-1. View Emulation Timeline
+    INFO: [HW-EM 06-0] Waiting for the simulator process to exit
+    INFO: [HW-EM 06-1] All the simulator processes exited successfully
+    ```    
 
-    In the *Assistant* view, double-click `Emulation-HW > vadd-Default > Run Summary (xclbin)` to open Vitis Analyzer
+1. View Application Timeline
 
-    Vitis Analyzer shows **System Diagram**, **Platform Diagram**, **Run Guidance**, **Profile Summary** and **Application Timeline** tabs on the left-hand side. Click **Application Timeline**. Zoom in between the 16 and 30 second area and observe the events that occurred. Note that data is processed in smaller chunks in the kernel and in a sequential manner.
+    In the *Assistant* view, double-click `Emulation-HW > vadd-Default > Run Summary (binary_container_1.xclbin)` to open Vitis Analyzer
+
+    Vitis Analyzer shows **Summary**, **System Diagram**, **Platform Diagram**, **Run Guidance**, **Profile Summary**, **Application Timeline** and **Waveform** tabs on the left-hand side. Click **Application Timeline**. Zoom in between the 20 and 40 second area and observe the events that occurred. Note that data is processed in smaller chunks in the kernel and in a sequential manner.
 
     ![](images/Vitis_intro/hw_emu_application_timeline.png)
 
-1. Click on the **Profile Summary** entry in the left panel, and observe the four tabs, each containing reports on various performance metrics:
-    - **Top Operations** : Shows the *top operations* related to memory transfer between the host and kernel to global memory, and kernel execution. This allows you to identify throughput bottlenecks when transferring data. Efficient transfer of data to the kernel/host allows for faster execution times
+1. Click on the **Profile Summary** entry in the left panel, and observe different entries, each containing reports on various performance metrics, we will focus on four of them
+
+    ![](images/Vitis_intro/profile_summary.png)
+
     - **Kernels &amp; Compute Units** : Shows the number of times the kernel was executed. Includes the total, minimum, average, and maximum run times. If the design has multiple compute units, it will show each compute unit's utilization. When accelerating an algorithm, the faster the kernel executes, the higher the throughput which can be achieved.
-    - **Data Transfers** : This tab has no bearing in software emulation as no actual data transfers are emulated across the host to the platform. In hardware emulation, this shows the emulated throughput and bandwidth of the read/writes to the global memory that the host and kernel share
-    - **OpenCL APIs** : Shows all the OpenCL API command executions, how many times each was executed, and how long they take to execute
+    - **Kernel Data Transfers** : This report has no bearing in software emulation as no actual data transfers are emulated across the host to the platform. In hardware emulation, this shows the emulated throughput and bandwidth of the read/writes to the global memory that the host and kernel share
+    - **Host Data Transfer** : Shows the *top operations* related to memory transfer between the host and kernel to global memory, and kernel execution. This allows you to identify throughput bottlenecks when transferring data. Efficient transfer of data to the kernel/host allows for faster execution times
+    - **API Calls** : Shows all the OpenCL API command executions, how many times each was executed, and how long they take to execute
+    - **Kernel Internals** : Displays the running time for compute units in microseconds (µs) and reports stall time as a percent of the running time.
+
 
 1. Click on each of tabs and review the report:  
-
-    - Top Operations
-
-    ![](images/Vitis_intro/hw_emu_profile_top.png)
 
     - Kernels & Compute Units
 
     ![](images/Vitis_intro/hw_emu_profile_kernel_compute_units.png)
 
-    - Data Transfers
+    - Kernel Data Transfers
 
-    ![](images/Vitis_intro/hw_emu_profile_data_transfer.png)
+    ![](images/Vitis_intro/hw_emu_profile_kernel_transfer.png)
+
+    - Host Data Transfer
+
+    ![](images/Vitis_intro/hw_emu_profile_host_data_transfers.png)
 
     - OpenCL APIs
 
-    ![](images/Vitis_intro/hw_emu_profile_OpenCL_APIs.png)
+    ![](images/Vitis_intro/hw_emu_profile_API_calls.png)
+
+    - Kernel Internals
+
+    ![](images/Vitis_intro/hw_emu_profile_kernel_internals.png)
 
 
 1. When finished, close the analyzer by clicking `File -> Exit` and clicking **OK**
@@ -89,7 +129,7 @@ This lab is a continuation of previous *Introduction to Vitis* lab. You ended th
 
     ![](images/Vitis_intro/hw_settings_invoke.png)
 
-1. Expand Hardware in the left panel to see *binary_container* and *krnl_vadd* entries. Select *krnl_vadd* on the left-hand side, click on the *Data Transfer* drop-down button in krnl_vadd row and select *Counters+Trace* option. Notice the same monitoring options will be applied to all items in the hierarchy under the top level selection. Similarly, click on *Execute Profiling* check-box in krnl_vadd row.
+1. Expand Hardware in the left panel to see *binary_container_1* and *krnl_vadd* entries. Select *krnl_vadd* on the left-hand side, click on the *Data Transfer* drop-down button in krnl_vadd row and select *Counters+Trace* option. Notice the same monitoring options will be applied to all items in the hierarchy under the top level selection. Similarly, click on *Execute Profiling* check-box in krnl_vadd row.
 
     At this point the settings should look like shown below
 
@@ -123,41 +163,44 @@ Since the Hardware build and AFI availability for AWS takes a considerable amoun
 
     ![](images/Vitis_intro/hw_trace_settings.png)
 
-1. Click on *Arguments* tab, make sure *Automatically add binary container(s) to arguments* is checked.
-
-    Note that for AWS F1 `binary_container_1.xclbin` is not an FPGA binary, but an AFI
+1. Click on *Arguments* tab, uncheck *Automatically add binary container(s) to arguments*, add the argument ../binary_container_1.awsxclbin
 
     ![](images/Vitis_intro/hw_arguments_settings.png)
 
 1. Execute the application by clicking **Apply** and then **Run**. The FPGA bitstream will be downloaded and the host application will be executed showing output similar to:
 
-    ![](./images/Vitis_intro/hw_run_output.png)
+    ```
+    Loading: '../binary_container_1.awsxclbin'
+    TEST PASSED
+    ```
 
 ### Analyze hardware application timeline and profile summary
 
 1. In the *Assistant* view, double click `Hardware > vadd-Default > Run Summary (xclbin)` to open Vitis Analyzer
 
-    Vitis Analyzer shows **Run Guidance**, **Profile Summary** and **Application Timeline** panels on the left-hand side. Click **Application Timeline**. Zoom in between 185,800,000 and 186,800,000 microsecond area (note for your output the range may differ depending on what else was executed on the instance) and observe the activities in various parts of the system. Note that the kernel processes data in one shot
+    Vitis Analyzer shows **Summary**, **Run Guidance**, **Profile Summary** and **Application Timeline** panels on the left-hand side. Click **Application Timeline**. Zoom in at the end of the timeline and observe the activities in various parts of the system. Note that the kernel processes data in one shot
 
     ![](images/Vitis_intro/hw_application_timeline.png)
 
 1. Click on the *Profile Summary* entry in the left panel, and observe multi-tab (four tabs) output
 
-    - Top Operations
-
-    ![](images/Vitis_intro/hw_profile_top.png)
-
     - Kernels & Compute Units
 
     ![](images/Vitis_intro/hw_profile_kernel_compute_units.png)
 
-    - Data Transfers
+    - Kernel Data Transfers
+
+    ![](images/Vitis_intro/hw_profile_kernel_data_transfer.png)
+
+    - Host Data Transfer
 
     ![](images/Vitis_intro/hw_profile_data_transfer.png)
 
     - OpenCL APIs
 
-    ![](images/Vitis_intro/hw_profile_OpenCL_APIs.png)
+    ![](images/Vitis_intro/hw_profile_API_calls.png)
+
+
 
 1. When finished, close the analyzer by clicking `File > Exit` and clicking **OK**
 
@@ -165,8 +208,16 @@ Since the Hardware build and AFI availability for AWS takes a considerable amoun
 
     Earlier, when you set kernel profiling and trace settings, `xrt.ini` file gets updated. During the execution, this updated file is used to generate the profile and application timeline data which are seen using Vitis Analyzer.
 
-    ![](./images/Vitis_intro/hw_xrt.png)
-
+    ```
+    [Debug]
+    profile=true
+    data_transfer_trace=fine
+    stall_trace=off
+    trace_buffer_size=1M
+    continuous_trace_interval=10
+    app_debug=true
+    timeline_trace=true
+    ```
 
 ## Conclusion
 
@@ -191,4 +242,4 @@ Before the design can be run on AWS an AFI (Amazon FPGA Image) is required
 Once the full system is built, you can create an AFI by following the steps listed in [create an AFI](Creating_AFI.md)
 
 ---------------------------------------
-Copyright&copy; 2020 Xilinx
+<p align="center">Copyright&copy; 2020 Xilinx</p>

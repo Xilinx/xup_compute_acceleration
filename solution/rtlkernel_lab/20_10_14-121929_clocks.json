@@ -1,0 +1,34 @@
+{
+    "clock_freq_topology":
+    {
+        "m_count": "5",
+        "m_clock_freq":
+        [
+            {
+                "m_freq_Mhz": "250",
+                "m_type": "SYSTEM",
+                "m_name": "clk_main_a0"
+            },
+            {
+                "m_freq_Mhz": "250",
+                "m_type": "UNUSED",
+                "m_name": "clk_main_a0"
+            },
+            {
+                "m_freq_Mhz": "250",
+                "m_type": "DATA",
+                "m_name": "DATA_CLK"
+            },
+            {
+                "m_freq_Mhz": "125",
+                "m_type": "UNUSED",
+                "m_name": "clk_extra_a1"
+            },
+            {
+                "m_freq_Mhz": "500",
+                "m_type": "KERNEL",
+                "m_name": "KERNEL_CLK"
+            }
+        ]
+    }
+}

@@ -1,0 +1,599 @@
+{
+    "ltx_root": {
+        "version": 4,
+        "minor": 0,
+        "ltx_data": [
+            {
+                "name": "EDA_PROBESET",
+                "active": true,
+                "debug_cores": [
+                    {
+                        "type": "XSDB_V3",
+                        "name": "dbg_hub",
+                        "spec": "labtools_xsdbm_v3"
+                    },
+                    {
+                        "type": "XSDB_V3",
+                        "name": "WRAPPER_INST/SH/SH_SDA_DEBUG_BRIDGE/inst/xsdbm",
+                        "spec": "labtools_xsdbm_v3",
+                        "reconfigTop": "WRAPPER_INST/SH",
+                        "clk_input_freq_hz": "125000003"
+                    },
+                    {
+                        "type": "XSDB_V3",
+                        "name": "WRAPPER_INST/CL/debug_bridge_0/inst/xsdbm",
+                        "spec": "labtools_xsdbm_v3",
+                        "reconfigTop": "WRAPPER_INST/CL",
+                        "clk_input_freq_hz": "125000003"
+                    },
+                    {
+                        "type": "ILA_V3",
+                        "name": "WRAPPER_INST/SH/SH/MGT_TOP/SH_ILA_0",
+                        "spec": "labtools_ila_v6",
+                        "ipName": "ila",
+                        "reconfigTop": "WRAPPER_INST/SH",
+                        "core_location": {
+                            "user_chain": 1,
+                            "slave_index": 0,
+                            "bscan_switch_index": 1
+                        },
+                        "uuid": "208F564274BD554891F5E0FFF2D1E7F2",
+                        "pins": [
+                            {
+                                "name": "probe0",
+                                "id": 0,
+                                "type": "DATA_TRIGGER",
+                                "direction": "IN",
+                                "isVector": false,
+                                "leftIndex": 0,
+                                "rightIndex": 0,
+                                "portIndex": 0,
+                                "nets": [
+                                    {
+                                        "name": "WRAPPER_INST/SH/SH/MGT_TOP/sh_ocl_awvalid",
+                                        "isBus": false
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "probe1",
+                                "id": 1,
+                                "type": "DATA_TRIGGER",
+                                "direction": "IN",
+                                "isVector": true,
+                                "leftIndex": 0,
+                                "rightIndex": 31,
+                                "portIndex": 1,
+                                "nets": [
+                                    {
+                                        "name": "WRAPPER_INST/SH/SH/MGT_TOP/cl_sh_id0_q",
+                                        "isBus": true,
+                                        "subnets": [
+                                            {
+                                                "name": "WRAPPER_INST/SH/SH/MGT_TOP/cl_sh_id0_q[31]"
+                                            },
+                                            {
+                                                "name": "WRAPPER_INST/SH/SH/MGT_TOP/cl_sh_id0_q[30]"
+                                            },
+                                            {
+                                                "name": "WRAPPER_INST/SH/SH/MGT_TOP/cl_sh_id0_q[29]"
+                                            },
+                                            {
+                                                "name": "WRAPPER_INST/SH/SH/MGT_TOP/cl_sh_id0_q[28]"
+                                            },
+                                            {
+                                                "name": "WRAPPER_INST/SH/SH/MGT_TOP/cl_sh_id0_q[27]"
+                                            },
+                                            {
+                                                "name": "WRAPPER_INST/SH/SH/MGT_TOP/cl_sh_id0_q[26]"
+                                            },
+                                            {
+                                                "name": "WRAPPER_INST/SH/SH/MGT_TOP/cl_sh_id0_q[25]"
+                                            },
+                                            {
+                                                "name": "WRAPPER_INST/SH/SH/MGT_TOP/cl_sh_id0_q[24]"
+                                            },
+                                            {
+                                                "name": "WRAPPER_INST/SH/SH/MGT_TOP/cl_sh_id0_q[23]"
+                                            },
+                                            {
+                                                "name": "WRAPPER_INST/SH/SH/MGT_TOP/cl_sh_id0_q[22]"
+                                            },
+                                            {
+                                                "name": "WRAPPER_INST/SH/SH/MGT_TOP/cl_sh_id0_q[21]"
+                                            },
+                                            {
+                                                "name": "WRAPPER_INST/SH/SH/MGT_TOP/cl_sh_id0_q[20]"
+                                            },
+                                            {
+                                                "name": "WRAPPER_INST/SH/SH/MGT_TOP/cl_sh_id0_q[19]"
+                                            },
+                                            {
+                                                "name": "WRAPPER_INST/SH/SH/MGT_TOP/cl_sh_id0_q[18]"
+                                            },
+                                            {
+                                                "name": "WRAPPER_INST/SH/SH/MGT_TOP/cl_sh_id0_q[17]"
+                                            },
+                                            {
+                                                "name": "WRAPPER_INST/SH/SH/MGT_TOP/cl_sh_id0_q[16]"
+                                            },
+                                            {
+                                                "name": "WRAPPER_INST/SH/SH/MGT_TOP/cl_sh_id0_q[15]"
+                                            },
+                                            {
+                                                "name": "WRAPPER_INST/SH/SH/MGT_TOP/cl_sh_id0_q[14]"
+                                            },
+                                            {
+                                                "name": "WRAPPER_INST/SH/SH/MGT_TOP/cl_sh_id0_q[13]"
+                                            },
+                                            {
+                                                "name": "WRAPPER_INST/SH/SH/MGT_TOP/cl_sh_id0_q[12]"
+                                            },
+                                            {
+                                                "name": "WRAPPER_INST/SH/SH/MGT_TOP/cl_sh_id0_q[11]"
+                                            },
+                                            {
+                                                "name": "WRAPPER_INST/SH/SH/MGT_TOP/cl_sh_id0_q[10]"
+                                            },
+                                            {
+                                                "name": "WRAPPER_INST/SH/SH/MGT_TOP/cl_sh_id0_q[9]"
+                                            },
+                                            {
+                                                "name": "WRAPPER_INST/SH/SH/MGT_TOP/cl_sh_id0_q[8]"
+                                            },
+                                            {
+                                                "name": "WRAPPER_INST/SH/SH/MGT_TOP/cl_sh_id0_q[7]"
+                                            },
+                                            {
+                                                "name": "WRAPPER_INST/SH/SH/MGT_TOP/cl_sh_id0_q[6]"
+                                            },
+                                            {
+                                                "name": "WRAPPER_INST/SH/SH/MGT_TOP/cl_sh_id0_q[5]"
+                                            },
+                                            {
+                                                "name": "WRAPPER_INST/SH/SH/MGT_TOP/cl_sh_id0_q[4]"
+                                            },
+                                            {
+                                                "name": "WRAPPER_INST/SH/SH/MGT_TOP/cl_sh_id0_q[3]"
+                                            },
+                                            {
+                                                "name": "WRAPPER_INST/SH/SH/MGT_TOP/cl_sh_id0_q[2]"
+                                            },
+                                            {
+                                                "name": "WRAPPER_INST/SH/SH/MGT_TOP/cl_sh_id0_q[1]"
+                                            },
+                                            {
+                                                "name": "WRAPPER_INST/SH/SH/MGT_TOP/cl_sh_id0_q[0]"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "probe1",
+                                "id": 2,
+                                "type": "DATA_TRIGGER",
+                                "direction": "IN",
+                                "isVector": true,
+                                "leftIndex": 32,
+                                "rightIndex": 63,
+                                "portIndex": 1,
+                                "nets": [
+                                    {
+                                        "name": "WRAPPER_INST/SH/SH/MGT_TOP/cl_sh_id1_q",
+                                        "isBus": true,
+                                        "subnets": [
+                                            {
+                                                "name": "WRAPPER_INST/SH/SH/MGT_TOP/cl_sh_id1_q[31]"
+                                            },
+                                            {
+                                                "name": "WRAPPER_INST/SH/SH/MGT_TOP/cl_sh_id1_q[30]"
+                                            },
+                                            {
+                                                "name": "WRAPPER_INST/SH/SH/MGT_TOP/cl_sh_id1_q[29]"
+                                            },
+                                            {
+                                                "name": "WRAPPER_INST/SH/SH/MGT_TOP/cl_sh_id1_q[28]"
+                                            },
+                                            {
+                                                "name": "WRAPPER_INST/SH/SH/MGT_TOP/cl_sh_id1_q[27]"
+                                            },
+                                            {
+                                                "name": "WRAPPER_INST/SH/SH/MGT_TOP/cl_sh_id1_q[26]"
+                                            },
+                                            {
+                                                "name": "WRAPPER_INST/SH/SH/MGT_TOP/cl_sh_id1_q[25]"
+                                            },
+                                            {
+                                                "name": "WRAPPER_INST/SH/SH/MGT_TOP/cl_sh_id1_q[24]"
+                                            },
+                                            {
+                                                "name": "WRAPPER_INST/SH/SH/MGT_TOP/cl_sh_id1_q[23]"
+                                            },
+                                            {
+                                                "name": "WRAPPER_INST/SH/SH/MGT_TOP/cl_sh_id1_q[22]"
+                                            },
+                                            {
+                                                "name": "WRAPPER_INST/SH/SH/MGT_TOP/cl_sh_id1_q[21]"
+                                            },
+                                            {
+                                                "name": "WRAPPER_INST/SH/SH/MGT_TOP/cl_sh_id1_q[20]"
+                                            },
+                                            {
+                                                "name": "WRAPPER_INST/SH/SH/MGT_TOP/cl_sh_id1_q[19]"
+                                            },
+                                            {
+                                                "name": "WRAPPER_INST/SH/SH/MGT_TOP/cl_sh_id1_q[18]"
+                                            },
+                                            {
+                                                "name": "WRAPPER_INST/SH/SH/MGT_TOP/cl_sh_id1_q[17]"
+                                            },
+                                            {
+                                                "name": "WRAPPER_INST/SH/SH/MGT_TOP/cl_sh_id1_q[16]"
+                                            },
+                                            {
+                                                "name": "WRAPPER_INST/SH/SH/MGT_TOP/cl_sh_id1_q[15]"
+                                            },
+                                            {
+                                                "name": "WRAPPER_INST/SH/SH/MGT_TOP/cl_sh_id1_q[14]"
+                                            },
+                                            {
+                                                "name": "WRAPPER_INST/SH/SH/MGT_TOP/cl_sh_id1_q[13]"
+                                            },
+                                            {
+                                                "name": "WRAPPER_INST/SH/SH/MGT_TOP/cl_sh_id1_q[12]"
+                                            },
+                                            {
+                                                "name": "WRAPPER_INST/SH/SH/MGT_TOP/cl_sh_id1_q[11]"
+                                            },
+                                            {
+                                                "name": "WRAPPER_INST/SH/SH/MGT_TOP/cl_sh_id1_q[10]"
+                                            },
+                                            {
+                                                "name": "WRAPPER_INST/SH/SH/MGT_TOP/cl_sh_id1_q[9]"
+                                            },
+                                            {
+                                                "name": "WRAPPER_INST/SH/SH/MGT_TOP/cl_sh_id1_q[8]"
+                                            },
+                                            {
+                                                "name": "WRAPPER_INST/SH/SH/MGT_TOP/cl_sh_id1_q[7]"
+                                            },
+                                            {
+                                                "name": "WRAPPER_INST/SH/SH/MGT_TOP/cl_sh_id1_q[6]"
+                                            },
+                                            {
+                                                "name": "WRAPPER_INST/SH/SH/MGT_TOP/cl_sh_id1_q[5]"
+                                            },
+                                            {
+                                                "name": "WRAPPER_INST/SH/SH/MGT_TOP/cl_sh_id1_q[4]"
+                                            },
+                                            {
+                                                "name": "WRAPPER_INST/SH/SH/MGT_TOP/cl_sh_id1_q[3]"
+                                            },
+                                            {
+                                                "name": "WRAPPER_INST/SH/SH/MGT_TOP/cl_sh_id1_q[2]"
+                                            },
+                                            {
+                                                "name": "WRAPPER_INST/SH/SH/MGT_TOP/cl_sh_id1_q[1]"
+                                            },
+                                            {
+                                                "name": "WRAPPER_INST/SH/SH/MGT_TOP/cl_sh_id1_q[0]"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "probe2",
+                                "id": 3,
+                                "type": "DATA_TRIGGER",
+                                "direction": "IN",
+                                "isVector": false,
+                                "leftIndex": 0,
+                                "rightIndex": 0,
+                                "portIndex": 2,
+                                "nets": [
+                                    {
+                                        "name": "WRAPPER_INST/SH/SH/MGT_TOP/ocl_sh_awready",
+                                        "isBus": false
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "probe3",
+                                "id": 4,
+                                "type": "DATA_TRIGGER",
+                                "direction": "IN",
+                                "isVector": false,
+                                "leftIndex": 0,
+                                "rightIndex": 0,
+                                "portIndex": 3,
+                                "nets": [
+                                    {
+                                        "name": "WRAPPER_INST/SH/SH/MGT_TOP/sh_ocl_arvalid",
+                                        "isBus": false
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "probe4",
+                                "id": 5,
+                                "type": "DATA_TRIGGER",
+                                "direction": "IN",
+                                "isVector": true,
+                                "leftIndex": 0,
+                                "rightIndex": 31,
+                                "portIndex": 4,
+                                "nets": [
+                                    {
+                                        "name": "WRAPPER_INST/SH/SH/MGT_TOP/sh_cl_ctl0",
+                                        "isBus": true,
+                                        "subnets": [
+                                            {
+                                                "name": "WRAPPER_INST/SH/SH/MGT_TOP/sh_cl_ctl0[31]"
+                                            },
+                                            {
+                                                "name": "WRAPPER_INST/SH/SH/MGT_TOP/sh_cl_ctl0[30]"
+                                            },
+                                            {
+                                                "name": "WRAPPER_INST/SH/SH/MGT_TOP/sh_cl_ctl0[29]"
+                                            },
+                                            {
+                                                "name": "WRAPPER_INST/SH/SH/MGT_TOP/sh_cl_ctl0[28]"
+                                            },
+                                            {
+                                                "name": "WRAPPER_INST/SH/SH/MGT_TOP/sh_cl_ctl0[27]"
+                                            },
+                                            {
+                                                "name": "WRAPPER_INST/SH/SH/MGT_TOP/sh_cl_ctl0[26]"
+                                            },
+                                            {
+                                                "name": "WRAPPER_INST/SH/SH/MGT_TOP/sh_cl_ctl0[25]"
+                                            },
+                                            {
+                                                "name": "WRAPPER_INST/SH/SH/MGT_TOP/sh_cl_ctl0[24]"
+                                            },
+                                            {
+                                                "name": "WRAPPER_INST/SH/SH/MGT_TOP/sh_cl_ctl0[23]"
+                                            },
+                                            {
+                                                "name": "WRAPPER_INST/SH/SH/MGT_TOP/sh_cl_ctl0[22]"
+                                            },
+                                            {
+                                                "name": "WRAPPER_INST/SH/SH/MGT_TOP/sh_cl_ctl0[21]"
+                                            },
+                                            {
+                                                "name": "WRAPPER_INST/SH/SH/MGT_TOP/sh_cl_ctl0[20]"
+                                            },
+                                            {
+                                                "name": "WRAPPER_INST/SH/SH/MGT_TOP/sh_cl_ctl0[19]"
+                                            },
+                                            {
+                                                "name": "WRAPPER_INST/SH/SH/MGT_TOP/sh_cl_ctl0[18]"
+                                            },
+                                            {
+                                                "name": "WRAPPER_INST/SH/SH/MGT_TOP/sh_cl_ctl0[17]"
+                                            },
+                                            {
+                                                "name": "WRAPPER_INST/SH/SH/MGT_TOP/sh_cl_ctl0[16]"
+                                            },
+                                            {
+                                                "name": "WRAPPER_INST/SH/SH/MGT_TOP/sh_cl_ctl0[15]"
+                                            },
+                                            {
+                                                "name": "WRAPPER_INST/SH/SH/MGT_TOP/sh_cl_ctl0[14]"
+                                            },
+                                            {
+                                                "name": "WRAPPER_INST/SH/SH/MGT_TOP/sh_cl_ctl0[13]"
+                                            },
+                                            {
+                                                "name": "WRAPPER_INST/SH/SH/MGT_TOP/sh_cl_ctl0[12]"
+                                            },
+                                            {
+                                                "name": "WRAPPER_INST/SH/SH/MGT_TOP/sh_cl_ctl0[11]"
+                                            },
+                                            {
+                                                "name": "WRAPPER_INST/SH/SH/MGT_TOP/sh_cl_ctl0[10]"
+                                            },
+                                            {
+                                                "name": "WRAPPER_INST/SH/SH/MGT_TOP/sh_cl_ctl0[9]"
+                                            },
+                                            {
+                                                "name": "WRAPPER_INST/SH/SH/MGT_TOP/sh_cl_ctl0[8]"
+                                            },
+                                            {
+                                                "name": "WRAPPER_INST/SH/SH/MGT_TOP/sh_cl_ctl0[7]"
+                                            },
+                                            {
+                                                "name": "WRAPPER_INST/SH/SH/MGT_TOP/sh_cl_ctl0[6]"
+                                            },
+                                            {
+                                                "name": "WRAPPER_INST/SH/SH/MGT_TOP/sh_cl_ctl0[5]"
+                                            },
+                                            {
+                                                "name": "WRAPPER_INST/SH/SH/MGT_TOP/sh_cl_ctl0[4]"
+                                            },
+                                            {
+                                                "name": "WRAPPER_INST/SH/SH/MGT_TOP/sh_cl_ctl0[3]"
+                                            },
+                                            {
+                                                "name": "WRAPPER_INST/SH/SH/MGT_TOP/sh_cl_ctl0[2]"
+                                            },
+                                            {
+                                                "name": "WRAPPER_INST/SH/SH/MGT_TOP/sh_cl_ctl0[1]"
+                                            },
+                                            {
+                                                "name": "WRAPPER_INST/SH/SH/MGT_TOP/sh_cl_ctl0[0]"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "probe4",
+                                "id": 6,
+                                "type": "DATA_TRIGGER",
+                                "direction": "IN",
+                                "isVector": true,
+                                "leftIndex": 32,
+                                "rightIndex": 47,
+                                "portIndex": 4,
+                                "nets": [
+                                    {
+                                        "name": "WRAPPER_INST/SH/SH/MGT_TOP/cl_sh_status_vled",
+                                        "isBus": true,
+                                        "subnets": [
+                                            {
+                                                "name": "WRAPPER_INST/SH/SH/MGT_TOP/cl_sh_status_vled[15]"
+                                            },
+                                            {
+                                                "name": "WRAPPER_INST/SH/SH/MGT_TOP/cl_sh_status_vled[14]"
+                                            },
+                                            {
+                                                "name": "WRAPPER_INST/SH/SH/MGT_TOP/cl_sh_status_vled[13]"
+                                            },
+                                            {
+                                                "name": "WRAPPER_INST/SH/SH/MGT_TOP/cl_sh_status_vled[12]"
+                                            },
+                                            {
+                                                "name": "WRAPPER_INST/SH/SH/MGT_TOP/cl_sh_status_vled[11]"
+                                            },
+                                            {
+                                                "name": "WRAPPER_INST/SH/SH/MGT_TOP/cl_sh_status_vled[10]"
+                                            },
+                                            {
+                                                "name": "WRAPPER_INST/SH/SH/MGT_TOP/cl_sh_status_vled[9]"
+                                            },
+                                            {
+                                                "name": "WRAPPER_INST/SH/SH/MGT_TOP/cl_sh_status_vled[8]"
+                                            },
+                                            {
+                                                "name": "WRAPPER_INST/SH/SH/MGT_TOP/cl_sh_status_vled[7]"
+                                            },
+                                            {
+                                                "name": "WRAPPER_INST/SH/SH/MGT_TOP/cl_sh_status_vled[6]"
+                                            },
+                                            {
+                                                "name": "WRAPPER_INST/SH/SH/MGT_TOP/cl_sh_status_vled[5]"
+                                            },
+                                            {
+                                                "name": "WRAPPER_INST/SH/SH/MGT_TOP/cl_sh_status_vled[4]"
+                                            },
+                                            {
+                                                "name": "WRAPPER_INST/SH/SH/MGT_TOP/cl_sh_status_vled[3]"
+                                            },
+                                            {
+                                                "name": "WRAPPER_INST/SH/SH/MGT_TOP/cl_sh_status_vled[2]"
+                                            },
+                                            {
+                                                "name": "WRAPPER_INST/SH/SH/MGT_TOP/cl_sh_status_vled[1]"
+                                            },
+                                            {
+                                                "name": "WRAPPER_INST/SH/SH/MGT_TOP/cl_sh_status_vled[0]"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "probe4",
+                                "id": 7,
+                                "type": "DATA_TRIGGER",
+                                "direction": "IN",
+                                "isVector": true,
+                                "leftIndex": 48,
+                                "rightIndex": 63,
+                                "portIndex": 4,
+                                "nets": [
+                                    {
+                                        "name": "WRAPPER_INST/SH/SH/MGT_TOP/sh_cl_status_vdip",
+                                        "isBus": true,
+                                        "subnets": [
+                                            {
+                                                "name": "WRAPPER_INST/SH/SH/MGT_TOP/sh_cl_status_vdip[15]"
+                                            },
+                                            {
+                                                "name": "WRAPPER_INST/SH/SH/MGT_TOP/sh_cl_status_vdip[14]"
+                                            },
+                                            {
+                                                "name": "WRAPPER_INST/SH/SH/MGT_TOP/sh_cl_status_vdip[13]"
+                                            },
+                                            {
+                                                "name": "WRAPPER_INST/SH/SH/MGT_TOP/sh_cl_status_vdip[12]"
+                                            },
+                                            {
+                                                "name": "WRAPPER_INST/SH/SH/MGT_TOP/sh_cl_status_vdip[11]"
+                                            },
+                                            {
+                                                "name": "WRAPPER_INST/SH/SH/MGT_TOP/sh_cl_status_vdip[10]"
+                                            },
+                                            {
+                                                "name": "WRAPPER_INST/SH/SH/MGT_TOP/sh_cl_status_vdip[9]"
+                                            },
+                                            {
+                                                "name": "WRAPPER_INST/SH/SH/MGT_TOP/sh_cl_status_vdip[8]"
+                                            },
+                                            {
+                                                "name": "WRAPPER_INST/SH/SH/MGT_TOP/sh_cl_status_vdip[7]"
+                                            },
+                                            {
+                                                "name": "WRAPPER_INST/SH/SH/MGT_TOP/sh_cl_status_vdip[6]"
+                                            },
+                                            {
+                                                "name": "WRAPPER_INST/SH/SH/MGT_TOP/sh_cl_status_vdip[5]"
+                                            },
+                                            {
+                                                "name": "WRAPPER_INST/SH/SH/MGT_TOP/sh_cl_status_vdip[4]"
+                                            },
+                                            {
+                                                "name": "WRAPPER_INST/SH/SH/MGT_TOP/sh_cl_status_vdip[3]"
+                                            },
+                                            {
+                                                "name": "WRAPPER_INST/SH/SH/MGT_TOP/sh_cl_status_vdip[2]"
+                                            },
+                                            {
+                                                "name": "WRAPPER_INST/SH/SH/MGT_TOP/sh_cl_status_vdip[1]"
+                                            },
+                                            {
+                                                "name": "WRAPPER_INST/SH/SH/MGT_TOP/sh_cl_status_vdip[0]"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "probe5",
+                                "id": 8,
+                                "type": "DATA_TRIGGER",
+                                "direction": "IN",
+                                "isVector": false,
+                                "leftIndex": 0,
+                                "rightIndex": 0,
+                                "portIndex": 5,
+                                "nets": [
+                                    {
+                                        "name": "WRAPPER_INST/SH/SH/MGT_TOP/ocl_sh_arready",
+                                        "isBus": false
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "type": "XSDBS_V2",
+                        "name": "WRAPPER_INST/CL/HIP/inst/memory/aws/inst/gen_mem.sh_ddr_0/ddr_cores.DDR4_1",
+                        "spec": "labtools_xsdbslavelib_v2",
+                        "ipName": "DDR4_SDRAM",
+                        "reconfigTop": "WRAPPER_INST/CL",
+                        "core_location": {
+                            "user_chain": 1,
+                            "slave_index": 0,
+                            "bscan_switch_index": 0
+                        },
+                        "uuid": "7FC84A9D204F5CA69A335D614C3BEE45"
+                    }
+                ]
+            }
+        ]
+    }
+}

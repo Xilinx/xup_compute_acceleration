@@ -23,7 +23,7 @@ After completing this lab, you will be able to:
 Clone the open source Vitis Accelerated Libraries repository in your home directory
 
 ```sh
-git clone https://github.com/Xilinx/Vitis_Libraries.git ~/Vitis_Libraries -b 2019.2
+git clone https://github.com/Xilinx/Vitis_Libraries.git ~/Vitis_Libraries -b v2020.1_update1
 ```
 
 ### Build FPGA binary file
@@ -39,42 +39,46 @@ git clone https://github.com/Xilinx/Vitis_Libraries.git ~/Vitis_Libraries -b 201
 	 It is crucial to define `XCL_EMULATION_MODE`. Let's start with `sw_emu`. We also need to define the target platform, this will be stored in the variable `PFM`, update this path appropriately. Finally, we are going to set up `VITIS_LIBS`. This variable will point to the `include` directory of vision library L1
 
     * Define EMULATION MODE it will also work as build target
+    * Define AWS platform name
     * Define platform
     * Define path of Vitis accelerated libraries 
 
     ```sh
     export XCL_EMULATION_MODE=sw_emu
-    export PFM=$AWS_FPGA_REPO_DIR/Vitis/aws_platform/xilinx_aws-vu9p-f1_shell-v04261818_201920_2/xilinx_aws-vu9p-f1_shell-v04261818_201920_2.xpfm
+    export AWS_PFM=xilinx_aws-vu9p-f1_shell-v04261818_201920_2
+    export PFM=$AWS_FPGA_REPO_DIR/Vitis/aws_platform/$AWS_PFM/$AWS_PFM.xpfm
     export VITIS_LIBS=~/Vitis_Libraries/vision/L1/include
     ```
 
 1. Create a temporary folder
 
-    We will use `compile_output` folder to store temporary files to avoid polluting the root directory
+    We will use `output` folder to store temporary files to avoid polluting the root directory
 
     ```sh
-    mkdir compile_output
+    mkdir output
     ```
 
 1. Compile kernel and build FPGA binary
 
     In this step the Vitis compiler (`v++`) will be used three times:
-    - Synthesize the resize kernel (`resize_accel_rgb`) to create a Xilinx object (`compile_output/resize.xo`)
-    - Synthesize the resize & blur kernel (`resize_blur_rgb`) to create a Xilinx object (`compile_output/resize_blur.xo`)
-    - Build the [FPGA binary](https://www.xilinx.com/html_docs/xilinx2019_2/vitis_doc/Chunk2086915788.html) (`vision_example.xclbin`) file
+    - Synthesize the resize kernel (`resize_accel_rgb`) to create a Xilinx object (`output/resize.xo`)
+    - Synthesize the resize & blur kernel (`resize_blur_rgb`) to create a Xilinx object (`output/resize_blur.xo`)
 
     ```sh
-    #Compile Kernels
-    v++ -f $PFM -t $XCL_EMULATION_MODE --log_dir compile_output -c -g --config src/vision_config.ini \
-     -I$VITIS_LIBS -k resize_accel_rgb -o compile_output/resize.xo src/hw/resize_rgb.cpp
-    v++ -f $PFM -t $XCL_EMULATION_MODE --log_dir compile_output -c -g --config src/vision_config.ini \
-     -I$VITIS_LIBS -k resize_blur_rgb -o compile_output/resize_blur.xo src/hw/resize_blur.cpp
-    #Create FPGA binary
-    v++ -f $PFM -t $XCL_EMULATION_MODE --log_dir compile_output -l -g -j 7 --config src/connectivity_aws.ini \
-     --config src/vision_config.ini -o vision_example.xclbin compile_output/resize.xo compile_output/resize_blur.xo
+    v++ -f $PFM -t $XCL_EMULATION_MODE --log_dir output -c -g --config src/vision_config.ini \
+     -I$VITIS_LIBS -k resize_accel_rgb -o output/resize.xo src/hw/resize_rgb.cpp
+    v++ -f $PFM -t $XCL_EMULATION_MODE --log_dir output -c -g --config src/vision_config.ini \
+     -I$VITIS_LIBS -k resize_blur_rgb -o output/resize_blur.xo src/hw/resize_blur.cpp
     ```
 
-    `v++` is the Vitis compiler command. `v++` compiles and link FPGA binaries, here some of the switches are described. For more information visit [Vitis compiler](https://www.xilinx.com/html_docs/xilinx2019_2/vitis_doc/Chunk1193338764.html), or run `v++ -h`
+    - Build the device binary (`vision_example.xclbin`) file
+
+    ```sh
+    v++ -f $PFM -t $XCL_EMULATION_MODE --log_dir output -l -g -j 7 --config src/connectivity_aws.ini \
+     --config src/vision_config.ini -o vision_example.xclbin output/resize.xo output/resize_blur.xo
+    ```
+
+    `v++` is the Vitis compiler command. `v++` compiles and link FPGA binaries, here some of the switches are described. For more information run `v++ -h`
 
     - `-f` or `--platform`: specify a Platform
     - `-t` or `--target`: specify a compile target: `[sw_emu|hw_emu|hw]` if not defined default is `hw`
@@ -92,27 +96,20 @@ git clone https://github.com/Xilinx/Vitis_Libraries.git ~/Vitis_Libraries -b 201
 
 ### Build host code
 
-In order to build the host application we are going to use `xcpp` a GCC-compatible compiler.
+In order to build the host application we are going to use `g++`.
 
-1. Create object files `*.o` of every `*.cpp` file of the host code
+1. Create the object files `*.o` for every `*.cpp` file of the host code
 
     ```sh
-    export XCPP_FLAGS="-c -std=c++14 -g -D__USE_XOPEN2K8 -I$XILINX_XRT/include/ -I$XILINX_VIVADO/include"
-    xcpp $XCPP_FLAGS -o compile_output/opencv_example.o ./src/sw/opencv_example.cpp
-    xcpp $XCPP_FLAGS -o compile_output/event_timer.o src/sw/event_timer.cpp
-    xcpp $XCPP_FLAGS -o compile_output/xcl2.o src/sw/xcl2.cpp
-    xcpp $XCPP_FLAGS -o compile_output/xilinx_ocl_helper.o src/sw/xilinx_ocl_helper.cpp
+    export CPP_FLAGS="-c -std=c++11 -D__USE_XOPEN2K8 -I$XILINX_XRT/include/"
+    cd output/;g++ $CPP_FLAGS $(ls ../src/sw/*.cpp); cd ..
     ```
 
 1. Create executable file linking object files with dynamic libraries
 
     ```sh
-    export OBJECT_FILES="compile_output/opencv_example.o compile_output/event_timer.o compile_output/xcl2.o compile_output/xilinx_ocl_helper.o"
-    xcpp -o vision_example $OBJECT_FILES -lxilinxopencl -lpthread -lrt -lstdc++ -lhlsmc++-GCC46 -lgmp -lmpfr \
-     -lIp_floating_point_v7_0_bitacc_cmodel -lopencv_core -lopencv_imgproc -lopencv_highgui \
-     -L $XILINX_VITIS/runtime/lib/x86_64 -L$XILINX_XRT/lib/ -Wl,-rpath,$XILINX_VIVADO/lnx64/lib/csim \
-     -L $XILINX_VIVADO/lnx64/lib/csim  -Wl,-rpath,$XILINX_VIVADO/lnx64/tools/fpo_v7_0 \
-     -L $XILINX_VIVADO/lnx64/tools/fpo_v7_0  -L $XILINX_VIVADO/lnx64/tools/opencv/opencv_gcc
+    g++ -std=c++11 -o vision_example $(ls output/*.o) `pkg-config --libs --cflags opencv` \
+    -lxilinxopencl -lxml2 -L$XILINX_XRT/lib/ -L/usr/lib64/
     ```
 
 ### Execute the kernels (emulation only)
@@ -121,7 +118,7 @@ In order to build the host application we are going to use `xcpp` a GCC-compatib
 
     Make sure you set `LD_LIBRARY_PATH` to include these two path, otherwise the execution will fail.
     ```sh
-    export LD_LIBRARY_PATH=/opt/xilinx/xrt/lib:$XILINX_VIVADO/lnx64/tools/opencv/opencv_gcc
+    export LD_LIBRARY_PATH=$XILINX_XRT/lib
     ```
 
 1. If your are running either `sw_emu` or `hw_emu` an emulated platform needs to be created to simulate the hardware. Skip this step if you are running `hw`
@@ -133,8 +130,9 @@ In order to build the host application we are going to use `xcpp` a GCC-compatib
 
 1. Run the resize kernel **emulation only** using a small image to speed up emulation
 
+    - Run resize kernel with a resize factor of 3
+
     ```sh
-    # Run resize kernel with a resize factor of 3
     ./vision_example vision_example.xclbin 0 src/data/fish_wallpaper_small.jpg 3
     ```
 
@@ -160,22 +158,32 @@ Since compilation for hardware target will take a long time, the FPGA binary is 
 
 1. The host code **does not** need to be recompiled because it **does not** depend on the emulation mode. `XRT` is going to link the executable with the actual hardware instead of the emulated platform
 
-1. Copy provided solution and execute the following commands to run in hardware
+1. Copy precompiled device binary
 
     ```sh
     cp ~/xup_compute_acceleration/solutions/vision_lab/vision_example.awsxclbin .
-    #Run resize kernel with a resize factor of 3
+    ```
+
+1. Run the kernels on hardware 
+    
+    - Run resize kernel with a resize factor of 3
+
+    ```sh
     ./vision_example vision_example.awsxclbin 0 src/data/fish_wallpaper.jpg 3
-    #Run resize & blur kernel with a resize factor of 4
+    ```
+
+    - Run resize & blur kernel with a resize factor of 4 
+
+    ```sh
     ./vision_example vision_example.awsxclbin 1 src/data/fish_wallpaper.jpg 4
     ```
 
-    The host application `vision_example` will execute, programming the FPGA and running the host code. This will generate four output files: **resize_sw.png**, **resize_hw.png**, **resize_blur_sw.png** and **resize_blur_hw.png** very quickly compared to `sw_emu` execution done before. Also `profile_summary.csv` and `timeline_trace.csv` files will be generated. These files can be analyzed using `vitis_analyzer`
+    The host application `vision_example` will execute, programming the FPGA and running the host code. This will generate four output files: **resize_sw.png**, **resize_hw.png**, **resize_blur_sw.png** and **resize_blur_hw.png** very quickly compared to `sw_emu` execution done before. Also `xclbin.run_summary` file will be generated, which can be analyzed using `vitis_analyzer`
 
-1. Explore profile summary and application timeline
+1. Explore *Profile Summary* and *Application Timeline*
 
     ```sh
-    vitis_analyzer profile_summary.csv timeline_trace.csv
+    vitis_analyzer xclbin.run_summary
     ```
 
 1. Close Vitis Analyzer
@@ -191,7 +199,7 @@ rm -rf _x/ *.log *.jou *.pb *xclbin* *.json *.png *.csv *.*summary*
 
 ## Conclusion
 
-In this lab, you used Vitis from the command line (`v++`) to create an FPGA binary file with two kernels. You also used `xcpp` to compile the host application. You performed software emulation and analyzed the output images. You then run the provided solution in hardware and evaluate the output images.
+In this lab, you used Vitis from the command line (`v++`) to create an FPGA binary file with two kernels. You also used `g++` to compile the host application. You performed software emulation and analyzed the output images. You then run the provided solution in hardware and evaluate the output images.
 
 ---------------------------------------
 
@@ -199,13 +207,13 @@ In this lab, you used Vitis from the command line (`v++`) to create an FPGA bina
 
 ### Build Full Hardware
 
-1. The previous compilation was for `sw_emu`. It needs to be set to `hw` for generating FPGA binary. Execute the following command to prepare for the hardware targeting
+1. The previous compilation was for `sw_emu`. In order to build the FPGA binary file we need pass `hw` as target to `v++`. Execute the following command to set hardware build
 
     ```sh
     export XCL_EMULATION_MODE=hw
     ```
 
-1. Compile kernels and FPGA binary by [repeating step 4 of Build FPGA binary file](#build-fpga-binary-file). The process takes about two hours to complete, generating FPGA binary file called `vision_example.xclbin`.
+1. Compile kernels and FPGA binary by [repeating step 4 of Build FPGA binary file](#build-fpga-binary-file). The process takes about two hours to generate FPGA binary file called `vision_example.xclbin`.
 
 1.	Note: to run in AWS you need to create an [AFI](Creating_AFI.md). Therefore, the FPGA binary file will be `vision_example.awsxclbin`. In a tutorial, this file will be provided
 
@@ -292,4 +300,4 @@ Instance:        resize_blur_rgb_1
 ```
 
 ---------------------------------------
-Copyright&copy; 2020 Xilinx
+<p align="center">Copyright&copy; 2020 Xilinx</p>

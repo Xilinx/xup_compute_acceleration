@@ -10,7 +10,7 @@ Welcome to the XUP Vitis-based Compute Acceleration tutorial. These labs will pr
 
 The tutorial instructions target the following hardware and software:
 
-* Vitis 2019.2
+* Vitis 2020.1
 * AWS EC2 F1 f1.2xlarge (cloud)
 * Alveo U200 (local board, or cloud)
 
@@ -89,4 +89,4 @@ These labs are intended for hardware designers who may want to use RTL to build 
 	This lab will show you how to carry out host application debug, and debug of the hardware kernel. Currently not supported on Nimbix as the Xilinx Virtual Cable is not available.
 
 ---------------------------------------
-Copyright&copy; 2020 Xilinx
+<p align="center">Copyright&copy; 2020 Xilinx</p>

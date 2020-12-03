@@ -59,9 +59,7 @@ Review the [Appendix](#steps-to-add-chipscope-debug-core-and-build-the-design) t
 
 1. In *Assistant* view, right click on **debug_system > debug > Hardware** and select **Run > Run Configurations...**
 1. Expand *OpenCL* and select *debug-Default*
-1. In the *Arguments* tab make sure **Automatically add binary container(s) to arguments** is checked
-
-    Note, for AWS F1 *binary_container_1.xclbin* is not an FPGA binary file but an AFI
+1. In the *Arguments* tab, uncheck **Automatically add binary container(s) to arguments** and add *../binary_container_1.awsxclbin* as an argument
 
 1. Click **Run**
 
@@ -73,18 +71,34 @@ Review the [Appendix](#steps-to-add-chipscope-debug-core-and-build-the-design) t
 
 The Xilinx Virtual Cable (XVC) is a virtual device that gives you JTAG debug capabilities over PCIe to the target device. XVC will be used to debug the design.
 
-#### For Alveo U200
+
+#### XVC for AWS
+Open a new terminal window and run the following script which will manage setup of the XVC:
+
+```sh
+sudo fpga-start-virtual-jtag -P 10200 -S 0
+```
+The output should look like:
+
+```
+Starting Virtual JTAG XVC Server for FPGA slot id 0, listening to TCP port 10200.
+Press CTRL-C to stop the service.
+```
+
+Skip the next section and continue with [Connecting Vivado to the XVC](#connecting-vivado-to-xvc)
+
+#### XVC for Alveo U200
 
 For an Alveo board, you need to determine the XVC device in your system. XVC is installed as part of the Vitis and XRT installation.
 
 ```sh
-ls /dev/xvc_pub*
+ls /dev/xfpga/xvc_pub*
 ```
 
 This will report something similar to the output below:
 
 ```sh
-/dev/xvc_pub.u513
+/dev/xfpga/xvc_pub.u513
 ```
 
 Each computer may have a different value for *xvc_pub.\** so you will need to check the name for your computer.
@@ -94,35 +108,20 @@ Each computer may have a different value for *xvc_pub.\** so you will need to ch
     Run the following command (where *u513* should be the value your obtained from the previous command):
 
     ```sh
-    debug_hw --xvc_pcie /dev/xvc_pub.u513 --hw_server
+    debug_hw --xvc_pcie /dev/xfpga/xvc_pub.u513 --hw_server
     ```
 
     The Virtual JTAG XVC Server will start listening to TCP port **10200** in this case. This is the port you will need to [connect to from Vivado](#connecting-vivado-to-xvc). Note the *hw_server* is listening to TCP port 3121. See example output below
 
     ```sh
     launching xvc_pcie...
-    xvc_pcie -d /dev/xvc_pub.u513 -s TCP::10200
+    xvc_pcie -d /dev/xfpga/xvc_pub.u513 -s TCP::10200
     launching hw_server...
     hw_server -sTCP::3121
     
     ****************************
     *** Press Ctrl-C to exit ***
     ****************************
-    ```
-
-    Skip the next section and continue with [Connecting Vivado to the XVC](#connecting-vivado-to-xvc)
-
-#### For AWS
-Open a new terminal window and run the following script which will manage setup of the XVC:
-
-    ```sh
-    sudo fpga-start-virtual-jtag -P 10200 -S 0
-    ```
-    The output should look like:
-
-    ```
-    Starting Virtual JTAG XVC Server for FPGA slot id 0, listening to TCP port 10200.
-    Press CTRL-C to stop the service.
     ```
 
 ### Connecting Vivado to XVC
@@ -133,7 +132,7 @@ Open a new terminal window and run the following script which will manage setup 
     vivado
     ```
 
-1. Click on **Open Hardware Manager >** link
+1. Click on **Open Hardware Manager >**
 1. Click **Open Target > Auto Connect**
 
     ![](./images/debug_lab/hw_manager_open_target.png)
@@ -153,8 +152,8 @@ Open a new terminal window and run the following script which will manage setup 
     ![](./images/debug_lab/hardware_manager.png)
 
 1. Select the *debug_bridge* in the Hardware panel
-1. In the *Hardware Device Properties* view, click on the browse button (`...`) beside **Probes file**
-1. Browse to the project's **~/workspace/debug/Hardware** folder, select the **.ltx** file and click **OK**  
+1. In the *Hardware Device Properties* view, click on the browse button (...) beside **Probes file**
+1. Browse to the project's **~/workspace/debug/Hardware** folder, select the **binary_container_1.ltx** file and click **OK**  
 1. Select the *hw_ila_1* tab, and notice four (Slot_0 to Slot_3) probes are filled in the Waveform window
 1. Click on the **Run Trigger immediate** button and observe the waveform window is fills with data showing that the four channels were _Inactive_ for the duration of the signal capture
 
@@ -195,7 +194,7 @@ Open a new terminal window and run the following script which will manage setup 
 
 1. In *Assistant* view, right click on **debug_system > debug > Hardware** and select **Debug > Debug Configurations...**
 
-1. Make sure that the **Arguments** tab shows **../binary_container_1.xclbin**
+1. Make sure that the **Arguments** tab shows **../binary_container_1.awsxclbin**
 
 1. Click **Apply** if needed, and then click **Debug**
 
@@ -203,7 +202,7 @@ Open a new terminal window and run the following script which will manage setup 
 
     The bitstream will be downloaded to the FPGA and the host application will start executing, halting at **main()** entry point
 
-1. In *host_example.cpp* view scroll down to line ~272 and double-click on the left border to set a breakpoint  At this point, three buffers would have been created
+1. In *host_example.cpp* view scroll down to line ~274 and double-click on the left border to set a breakpoint  At this point, three buffers would have been created
 
     ![](./images/debug_lab/set_breakpoint.png)
 
@@ -248,7 +247,7 @@ Notice the Command Queue tab shows one command submitted
 
     ![](./images/debug_lab/command_queue_after_2nd.png)
 
-1. Set a breakpoint at line ~398 (`clReleaseKernel()`) and press **F8** to resume the execution  
+1. Set a breakpoint at line ~400 (`clReleaseKernel()`) and press **F8** to resume the execution  
 
     Notice that the Command Queue tab still shows entries
 
@@ -313,9 +312,5 @@ cd ~/workspace/rtl_kernel/Hardware
 make rtl_kernel
 ```
 
-### References
-
-[Vitis Debugging Applications and Kernels](https://www.xilinx.com/html_docs/xilinx2019_2/vitis_doc/Chunk1842168126.html#pei1519495363831)
-
----------------------------------------
-Copyright&copy; 2020 Xilinx
+-------------------------------------------------
+<p align="center">Copyright&copy; 2020 Xilinx</p>

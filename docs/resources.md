@@ -36,4 +36,4 @@ This list cover examples and tutorials hosted on [Xilinx GitHub](https://github.
 1. [Vitis AI Tutorials](https://github.com/Xilinx/Vitis-AI-Tutorials)
 
 ---------------------------------------
-Copyright&copy; 2020 Xilinx
+<p align="center">Copyright&copy; 2020 Xilinx</p>

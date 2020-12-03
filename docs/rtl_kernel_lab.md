@@ -27,11 +27,11 @@ After completing this lab, you will be able to:
 
      Use `Create Application Project` from Welcome page, or use `File > New > Application Project` to create a new application
 
-1. In the *New Project's* page enter **rtl\_kernel** in the *Project name:* field and click **Next >**
-
 1. Select your target platform and click **Next >**
 
     If you don't see your target platform, then click on '+' button, browse to directory where platform is located and click **OK**
+
+1. In the *Application Project Details* page enter **rtl\_kernel** in the *Project name:* field and click **Next >**
 
 1. Select **Empty Application** and click **Finish**
 
@@ -39,7 +39,7 @@ After completing this lab, you will be able to:
 
 1. Make sure the **rtl\_kernel.prj** under _rtl\_kernel\_example_ in the *Explorer* view is selected
 
-1. Select **Xilinx > RTL Kernel Wizard…**  
+1. In the menu bar on top click **Xilinx > RTL Kernel Wizard…**  
 
     ![](./images/rtlkernel_lab/wizard_entry_page.png)
 
@@ -55,7 +55,7 @@ After completing this lab, you will be able to:
 
 1. We will have three arguments to the kernel (2 inputs and 1 output) which will be passed through Global Memory. Set `Number of AXI master interfaces` to be **3**
 
-    Keep the width of each AXI master data width to **64** (note this is specified in bytes so this will give a width of 512 bits for each interface), name **A** as the argument name for *m00\_axi*, **B** for *m01\_axi*, and **Res** for *m02\_axi*
+    Keep the width of each AXI master data width to **64** (note this is specified in bytes so this will give a width of 512 bits for each interface). Update the arguments name: **A** for *m00\_axi*, **B** for *m01\_axi*, and **Res** for *m02\_axi*
 
     ![](./images/rtlkernel_lab/wizard_arguments.png)
 
@@ -148,6 +148,12 @@ After completing this lab, you will be able to:
 
     ![](./images/rtlkernel_lab/hw_emu_selection.png)
 
+1. In the *Assistant* view right click on *rtl_kernel > Emulation-HW* and select *Settings...*
+    
+    Configure the kernel settings to use `Counter + Trace`
+    
+    ![](./images/rtlkernel_lab/hw_emu_kernel_config.png)
+
 1. Build the project by clicking on the (![](./images/Fig-build.png)) button  
 
     This will build the project including *rtl\_kernel* executable file under the Emulation-HW directory. It may take about 10 minutes to build
@@ -164,11 +170,25 @@ After completing this lab, you will be able to:
 
     Note that three memory controllers are used, all of which targeting to the same DDR
 
-    ![](./images/rtlkernel_lab/hw_emu_completed_successfully.png)
+    ```
+    INFO: Found 1 platforms
+    INFO: Selected platform 0 from Xilinx
+    INFO: Found 1 devices
+    CL_DEVICE_NAME xilinx_aws-vu9p-f1_shell-v04261818_201920_2
+    Selected xilinx_aws-vu9p-f1_shell-v04261818_201920_2 as the target device
+    INFO: loading xclbin ../binary_container_1.xclbin
+    INFO: [HW-EM 01] Hardware emulation runs simulation underneath....
+    INFO: Test completed successfully.
+    INFO::[ Vitis-EM 22 ] [Time elapsed: 0 minute(s) 24 seconds, Emulation time: 0.0576465 ms]
+    Data transfer between kernel(s) and global memory(s)
+    KVAdd_1:m00_axi-DDR[1]          RD = 16.000 KB              WR = 16.000 KB       
+    KVAdd_1:m01_axi-DDR[1]          RD = 16.000 KB              WR = 16.000 KB       
+    KVAdd_1:m02_axi-DDR[1]          RD = 16.000 KB              WR = 16.000 KB   
+    ```
 
-1. In the *Assistant* view, expand **Emulation-HW > rtl\_kernel\_example-Default**, and double-click on **Run Summary (xclbin)**
+1. In the *Assistant* view, expand **Emulation-HW > rtl\_kernel\_example-Default**, and double-click on **Run Summary (binary_container_1.xclbin)**
 
-1. The *Vitis Analyzer* window will open. Click on **xlcbin (Hardware Emulation) > Application Timeline** entry, expand all entries in the timeline graph, zoom appropriately and observe the transactions
+1. The *Vitis Analyzer* window will open. Click on **Application Timeline** entry, expand all entries in the timeline graph, zoom appropriately and observe the transactions
 
 	![](./images/rtlkernel_lab/hw_emu_application_timeline.png)
 
@@ -182,8 +202,6 @@ Since building the FPGA hardware takes some time, a precompiled solution is prov
 #define TARGET_DEVICE "xilinx_aws-vu9p-f1_dynamic_5_0"
 ```
 
-![](./images/rtlkernel_lab/host_code_patch.png)
-
 1. Execute precompiled hardware solution
 
     ```sh
@@ -194,45 +212,47 @@ Since building the FPGA hardware takes some time, a precompiled solution is prov
 
     The FPGA bitstream will be downloaded and the host application will be executed showing output similar to:
 
-    ![](./images/rtlkernel_lab/hw_run_output.png)
+    ```
+    INFO: Found 1 platforms
+    INFO: Selected platform 0 from Xilinx
+    INFO: Found 1 devices
+    CL_DEVICE_NAME xilinx_aws-vu9p-f1_dynamic_5_0
+    Selected xilinx_aws-vu9p-f1_dynamic_5_0 as the target device
+    INFO: loading xclbin binary_container_1.awsxclbin
+    INFO: Test completed successfully.
+    ```
 
 ### Analyze hardware application timeline and profile summary
 
-1. Execute the following command to see the application timeline
+1. Execute the following command to open Vitis Analyzer and click *Application Timeline*
 
     ```sh
-    vitis_analyzer timeline_trace.csv
+    vitis_analyzer xclbin.run_summary
     ```
 
 1. Zoom in into the tail end of the execution and see various activities
 
     ![](./images/rtlkernel_lab/hw_application_timeline.png)
 
-1. When finished, close the analyzer by clicking `File > Exit` and clicking **OK**
-
-1. Execute the following command to see the profile summary
-
-    ```sh
-    vitis_analyzer profile_summary.csv
-    ```
-
-    - Top Operations
-
-    ![](./images/rtlkernel_lab/hw_profile_top.png)
+1. Now click on *Profile Summary*
 
     - Kernels & Compute Units
 
     ![](./images/rtlkernel_lab/hw_profile_kernel_compute_units.png)
 
-    - Data Transfers
+    - Kernel Data Transfers
 
-    ![](./images/rtlkernel_lab/hw_profile_data_transfer.png)
+    ![](./images/rtlkernel_lab/hw_profile_kernel_data_transfer.png)
+
+    - Host Data Transfer
+
+    ![](./images/rtlkernel_lab/hw_profile_host_data_transfer.png)
 
 1. When finished, close the analyzer by clicking `File > Exit` and clicking **OK**
 
 ## Conclusion
 
-In this lab, you used the RTL Kernel wizard to create an example RTL adder application. You configured the template and saw the example code that was automatically generated. You performed HW emulation and analyzed the application timeline.
+In this lab, you used the RTL Kernel wizard to create an example RTL adder kernel. You configured the template and saw the example code that was automatically generated. You performed HW emulation and analyzed the application timeline.
 
 ---------------------------------------
-Copyright&copy; 2020 Xilinx
+<p align="center">Copyright&copy; 2020 Xilinx</p>

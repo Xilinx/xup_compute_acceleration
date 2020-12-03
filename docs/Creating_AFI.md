@@ -26,7 +26,7 @@ $VITIS_DIR/tools/create_vitis_afi.sh
 Before running the commands below, make sure the Vitis setup script has been sourced (the following command assumes the aws-fpga Git repository is cloned to the user home area)
 
 ```sh
-source ~/aws-fpga/vitis_setup.sh
+source $AWS_FPGA_REPO_DIR/vitis_setup.sh
 ```
 
 * Create an AFI by running the `create_vitis_afi.sh` script and wait for the completion of the AFI creation process
@@ -87,4 +87,4 @@ Note: When AFI creation is in progress, the *State* will be `pending`. When the 
 Wait until the AFI becomes available before proceeding to execute on the F1 instance.
 
 ---------------------------------------
-Copyright&copy; 2020 Xilinx
+<p align="center">Copyright&copy; 2020 Xilinx</p>

@@ -1,0 +1,155 @@
+{
+    "build_metadata":
+    {
+        "dsa":
+        {
+            "vendor": "xilinx",
+            "board_id": "aws-vu9p-f1",
+            "name": "shell-v04261818",
+            "version_major": "201920",
+            "version_minor": "2",
+            "description": "",
+            "generated_by":
+            {
+                "name": "Vivado",
+                "version": "2019.2",
+                "cl": "2708876",
+                "time_stamp": "Tue Apr 28 20:02:31 2020"
+            },
+            "board":
+            {
+                "name": "",
+                "vendor": "amazon",
+                "part": "",
+                "board_part": ""
+            },
+            "feature_roms":
+            [
+                {
+                    "time_epoch": "0"
+                }
+            ]
+        },
+        "xclbin":
+        {
+            "generated_by":
+            {
+                "name": "v++",
+                "version": "2020.1",
+                "cl": "2902540",
+                "time_stamp": "Wed May 27 19:54:35 MDT 2020",
+                "options": "\/opt\/Xilinx\/Vitis\/2020.1\/bin\/unwrapped\/lnx64.o\/v++ --target hw --link --config common-config.cfg --config binary_container_1-link.cfg -obinary_container_1.xclbin ..\/src\/vitis_rtl_kernel\/KVAdd\/KVAdd.xo "
+            },
+            "user_regions":
+            [
+                {
+                    "name": "OCL_REGION_0",
+                    "type": "clc_region",
+                    "instance_path": "WRAPPER_INST\/CL",
+                    "base_address": "",
+                    "kernels":
+                    [
+                        {
+                            "name": "KVAdd",
+                            "ports":
+                            [
+                                {
+                                    "name": "s_axi_control",
+                                    "mode": "slave",
+                                    "range": "0x1000",
+                                    "data_width": "32",
+                                    "port_type": "addressable",
+                                    "base": "0x0"
+                                },
+                                {
+                                    "name": "m00_axi",
+                                    "mode": "master",
+                                    "range": "0xFFFFFFFFFFFFFFFF",
+                                    "data_width": "512",
+                                    "port_type": "addressable",
+                                    "base": "0x0"
+                                },
+                                {
+                                    "name": "m01_axi",
+                                    "mode": "master",
+                                    "range": "0xFFFFFFFFFFFFFFFF",
+                                    "data_width": "512",
+                                    "port_type": "addressable",
+                                    "base": "0x0"
+                                },
+                                {
+                                    "name": "m02_axi",
+                                    "mode": "master",
+                                    "range": "0xFFFFFFFFFFFFFFFF",
+                                    "data_width": "512",
+                                    "port_type": "addressable",
+                                    "base": "0x0"
+                                }
+                            ],
+                            "arguments":
+                            [
+                                {
+                                    "name": "scalar00",
+                                    "address_qualifier": "0",
+                                    "id": "0",
+                                    "port": "s_axi_control",
+                                    "size": "0x4",
+                                    "offset": "0x010",
+                                    "host_offset": "0x0",
+                                    "host_size": "0x4",
+                                    "type": "uint"
+                                },
+                                {
+                                    "name": "A",
+                                    "address_qualifier": "1",
+                                    "id": "1",
+                                    "port": "m00_axi",
+                                    "size": "0x8",
+                                    "offset": "0x018",
+                                    "host_offset": "0x0",
+                                    "host_size": "0x8",
+                                    "type": "int*"
+                                },
+                                {
+                                    "name": "B",
+                                    "address_qualifier": "1",
+                                    "id": "2",
+                                    "port": "m01_axi",
+                                    "size": "0x8",
+                                    "offset": "0x024",
+                                    "host_offset": "0x0",
+                                    "host_size": "0x8",
+                                    "type": "int*"
+                                },
+                                {
+                                    "name": "Res",
+                                    "address_qualifier": "1",
+                                    "id": "3",
+                                    "port": "m02_axi",
+                                    "size": "0x8",
+                                    "offset": "0x030",
+                                    "host_offset": "0x0",
+                                    "host_size": "0x8",
+                                    "type": "int*"
+                                }
+                            ],
+                            "instances":
+                            [
+                                {
+                                    "name": "KVAdd_1"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "packaged_by":
+            {
+                "name": "xclbinutil",
+                "version": "2.6.0",
+                "hash": "12115fd4054cb46a5ade62fafa74c523f59116e6",
+                "time_stamp": "Thu, 09 Jul 2020 15:20:59 +0000"
+            }
+        }
+    }
+}
