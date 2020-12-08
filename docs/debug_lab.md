@@ -25,7 +25,7 @@ To save time on compilation, a precompiled project will be provided with the Chi
 1. Continue with the same workspace `~/workspace`
 1. Click **File > Import...**
 1. In the *Import Projects* window, select **Vitis project exported zip file** and click **Next**
-1. Click on **Browse...** and select **debug_lab** from `~/xup_compute_acceleration/solutions/` and click **OK**
+1. Click on **Browse...** and select **debug_lab.ide.zip** from `~/xup_compute_acceleration/solutions/` and click **OK**
      Make sure that the three hierarchical options are checked
 1. Click **Finish**
 
