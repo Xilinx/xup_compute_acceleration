@@ -33,7 +33,7 @@ This lab has been verified in the following platforms (platform containing the s
 
 A FIR filter is one of the two primary digital filters. A FIR has a finite response to an impulse.
 
-The following figure shows the conventional discrete tapped delay line filter representation. As you can see the output, *y(n)*, is the weighted sum of the *n* previous samples. The wight vector, *a(n)*, is also called coefficients and vary deepening on the filter type, sampling frequency and other parameters.
+The following figure shows the conventional discrete tapped delay line filter representation. As you can see the output, *y(n)*, is the weighted sum of the *n* previous samples. The weight vector, *a(n)*, is also called coefficients and vary deepening on the filter type, sampling frequency and other parameters.
 
 ![](./images/streaming_lab/standard_fir.png)
 
@@ -210,4 +210,4 @@ Here is the list of the coefficients that are optimized.
     ```
 
 ---------------------------------------
-<p align="center">Copyright&copy; 2020 Xilinx</p>
+<p align="center">Copyright&copy; 2020-2021 Xilinx</p>
