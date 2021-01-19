@@ -7,7 +7,7 @@ layout: default
 
 ## Introduction
 
-In this lab you will create an streaming kernel which implements a Finite Impulse Response (FIR) filter of 73 taps. However, most of the Alveo/AWS F1 shells do not support direct streaming connection between the host and kernels. [QDMA shells](https://forums.xilinx.com/t5/Adaptable-Advantage-Blog/Improve-Your-Data-Center-Performance-With-The-New-QDMA-Shell/ba-p/990371), unlike XDMA, support direct streaming connections. See . In order to support the streaming kernel, you will include datamovers kernels which will translate from memory mapped to stream and vice versa.
+In this lab you will create an streaming kernel which implements a Finite Impulse Response (FIR) filter of 73 taps. However, most of the Alveo/AWS F1 shells do not support direct streaming connection between the host and kernels. [QDMA shells](https://forums.xilinx.com/t5/Adaptable-Advantage-Blog/Improve-Your-Data-Center-Performance-With-The-New-QDMA-Shell/ba-p/990371), unlike XDMA, support direct streaming connections. In order to support the streaming kernel, you will include datamovers kernels which will translate from memory mapped to stream and vice versa.
 
 The following image depicts the three kernels that will be use and how they are connected together.
 
