@@ -145,7 +145,9 @@ DDR controllers have a 512-bit wide interface internally. If we parallelize the 
 
     - Select **Platform Diagram** in the left panel
 
-    Observe that there are four DDR4 memory banks and three PLRAM banks. In this design `DDR[0]` is used for all operands, which is located in SLR2. Also notice that `DDR[0]` and `DDR[2]` are located in SLR1  
+    Observe that there are four DDR4 memory banks and three PLRAM banks. In this design, `DDR[1]` is used for all operands, which is located in SLR2. Notice, that `DDR[2]` is also located in SLR2.
+
+    Check memory bank allocation for Alveo U200 and how it relates to AWS-F1 [here](https://github.com/aws/aws-fpga/blob/master/Vitis/docs/Alveo_to_AWS_F1_Migration.md#off-chip-ddr-memory)
 
 	![](./images/improving_performance/platform_diagram.png)
 
