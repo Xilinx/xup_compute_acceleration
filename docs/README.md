@@ -42,7 +42,7 @@ You can also install [Vitis unified software platform](https://www.xilinx.com/su
 
 ### Nimbix (Alveo)
 
-The Xilinx Vitis tools and Alveo U200 hardware is available in the Nimbix cloud. Use the following instructions to [connect to a Nimbix Alveo instance](./setup_nimbix.md). A [free 100 hr Alveo trial](https://www.nimbix.net/alveo/) is currently available from Nimbix. This is the easiest way to work through this tutorial with Alveo U200 hardware.
+The Xilinx Vitis tools and Alveo U200 hardware is available in the Nimbix cloud. Use the following instructions to [connect to a Nimbix Alveo instance](./setup_nimbix.md). This is the easiest way to work through this tutorial with Alveo U200 hardware.
 
 ### Local computer
 
