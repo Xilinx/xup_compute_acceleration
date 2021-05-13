@@ -12,7 +12,7 @@ When reporting an issue provide the following information.
 
 - Section in lab or page you found the issue
 
-- How you are running the tutorial? Cloud (AWS, Nimbix) or on-premises
+- How you are running the tutorial? Cloud (AWS) or on-premises
 
 - Screenshots or code snippets if appropriate
     - Check how to [create and highlight code](https://docs.github.com/en/github/writing-on-github/creating-and-highlighting-code-blocks)

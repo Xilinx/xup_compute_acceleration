@@ -7,9 +7,6 @@ docs:
 - title: AWS F1
   url: setup_aws.html
   
-- title: Nimbix
-  url: setup_nimbix.html
-  
 - title: Local Computer
   url: setup_local_computer.html
 

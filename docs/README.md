@@ -12,9 +12,8 @@ The tutorial instructions target the following hardware and software:
 
 * Vitis 2020.1
 * AWS EC2 F1 f1.2xlarge (cloud)
-* Alveo U200 (local board, or cloud)
 
-This tutorial shows you how to use Vitis with either AWS EC2 F1 or Alveo U200 (locally, or in the Nimbix cloud). Sources and precompiled solutions are provided for AWS EC2 F1 x2.large and Alveo U200. You may be able to use the Vitis tutorial instructions with other cloud providers, and other hardware.
+This tutorial shows you how to use Vitis with AWS EC2 F1. Sources and precompiled solutions are provided for AWS EC2 F1 x2.large. You may be able to use the Vitis tutorial instructions with other cloud providers, and other hardware.
 
 
 ## Run Tutorial
@@ -23,7 +22,7 @@ You can run this tutorial in different ways.
 
 1. If you have an Alveo board, you can run all parts of the tutorial on a local machine.
 
-1. You can use the Vitis software in the cloud, with hardware in the cloud (AWS or Nimbix).
+1. You can use the Vitis software in the cloud, with hardware in the cloud (AWS F1).
   * For running your design in AWS you will need to [create an AFI](Creating_AFI.md)
 
 1. You can use the Vitis software on a local machine for building designs, and only switch to the cloud to deploy in hardware, make sure you build for the correct shell.
@@ -39,10 +38,6 @@ If you are attending an instructor-led XUP AWS tutorial, preconfigured AWS F1 in
 An [FPGA Developer AMI](https://aws.amazon.com/marketplace/pp/B06VVYBLZZ) (Amazon Machine Image) is available with the Xilinx Vitis software preinstalled. This can be used to target AWS EC2 F1 hardware. An AMI is like a Virtual Machine image. You can use this AMI and the following instructions to [set up and connect to an AWS instance](./setup_aws.md)
 
 You can also install [Vitis unified software platform](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/vitis.html) on your local machine, build design offline, and use AWS F1 hardware for testing. See the Amazon guide to use [AWS EC2 FPGA Development Kit](https://github.com/aws/aws-fpga) for details on setting up your machine.
-
-### Nimbix (Alveo)
-
-The Xilinx Vitis tools and Alveo U200 hardware is available in the Nimbix cloud. Use the following instructions to [connect to a Nimbix Alveo instance](./setup_nimbix.md). This is the easiest way to work through this tutorial with Alveo U200 hardware.
 
 ### Local computer
 
@@ -64,7 +59,7 @@ The complete set of labs includes the following modules; it is recommended to co
 	This lab shows you how to use the Vitis GUI to create a new project using a simple vector addition example. You will run CPU emulation (`sw_emu`) to verify functional correctness of the example design. 
 
 1. [**Introduction to Vitis Part 2**](Vitis_intro-2.md):
-	In this lab you will continue with the previous example and run hardware emulation (`hw_emu`) to verify the functionality of the generated hardware design and profile the whole application. You will then use *AWS F1*, *Nimbix* or *on-premise* hardware to validate the design using a pre-generated host application and FPGA binary.
+	In this lab you will continue with the previous example and run hardware emulation (`hw_emu`) to verify the functionality of the generated hardware design and profile the whole application. You will then use *AWS F1* or *on-premise* hardware to validate the design using a pre-generated host application and FPGA binary.
 
 1. [**Improving Performance**](Improving_Performance_lab.md):
 	This lab shows how bandwidth can be improved, and thus system performance, by using wider data path and transferring data in parallel using multiple memory banks.
@@ -86,7 +81,7 @@ These labs are intended for hardware designers who may want to use RTL to build 
 	This lab guides you through the steps involved in using a RTL Kernel wizard to wrap a user RTL-based IP so the generated IP can be used in a Vitis project and application development.
 
 1. [**Debug**](debug_lab.md):
-	This lab will show you how to carry out host application debug, and debug of the hardware kernel. Currently not supported on Nimbix as the Xilinx Virtual Cable is not available.
+	This lab will show you how to carry out host application debug, and debug of the hardware kernel.
 
 ---------------------------------------
 <p align="center">Copyright&copy; 2020 Xilinx</p>

@@ -6,7 +6,7 @@ layout: default
 
 ## Introduction
 
-This lab is a continuation of the previous [RTL Kernel Wizard Lab](rtl_kernel_lab.md) lab. You will use ChipScope to monitor signals at the kernel interface level and perform software debugging using Vitis. Note that this lab is not currently supported on Nimbix as the Xilinx Virtual Cable (XVC) is not supported
+This lab is a continuation of the previous [RTL Kernel Wizard Lab](rtl_kernel_lab.md) lab. You will use ChipScope to monitor signals at the kernel interface level and perform software debugging using Vitis.
 
 ## Objectives
 

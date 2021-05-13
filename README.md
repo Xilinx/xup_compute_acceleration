@@ -10,7 +10,6 @@ This version of the tutorial has been verified for the following environments
 | Environment | Vitis | XRT | Shell | Notes |
 |-------------|-------|-----|-------|-------|
 | AWS F1 | 2020.1  | 2.6.0  | xilinx_aws-vu9p-f1_shell-v04261818_201920_2| AMI 1.9.0 |
-| Nimbix | 2020.1  | 2.6.555  | xilinx_u200_xdma_201830_2 | Xilinx Vitis Unified Software Platform 2020.1 |
 
 
 ## Report an Issue
