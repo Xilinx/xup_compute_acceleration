@@ -35,5 +35,15 @@ This list cover examples and tutorials hosted on [Xilinx GitHub](https://github.
 
 1. [Vitis AI Tutorials](https://github.com/Xilinx/Vitis-AI-Tutorials)
 
+## Vitis HLS Migration
+
+Since Vitis 2020.1 Vitis HLS is the default high-level Synthesis tool, and Vivado HLS is deprecated in Vitis 2020.2.
+
+Please review the Vitis HLS migration guide [here](https://www.xilinx.com/support/documentation/sw_manuals/xilinx2020_2/ug1391-vitis-hls-migration-guide.pdf)
+
+## Application Migration Between Alveo U200 and AWS F1
+
+To understand the differences between the AWS F1 and Alveo U200 platforms and how to migrate your application between these platforms, review [Alveo to AWS Migration guide](https://github.com/aws/aws-fpga/blob/master/Vitis/docs/Alveo_to_AWS_F1_Migration.md)
+
 ---------------------------------------
-<p align="center">Copyright&copy; 2020 Xilinx</p>
+<p align="center">Copyright&copy; 2020-2021 Xilinx</p>
