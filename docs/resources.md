@@ -39,7 +39,7 @@ This list cover examples and tutorials hosted on [Xilinx GitHub](https://github.
 
 Since Vitis 2020.1 Vitis HLS is the default high-level Synthesis tool, and Vivado HLS is deprecated in Vitis 2020.2.
 
-Please review the Vitis HLS migration guide [here](https://www.xilinx.com/support/documentation/sw_manuals/xilinx2020_2/ug1391-vitis-hls-migration-guide.pdf)
+Please review the Vitis HLS migration guide [here](https://www.xilinx.com/html_docs/xilinx2020_2/vitis_doc/migrating_to_vitis_hls.html#orj1568775346815)
 
 ## Application Migration Between Alveo U200 and AWS F1
 
