@@ -77,7 +77,6 @@ extern "C"
 
         uint512_dt v1_local[BUFFER_SIZE]; // Local memory to store vector1
         uint512_dt v2_local[BUFFER_SIZE];
-        uint512_dt result_local[BUFFER_SIZE]; // Local Memory to store result
 
         // Input vector size for integer vectors. However kernel is directly
         // accessing 512bit data (total 16 elements). So total number of read
@@ -97,7 +96,7 @@ extern "C"
             if ((i + BUFFER_SIZE) > size_in16)
                 chunk_size = size_in16 - i;
 
-        //burst read first vector from global memory to local memory
+        //burst read from both input vectors at the same time from global memory to local memory
         v1_rd:
             for (int j = 0; j < chunk_size; j++) {
 #pragma HLS pipeline
