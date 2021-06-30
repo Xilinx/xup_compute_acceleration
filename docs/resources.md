@@ -12,6 +12,8 @@ layout: default
 
 1. Read the Get Moving with Alveo articles, start here [Get Moving with Alveo: Acceleration Basics](https://developer.xilinx.com/en/articles/acceleration-basics.html), find the other articles in the series [here](https://developer.xilinx.com/en/articles.html)
 
+1. [Adaptive Computing Developer YouTube channel](https://www.youtube.com/channel/UCkzIS3hJplxSbVRxRQJW4Ow)
+
 1. [Parallel Programming for FPGAs Book](https://arxiv.org/pdf/1805.03648.pdf), by Ryan Kastner, Janarbek Matai, and Stephen Neuendorffer. [Source code on GitHub](https://github.com/KastnerRG/pp4fpgas)
 
 1. [The ZYNQ Book](http://www.zynqbook.com/), the earlier chapters of the book cover basic concepts, such as pipeline and dataflow.
