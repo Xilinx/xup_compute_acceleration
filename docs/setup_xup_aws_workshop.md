@@ -150,6 +150,24 @@ Known issues:
   - If the color depth is not set to True Color(24 bit) some programs are not displayed properly
 
 
+### Connect using VNC (Suggested for Mac users)
+
+1. We suggest to install [RealVNC](https://www.realvnc.com/en/connect/download/vnc/macos/) client
+
+    Other alternatives for Linux-based OS are [Remmina](https://remmina.org/) or [Vinagre](https://wiki.gnome.org/Apps/Vinagre)
+
+1. Open the RealVNC client
+
+1. Enter *IPv4 Public IP*:01 and then hit the enter key
+
+    ![](./images/connecting_lab/vnc.png)
+
+1. You will be informed that the connection is Unencrypted, click *Continue*
+
+1. Enter the provided password and click **OK**
+
+1. Continue to [Lab setup](#lab-setup)
+
 ## Lab setup
 
 1. Execute the following to clone the *aws-fpga* repository and setup the Xilinx tools. `aws-fpga` includes the AWS F1 tools, Hardware Development Kit (HDK) and documentation
