@@ -10,7 +10,7 @@ Welcome to the XUP Vitis-based Compute Acceleration tutorial. These labs will pr
 
 The tutorial instructions target the following hardware and software:
 
-* Vitis 2020.1
+* Vitis 2021.1
 * AWS EC2 F1 f1.2xlarge (cloud)
 
 This tutorial shows you how to use Vitis with AWS EC2 F1. Sources and precompiled solutions are provided for AWS EC2 F1 x2.large. You may be able to use the Vitis tutorial instructions with other cloud providers, and other hardware.
