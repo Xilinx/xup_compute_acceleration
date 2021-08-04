@@ -27,34 +27,35 @@ After completing this lab, you will be able to:
 
 1. Select your target platform and click **Next >**
 
-    You should see `xilinx_aws-vu9p-f1_shell-v04261818_201920_2` as one of the platforms if you are continuing with previous lab, otherwise add it from `$AWS_FPGA_REPO_DIR/aws-fpga/Vitis/aws_platform`
+    You should see `xilinx_aws-vu9p-f1_shell-v04261818_201920_2` as one of the platforms if you are continuing with previous lab, otherwise add it from `$AWS_FPGA_REPO_DIR/Vitis/aws_platform`
 
 1. In the *Application Project Details* page enter **optimization\_lab** in the *Application project name:* field and click **Next >**
-
 
 1. Select **Empty Application** template and click **Finish**
 
 ### Import the source files into the project
 
-1. In the *Explorer* view expand the *optimization_lab* folder if necessary, and right-click on the **src** folder and select **Import Sources...**
+1. In the *Explorer* view, expand the `optimization_lab_system > optimization_lab` folder if necessary, right-click on the **src** folder, and select **Import Sources...**
 
-1. Browse to the source directory at **~/xup\_compute\_acceleration/sources/optimization\_lab** and click **OK**
+1. Browse to the source directory at `~/xup_compute_acceleration/sources/optimization_lab` and click **OK**
 
-1. Select **idct.cpp** and **krnl\_idct.cpp** files and click **Finish**
+1. Select **idct.cpp** and click **finish**
 
-1. Expand the **src** folder in the *Explorer* view and note the two added files
+1. Similarly, import **krnl\_idct.cpp** file under `optimization_lab_system > optimization_lab_kernels > src`
 
 ### Add a function as a hardware kernel
 
-1. Click on the *Add Hardware Function* button icon (![alt tag](./images/Fig-hw_button.png)) in the **Hardware Functions** window to see functions available for implementation in hardware
+1. Double-click on **optimization\_lab\_system > optimization\_lab\_kernels > optimization\_lab\_kernels.prj** to open the *Hardware Kernel Project Settings* viewer
+
+1. Click the *Add Hardware Function* button icon (![alt tag](./images/Fig-hw_button.png)) in the **Hardware Functions** window to see functions available for implementation in hardware
 
 1. Select **krnl\_idct** function and click **OK**
 
-1. Notice a **binary\_container\_1** folder is created automatically under which the *krnl\_idct* function is added
+1. Notice the *krnl\_idct* function is added
 
 ### Analyze the source files
 
-1. From the *Explorer* view open the **src > krnl\_idct.cpp** file
+1. From the *Explorer* view, open the **optimization\_lab\_system > optimization\_lab\_kernels > src > krnl\_idct.cpp** file
 
 1. The **Outline** panel should be visible. It displays an outline of the code of the source file that is currently in scope. If you cannot see it, go to **Window > Show View...** then select **General > Outline**
 
@@ -96,7 +97,7 @@ After completing this lab, you will be able to:
     - **clCreateCommandQueue** : Creates a command-queue on a specific device  
 
 
-Note: all objects are accessed through a **clCreate...** function call, and they should be released before terminating the program by calling a corresponding **clRelease...**  This avoids memory leakage and clears locks on the device. 
+Note: all objects are accessed through a **clCreate...** function call, and they should be released before terminating the program by calling a corresponding **clRelease...**  This avoids memory leakage and clears locks on the device.
 
 ### Perform HW Emulation      
 
@@ -106,9 +107,10 @@ Note: all objects are accessed through a **clCreate...** function call, and they
 
 In the *idct.cpp* file, locate lines 286-297. Note that two memory buffers, *mInBuffer* and *mOutBuffer* are being used. The memory buffers will be located in external DRAM. The kernel will have one or more ports connected to the memory bank(s). By default, the compiler will connect all ports to DDR[0].
 
-1. In the *Assistant* view, right click on Emulation-HW and click **Settings...**
-1. In the left-hand side view expand *optimization\_lab > Emulation-HW > binary\_container\_1* and select **krnl_idct**
+1. In the *Assistant* view, right click on *optimization\_lab\_system > optimization\_lab\_system\_hw\_link > Emulation-HW > binary\_container_1* and click **Settings...**
+
 1. Under *Compute Unit Settings* expand *krnl\_idct* and *krnl\_idct\_1*
+
 1. Configure the kernel as shown in the image below
 
 	![](./images/optimization_lab/compute_unit_settings.png)
@@ -117,17 +119,17 @@ In the *idct.cpp* file, locate lines 286-297. Note that two memory buffers, *mIn
 
 #### Run Hardware Emulation
 
-1. Build the project (![alt tag](./images/Fig-build.png))
+1. Select *optimization\_lab\_system* in the *Assistant* view and build the project (![alt tag](./images/Fig-build.png))
 
-    Wait for the build to complete which will generate binary_container_1.xclbin file in the Emulation-HW directory
-   
+    Wait for the build to complete which will generate `binary_container_1.xclbin` file in the Emulation-HW directory
+
 1. Select **Run > Run Configurations…** to open the configurations window
+
+1. Double-click on the **System Project Debug** to create new configuration
 
 1. In the *Main* tab, click to select **Use waveform for kernel debugging** and **Launch live waveform**
 
     ![](./images/optimization_lab/waveform_settings.png)
-
-1. Click on the **Arguments** tab, make sure **Automatically add binary container(s) to arguments** is checked
 
 1. Click **Apply** and then **Run** to run the application  
 
@@ -144,7 +146,7 @@ In the *idct.cpp* file, locate lines 286-297. Note that two memory buffers, *mIn
     Setup complete
     Running CPU version
     Running FPGA version
-    INFO::[ Vitis-EM 22 ] [Time elapsed: 0 minute(s) 43 seconds, Emulation time: 0.0844512 ms]
+    INFO::[ Vitis-EM 22 ] [Time elapsed: 0 minute(s) 51 seconds, Emulation time: 0.171543 ms]
     Data transfer between kernel(s) and global memory(s)
     krnl_idct_1:m_axi_gmem0-DDR[0]          RD = 128.000 KB             WR = 0.000 KB        
     krnl_idct_1:m_axi_gmem1-DDR[0]          RD = 0.500 KB               WR = 0.000 KB        
@@ -157,11 +159,11 @@ In the *idct.cpp* file, locate lines 286-297. Note that two memory buffers, *mIn
     RUN COMPLETE
     ```
 
-	Notice that Vivado was started and the simulation waveform window is updated.
+	Notice that Vivado was started and the simulation waveform window is updated. It will run for about 165 us
 
 1. Click on the Zoom Fit (![](./images/zoom_full.png)) button and scroll down the waveform window to see activities taking place in the kernel  
 
-	Notice the gaps between *write* and the next *read* and execution of the kernel. 
+	Notice the gaps between *write* and the next *read* and execution of the kernel.
 
 	![](./images/optimization_lab/hw_emu_waveform_1.png)
 
@@ -169,21 +171,21 @@ In the *idct.cpp* file, locate lines 286-297. Note that two memory buffers, *mIn
 
 #### Understand the HLS Report, profile summary, and Application Timeline
 
-1. In the *Assistant* view, expand *optimization\_lab > Emulation-HW > optimization\_lab-Default* and double-click on **Run Summary (binary_container_1.xclbin)**
+1. In the *Assistant* view, expand *optimization\_lab\_system > optimization\_lab > Emulation-HW > SystemDebugger\_optimization\_lab\_system\_optimization\_lab* and double-click on **Run Summary (xclbin)**
 
 1. *Vitis Analyzer* window will open showing *binary_container_1.xclbin (Hardware Emulation)*
 
 1. Click on *Profile Summary* report and review it
 
 1. Click on the **Kernels & Compute Units** tab in the Profile Summary report
-	
+
 1. Review the Kernel **Total Time (ms)**  
 
     This number will serve as a baseline (reference point) to compare against after optimization. This baseline may be different depending on the target platform
 
     ![](./images/optimization_lab/hw_emu_profile_kernel_cu.png)
 
-1. Go back to Vitis. In the *Assistant* view, expand *optimization\_lab > Emulation-HW > binary\_container\_1 > krnl\_idct* and double-click on **Compile Summary (krnl\_idct)**
+1. Exit out of Vitis Analyzer. In the *Assistant* view, expand *optimization\_lab\_system > optimization\_lab\_system\_hw\_link > Emulation-HW > binary\_container\_1* and double-click on **Link Summary (binary\_container\_1)**
 
 1. *Vitis Analyzer* window will update and now it also includes *krnl\_idct (Hardware Emulation)*
 
@@ -191,21 +193,21 @@ In the *idct.cpp* file, locate lines 286-297. Note that two memory buffers, *mIn
 
     ![](./images/optimization_lab/hls_synthesis_report.png)
 
-1. The `krnl_idct` has a latency of ~6,000 (cycles)
+1. The `krnl_idct` has a latency of ~6,400 (cycles)
 
     The numbers may vary slightly depending on the target hardware you selected.
     The numbers will serve as a baseline for comparison against optimized versions of the kernel
 
 1. The report also shows the three main functions that are part of the `krnl_idct` kernel
 
-    - Note that these 3 sub-functions *execute*, *loop_rd_blocks* and *loop_wr_blocks* have roughly the same latency and that their sum total is equivalent to the total Interval reported in the Summary table
+    - Note that these 4 sub-functions, three of which *execute*, *loop\_rd\_blocks* and *loop\_wr\_blocks* have roughly the same latency and that their sum total is equivalent to the total Interval reported in the Summary table
     - This indicates that the three sub-functions are executing sequentially, hinting at an optimization opportunity
 
 1. Close all the reports by selecting **File > Exit**
 
 ### Analyze the kernel code and apply the DATAFLOW directive
 
-1. Open the **src > krnl\_idct.cpp** file
+1. Open the **optimization\_lab\_system > optimization\_lab\_kernels > src > krnl\_idct.cpp** file in the Explorer view
 
 1. Using the *Outline* viewer, navigate to the **krnl\_idct\_dataflow** function  
 
@@ -221,9 +223,9 @@ In the *idct.cpp* file, locate lines 286-297. Note that two memory buffers, *mIn
 
 1. Make sure the active configuration is **Emulation-HW**
 
-1. Click on the Build button (![alt tag](./images/Fig-build.png)) to build the project
+1. Select the **optimization\_lab\_system** in the Explorer view and click on the Build button (![alt tag](./images/Fig-build.png)) to build the project
 
-1. In the *Assistant* view, expand *optimization\_lab > Emulation-HW > binary\_container\_1 > krnl\_idct* and double-click on **Compile Summary (krnl\_idct)**
+1. In the *Assistant* view, expand *optimization\_lab\_system > optimization\_lab\_kernels > Emulation-HW > krnl\_dict* and double-click on **Compile Summary (krnl\_idct)**
 
 1. Click on **HLS Synthesis** and review it
 
@@ -235,24 +237,24 @@ In the *idct.cpp* file, locate lines 286-297. Note that two memory buffers, *mIn
 
 1. Run the hardware emulation. Wait for the run to finish with `RUN COMPLETE` message
 
-    Notice the effect of the dataflow optimization in the Vivado simulation waveform view. The read, write and kernel execution overlap and are much closer together. 
+    Notice the effect of the dataflow optimization in the Vivado simulation waveform view. The read, write and kernel execution overlap and are much closer together.
 
 	![](./images/optimization_lab/hw_emu_waveform_2.png)
 
 1. Close Vivado
 
-1. In the *Assistant* view, expand *optimization\_lab > Emulation-HW > optimization\_lab-Default*  and double-click the **Run Summary (binary_container_1.xclbin)**
+1. In the *Assistant* view, expand *optimization\_lab\_system > optimization\_lab > Emulation-HW > SystemDebugger\_optimization\_lab\_system\_optimization\_lab*  and double-click the **Run Summary (xclbin)**
 
 1. Click on **Profile Summary**
 
-1. Select the **Kernels & Compute Units** tab.  
+1. Select the **Kernels & Compute Units** tab  
     Compare the **Total Time (ms)** with the results from the un-optimized run (numbers may vary slightly to the results displayed below)
 
 	![](./images/optimization_lab/hw_emu_dataflow_profile_kernel.png)
 
 ### Analyze the host code
 
-1. Open the **src > idct.cpp** file
+1. Open the **optimization\_lab\_system > optimization\_lab > src > idct.cpp** file from the *Explorer* view
 
 1. Using the *Outline* viewer, navigate to the **runFPGA** function  
 
@@ -263,9 +265,9 @@ In the *idct.cpp* file, locate lines 286-297. Note that two memory buffers, *mIn
 
     These OpenCL functions use events to signal their completion and synchronize execution  
 
-1. Open the **Application Timeline** of the *Emulation-HW* run in **Vitis Analyzer**.
+1. Open the **Timeline Trace** of the *Emulation-HW* run in Vitis Analyzer
 
-    The green segments at the bottom indicate when the IDCT kernel is running
+    The green segments  indicate when the IDCT kernel is running
 
     ![](./images/optimization_lab/application_timeline_before_host_optimization.png)
 
@@ -277,7 +279,7 @@ In the *idct.cpp* file, locate lines 286-297. Note that two memory buffers, *mIn
     - The gap between the two segments is indicative of the kernel idle time between these two invocations
     - The **Data Transfer** section of the timeline shows that **Read** and **Write** operations are happening when the kernel is idle
     - The Read operation is to retrieve the results from the execution which just finished, and the Write operation is to send inputs for the next execution
-    - The gap in time between kernel invocations reduces the utilization of the hardware kernel, and the performance of the system 
+    - The gap in time between kernel invocations reduces the utilization of the hardware kernel, and the performance of the system
 
 1. Close *Vitis Analyzer*  
 
@@ -296,7 +298,7 @@ In the *idct.cpp* file, locate lines 286-297. Note that two memory buffers, *mIn
     - This macro defines the depth of the event queue
     - The value of 1 explains the observed behavior: new tasks (write, run, read) are only enqueued when the previous has completed effectively synchronizing each loop iteration
     - By increasing the value of the **NUM\_SCHED** macro, we increase the depth of the event queue and enable more blocks to be enqueued for processing, which should result in the *write*, *run* and *read* tasks overlapping, allowing the kernel to execute continuously or at least reducing the delay between invocations
-    
+
 1. Modify line 152 to increase the value of **NUM\_SCHED** to 6 as follows  
 
     ```C
@@ -308,13 +310,14 @@ In the *idct.cpp* file, locate lines 286-297. Note that two memory buffers, *mIn
 #### Run Hardware Emulation
 
 1. Build the application by clicking on the (![](./images/Fig-build.png)) button
+
     Since only the idct.cpp file was changed, only the host code is rebuilt. This should be much faster as no recompiling of the hardware kernel is required.
 
-1. Change the run configuration by unchecking the **Use waveform for kernel debugging** option, click **Apply**, and then click **Run**
+1. Change the run configuration by unchecking the **Use waveform for kernel debugging** option, and enable host tracing by clicking on the **Edit...* button of the *Xilinx Runtime Profiling* and clicking **OpenCL trace** check box for the *Host Trace*, click **Apply**, and then click **Run**
 
-1. In the *Assistant* view, expand *optimization\_lab > Emulation-HW > optimization\_lab-Default* and click on **Run Summary (binary_container_1.xclbin)**
+1. In the *Assistant* view, expand *optimization\_lab\_system > optimization\_lab\_kernels > Emulation-HW > SystemDebugger\_optimization\_lab\_system\_optimization\_lab*  and double-click the **Run Summary (xclbin)**
 
-1. On *Vitis Analyzer* window click on **xclbin (Hardware Emulation) > Application Timeline** report within **RUN**
+1. On *Vitis Analyzer* window click on **Timeline Trace**
 
     Observe how **software pipelining** enables overlapping of data transfers and kernel execution.
 ​
@@ -322,28 +325,54 @@ In the *idct.cpp* file, locate lines 286-297. Note that two memory buffers, *mIn
 
     Note: system tasks might slow down communication between the application and the hardware simulation, impacting on the performance results. The effect of software pipelining is considerably higher when running on the actual hardware.
 
-###  Run the Application on hardware
+### Build system hardware with profiling and timing analysis options if are continuing with the lab OTHERWISE skip to [Prebuilt](#run-the-system-in-hardware)
 
-As before, building the FPGA hardware takes some time, and a precompiled solution is provided.
+1. Set `Active build configuration:` to `Hardware` on the upper right corner of *Application Project Settings* view
 
-1. Set *Active build configuration:* to **Hardware**
+    In order to collect the profiling data and run Timing Analyzer on the application run in hardware, we need to setup some options.
 
-1. Copy the precompiled solution to the Hardware folder
+1. Select `optimization_lab_system > optimization_lab_system_hw_link > Hardware > binary_container_1` in *Assistant* view and then click on *Settings*. Click on the *Data Transfer* drop-down button in *binary\_container\_1* row and select **Counters+Trace** option. This should also enable *Execute Profiling* option. If not, then click on the corresponding check box.
+
+1. In the *V++ command line options:* field, enter `--profile.data all` to enable kernel profiling
+
+1. Select *Trace Memory* to be FIFO type and size of 64K. This is the memory where traces will be stored. You also have the option to store this information in DDR (max limit 4 GB) and PLRAM
+
+1. Click **Apply and Close**
+
+1. Build the project by selecting **optimization\_lab\_system** in `Assistant` view and clicking the build button 
+
+    Normally, you would build the hardware, but since it can take approximately two hours you should **NOT BUILD** it now. Instead you can use the precompiled solution. 
+
+1. A `binary_container_1.xclbin` and `optimization_lab` application will be generated in the `optimization_lab/Hardware` directory
+
+1. Register the generated xclbin file to generate binary\_container\_1.awsxclbin by running the shell script. Follow instructions available [here](Creating_AFI_AWSEducate.md)
+
+### Run the system in hardware
+
+1. If you have built the hardware yourself then copy the necessary files using the following commands:
 
     ```sh
-    cp ~/xup_compute_acceleration/solutions/optimization_lab/* ~/workspace/optimization_lab/Hardware/
+    cp binary_container_1.awsxclbin ~/workspace/optimization_lab/Hardware 
+    cp ~/xup_compute_acceleration/sources/xrt.ini ~/workspace/optimization_lab/Hardware/.
+    ````
+
+1. If you have not built the hardware yourself then copy the provided prebuilt solution files using the following commands:
+
+    ```sh
+    mkdir ~/workspace/optimization_lab/Hardware
+    cp ~/xup_compute_acceleration/solutions/optimization_lab/* ~/workspace/optimization_lab/Hardware/. 
     chmod +x ~/workspace/optimization_lab/Hardware/optimization_lab
-    ```
+    ````
 
-1. Right-click on Hardware in *Assistant* view, select `Run > Run Configurations...`
+    Setup the run configuration so you can run the application and then analyze results from GUI
 
-    Change Generate timeline trace report option from *Default* to *Yes* using the drop-down button in the Main tab.
+1. Right-click on `optimization_lab_system` in *Assistant* view, select `Run > Run Configurations...`
 
-1. Click the **Arguments** tab, and uncheck the *Automatically add binary container(s) to arguments* option. add `../binary_container_1.awsxclbin` as an argument
+1. Click on the **Edit...** button of the *Program Arguments*, uncheck *Automatically add binary container(s) to arguments*, then enter **../binary\_container\_1.awsxclbin** after clicking in the *Program Arguments* field. Finally, click **OK**
 
-1. Execute the application by clicking on **Apply** and then **Run**. The FPGA bitstream will be downloaded and the host application will be executed.
+1. click on the `Edit...` button of the *Xilinx Runtime Profiling* section, select the **OpenCL trace** option and click **OK**
 
-1. You can clearly see the speed up of the FPGA version even with profile enabled
+1. Execute the application by clicking **Apply** and then **Run**. The FPGA bitstream will be downloaded and the host application will be executed showing output similar to:
 
     ```
     FPGA number of 64*int16_t blocks per transfer: 16384
@@ -357,37 +386,35 @@ As before, building the FPGA hardware takes some time, and a precompiled solutio
     Running FPGA version
     Runs complete validating results
     TEST PASSED
-    CPU Time:        0.810083 s
-    CPU Throughput:  632.034 MB/s
-    FPGA Time:       0.210616 s
-    FPGA Throughput: 2430.97 MB/s
-    FPGA PCIe Throughput: 4861.94 MB/s
+    CPU Time:        0.764289 s
+    CPU Throughput:  669.904 MB/s
+    FPGA Time:       0.116871 s
+    FPGA Throughput: 4380.91 MB/s
+    FPGA PCIe Throughput: 8761.82 MB/s
     ```
 
-### Analyze hardware application timeline and profile summary
+1. In the *Assistant* view, double click `optimization_lab_system > optimization_lab > Hardware > SystemDebugger_optimization_lab_system_optimization_lab > Run Summary (xclbin)` to open Vitis Analyzer
 
-1. In the *Assistant* view, double click `Hardware > optimization_lab-Default > Run Summary (xclbin)` to open Vitis Analyzer
+    Click **Timeline Trace**. Zoom in at the end of the timeline and observe the activities in various parts of the system. 
 
-1. Click **Application Timeline**. Zoom in between 185,800,000 and 186,800,000 microsecond area (note for your output the range may differ depending on what else was executed on the instance) and observe the activities in various parts of the system. Note that the kernel processes data in one shot.
-
-	![](./images/optimization_lab/hw_application_timeline.png)
+    ![](images/optimization_lab/hw_application_timeline.png)
 
 1. Click on the *Profile Summary* entry in the left panel, and observe multi-tab (four tabs) output
 
     - Kernels & Compute Units
 
-    ![](./images/optimization_lab/hw_profile_kernel_compute_units.png)
+    ![](images/optimization_lab/hw_profile_kernel_compute_units.png)
 
-    - Kernel Data Transfers
+    - Kernel Data Transfers 
 
-    ![](./images/optimization_lab/hw_profile_kernel_data_transfer.png)
+    ![](images/optimization_lab/hw_profile_kernel_data_transfer.png)
 
-    - Host Data Transfers
+    - Host Data Transfer
 
-    ![](./images/optimization_lab/hw_profile_host_data_transfer.png)
+    ![](images/optimization_lab/hw_profile_host_data_transfer.png)
 
 
-1. When finished, close *Vitis Analyzer* by clicking `File > Exit` and clicking **OK**
+1. When finished, close the analyzer by clicking `File > Exit` and clicking **OK**
 
 
 ## Conclusion
@@ -413,4 +440,4 @@ This will build the project under the **Hardware** directory. The built project 
 Once the full system is built, you should [create an AWS F1 AFI](Creating_AFI.md) to run this example in AWS-F1.
 
 ---------------------------------------
-<p align="center">Copyright&copy; 2020 Xilinx</p>
+<p align="center">Copyright&copy; 2021 Xilinx</p>
