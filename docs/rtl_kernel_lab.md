@@ -31,15 +31,17 @@ After completing this lab, you will be able to:
 
     If you don't see your target platform, then click on '+' button, browse to directory where platform is located and click **OK**
 
-1. In the *Application Project Details* page enter **rtl\_kernel** in the *Project name:* field and click **Next >**
+1. In the *Application Project Details* page enter **rtl\_kernel** in the *Application Project name:* field and click **Next >**
 
 1. Select **Empty Application** and click **Finish**
 
 ### Create RTL\_Kernel Project using RTL Kernel Wizard      
 
-1. Make sure the **rtl\_kernel.prj** under _rtl\_kernel\_example_ in the *Explorer* view is selected
+1. Make sure the **rtl\_kernel.prj** under **rtl\_kernel\_system > _rtl\_kernel_** in the *Explorer* view is selected
 
-1. In the menu bar on top click **Xilinx > RTL Kernel Wizard…**  
+1. In the menu bar on top click **Xilinx > Launch RTL Kernel Wizard > RTL\_kernel\_kernels**  
+
+    Wizard will be opened showing welcome package
 
     ![](./images/rtlkernel_lab/wizard_entry_page.png)
 
@@ -59,11 +61,11 @@ After completing this lab, you will be able to:
 
     ![](./images/rtlkernel_lab/wizard_arguments.png)
 
-1. Click **Next >** and Stream Interface page will be displayed. Notice: this example does not use AXI4-Stream interfaces. Therefore, make sure that `Number of AXI4-Stream interfaces` is set to 0
+1. Click **Next >** and *Stream Interface* page will be displayed. Notice: this example does not use AXI4-Stream interfaces. Therefore, make sure that `Number of AXI4-Stream interfaces` is set to 0
 
     ![](./images/rtlkernel_lab/wizard_streaming_int.png)
 
-1. Click **Next >** and the the summary page will be displayed showing a function prototype and register map for the kernel.  
+1. Click **Next >** and the the *Summary* page will be displayed showing a function prototype and register map for the kernel.  
 
     Note the control register and the scalar operand are accessed via the S\_AXI\_CONTROL interface. The control register is at offset 0x0 and the scalar operand is at offset 0x10
 
@@ -81,7 +83,7 @@ After completing this lab, you will be able to:
 
     ![](./images/rtlkernel_lab/vivado_hierarchy.png)
 
-    There is one module to handle the control signals (ap_start, ap_done, and ap_idle) and three master AXI channels to read source operands from, and write the result to DDR. The expanded m02_axi module shows *read*, *adder*, *write* instances
+    There is one module to handle the control signals (ap\_start, ap\_done, and ap\_idle) and three master AXI channels to read source operands from, and write the result to DDR. The expanded m02\_axi module shows *read*, *adder*, *write* instances
 
 1. Expand **Flow Navigator > RTL ANALYSIS > Open Elaborated Design** and click on **Schematic**. Then, click **OK**
 
@@ -97,7 +99,7 @@ After completing this lab, you will be able to:
 
     ![](./images/rtlkernel_lab/vivado_elaborated_3_blocks.png)
 
-1. Zoom in into the top section and see the control logic, the wizard has generated the ap_start, ap_idle, and ap_done control signals
+1. Zoom in into the top section and see the control logic, the wizard has generated the ap\_start, ap\_idle, and ap\_done control signals
 
     ![](./images/rtlkernel_lab/vivado_control_block.png)
 
@@ -123,24 +125,28 @@ After completing this lab, you will be able to:
 
 ### Analyze the RTL kernel added to the Vitis project
 
-1. Expand the *src* folder under the **rtl\_kernel**  
+1. Expand the *src* folder under the **rtl\_kernel\_system > rtl\_kernel\_kernels**  
 
     Notice that the *vitis\_rtl\_kernel* folder  has been added to the project. Expanding this folder (*KVAdd*) shows the kernel (.xo) and a C++ file which have been automatically included
 
     ![](./images/rtlkernel_lab/project_with_rtl.png)
 
 1. Double-click on the **host_example.cpp** to open it   
-  * The *main* function is defined around line 62. The number of words it transfers is 4,096
+  * The *main* function is defined around line 67. The number of words it transfers is 4,096
   * Notice around line 96 the source operands and expected results are initialized
-  * Around line 209 (from the `clCreateProgramWithBinary()` function) shows the loading of the xclbin and creating the OpenCL kernel (`clCreateKernel()`)
-  * The following lines (~250) show how the buffers are created in the device memory and enqueued (`clCreateBuffer()`, `clEnqueueWriteBuffer()`)
-  * Around lines 305, the arguments to the kernel are set (`clSetKernelArg()`), and the kernel is enqueued to be executed (`clEnqueueTask()`)
-  * Around line 338 results are read back (`clEnqueueReadBuffer()`) and compared to the expected results.
+  * Around line 214 (from the `clCreateProgramWithBinary()` function) shows the loading of the xclbin and creating the OpenCL kernel (`clCreateKernel()`)
+  * The following lines (~255) show how the buffers are created in the device memory and enqueued (`clCreateBuffer()`, `clEnqueueWriteBuffer()`)
+  * Around lines 310, the arguments to the kernel are set (`clSetKernelArg()`), and the kernel is enqueued to be executed (`clEnqueueTask()`)
+  * Around line 343 results are read back (`clEnqueueReadBuffer()`) and compared to the expected results.
   * The *Shutdown and cleanup section* shows releasing of the memory, program, and kernel
 
 ### Define a hardware kernel, and build the project
 
-1. Select **rtl_kernel.prj** in the *Explorer* view to see the project settings page
+1. Import the *host\_example.cpp* file from **rtl\_kernel\_system > rtl\_kernel\_kernels > src > vitis\_rtl\_kernel > KVAdd** into the **rtl\_kernel\_system > rtl\_kernel > src** folder
+
+    This is necessary as the host compiler expects the application source(s) in this folder
+
+1. Select **rtl\_kernel\_kernels.prj** in the *Explorer* view to see the project settings page
 
 1. Click on the **Add Hardware Function button** (![](./images/Fig-hw_button.png)) and select *KVAdd*
 
@@ -148,19 +154,27 @@ After completing this lab, you will be able to:
 
     ![](./images/rtlkernel_lab/hw_emu_selection.png)
 
-1. In the *Assistant* view right click on *rtl_kernel > Emulation-HW* and select *Settings...*
-    
-    Configure the kernel settings to use `Counter + Trace`
-    
+1. Using a text editor like *vi* or *gedit*, create **link.cfg** file with the following content in **~/workspace/rtl\_kernel\_system\_hw\_link** from the terminal window. It will enable `Counter + Trace` functionality
+
+    ```
+    [profile]
+    data=KVAdd:KVAdd_1:A:all
+    data=KVAdd:KVAdd_1:B:all
+    data=KVAdd:KVAdd_1:Res:all
+    ```
+1. In the *Assistant* view right click on *rtl\_kernel\_system > rtl\_kernel\_system\_hw\_link > Emulation-HW > binary\_container\_1* and select *Settings...*
+
+    Enter `--config ../link.cfg` in the *V++ command line options:* field. Make sure the `Execute Profiling` checkboxes are checked
+
     ![](./images/rtlkernel_lab/hw_emu_kernel_config.png)
 
-1. Build the project by clicking on the (![](./images/Fig-build.png)) button  
+1. Select `rtl_kernel_system` in the *Assistant* view and build the project by clicking on the (![](./images/Fig-build.png)) button  
 
     This will build the project including *rtl\_kernel* executable file under the Emulation-HW directory. It may take about 10 minutes to build
 
-1. Select **Run > Run Configurations…** to open the configurations window
+1. Select *rtl\_kernel\_system* in the *Assistant* view and select  **Run > Run Configurations…** to open the configurations window
 
-1. Click on the **Arguments** tab, and then select **Automatically add binary container(s) to arguments**
+1. Make sure to check the **OpenCL trace** option of the *Host trace* by clicking the **Edit...** button of the *Xilinx Runtime Profiling*
 
     ![](./images/rtlkernel_lab/hw_emu_run_configuration.png)
 
@@ -179,34 +193,59 @@ After completing this lab, you will be able to:
     INFO: loading xclbin ../binary_container_1.xclbin
     INFO: [HW-EM 01] Hardware emulation runs simulation underneath....
     INFO: Test completed successfully.
-    INFO::[ Vitis-EM 22 ] [Time elapsed: 0 minute(s) 24 seconds, Emulation time: 0.0576465 ms]
+    INFO::[ Vitis-EM 22 ] [Time elapsed: 0 minute(s) 30 seconds, Emulation time: 0.151515 ms]
     Data transfer between kernel(s) and global memory(s)
     KVAdd_1:m00_axi-DDR[1]          RD = 16.000 KB              WR = 16.000 KB       
     KVAdd_1:m01_axi-DDR[1]          RD = 16.000 KB              WR = 16.000 KB       
     KVAdd_1:m02_axi-DDR[1]          RD = 16.000 KB              WR = 16.000 KB   
     ```
 
-1. In the *Assistant* view, expand **Emulation-HW > rtl\_kernel\_example-Default**, and double-click on **Run Summary (binary_container_1.xclbin)**
+1. In the *Assistant* view, expand **rtl\_kernel\_system > rtl\_kernel > Emulation-HW > SystemDebugger\_rtl\_kernel\_system\_rtl\_kernel**, and double-click on **Run Summary (xclbin)**
 
-1. The *Vitis Analyzer* window will open. Click on **Application Timeline** entry, expand all entries in the timeline graph, zoom appropriately and observe the transactions
+1. The *Vitis Analyzer* window will open. Click on **Timeline Trace** entry, expand all entries in the timeline graph, zoom appropriately and observe the transactions
 
 	![](./images/rtlkernel_lab/hw_emu_application_timeline.png)
 
-###  Run the Application in hardware
 
-Since building the FPGA hardware takes some time, a precompiled solution is provided.
+### Build system hardware with profiling and timing analysis options if are continuing with the lab OTHERWISE skip to [Prebuilt](#run-the-system-in-hardware)
 
-**Note:** There is a mismatch between the TARGET_DEVICE named in shell and what wizard based host code is expecting. So before generating the bitstream it is necessary to add one line in the host code and re-compile host application by clicking **Project > Build Project**. Add the following code after line 37 in `host_example.cpp`
+1. Set `Active build configuration:` to `Hardware` on the upper right corner of *Application Project Settings* view
 
-```C
-#define TARGET_DEVICE "xilinx_aws-vu9p-f1_dynamic_5_0"
-```
+    In order to collect the profiling data and run Timing Analyzer on the application run in hardware, we need to setup some options.
+
+1. Select `rtl_kernel_system > rtl_kernel_system_hw_link > Hardware > binary_container_1` in *Assistant* view and then click on *Settings*. Notice that the settings from the *Emulation-HW* run have propagated to the *Hardware* configuration.
+
+1. Select *Trace Memory* to be FIFO type and size of 64K
+
+1. Click **Apply and Close**
+
+1. Build the project by selecting **rtl\_kernel\_system** in `Assistant` view and clicking the build button 
+
+1. A `binary_container_1.xclbin` and `optimization_lab` application will be generated in the `rtl_kernel/Hardware` directory
+
+1. Register the generated xclbin file to generate binary\_container\_1.awsxclbin by running the shell script. Follow instructions available [here](Creating_AFI_AWSEducate.md)
+
+### Run the system in hardware
+
+1. If you have built the hardware yourself then copy the necessary files using the following commands:
+
+    ```sh
+    cp binary_container_1.awsxclbin ~/workspace/rtl_kernel/Hardware 
+    cp ~/xup_compute_acceleration/sources/xrt.ini ~/workspace/rtl_kernel/Hardware/.
+    ````
+
+1. If you have not built the hardware yourself then copy the provided prebuilt solution files using the following commands:
+
+    ```sh
+    mkdir ~/workspace/rtl_kernel/Hardware
+    cp ~/xup_compute_acceleration/solutions/rtl_kernel/* ~/workspace/rtl_kernel/Hardware/. 
+    chmod +x ~/workspace/rtl_kernel/Hardware/rtl_kernel
+    ````
 
 1. Execute precompiled hardware solution
 
     ```sh
-    cd ~/xup_compute_acceleration/solutions/rtlkernel_lab
-    chmod +x rtl_kernel
+    cd ~/workspace/rtl_kernel/Hardware/
     ./rtl_kernel binary_container_1.awsxclbin
     ```
 
@@ -216,8 +255,8 @@ Since building the FPGA hardware takes some time, a precompiled solution is prov
     INFO: Found 1 platforms
     INFO: Selected platform 0 from Xilinx
     INFO: Found 1 devices
-    CL_DEVICE_NAME xilinx_aws-vu9p-f1_dynamic_5_0
-    Selected xilinx_aws-vu9p-f1_dynamic_5_0 as the target device
+    CL_DEVICE_NAME xilinx_aws-vu9p-f1_shell-v04261818_201920_2
+    Selected xilinx_aws-vu9p-f1_shell-v04261818_201920_2 as the target device
     INFO: loading xclbin binary_container_1.awsxclbin
     INFO: Test completed successfully.
     ```
@@ -255,4 +294,4 @@ Since building the FPGA hardware takes some time, a precompiled solution is prov
 In this lab, you used the RTL Kernel wizard to create an example RTL adder kernel. You configured the template and saw the example code that was automatically generated. You performed HW emulation and analyzed the application timeline.
 
 ---------------------------------------
-<p align="center">Copyright&copy; 2020 Xilinx</p>
+<p align="center">Copyright&copy; 2021 Xilinx</p>
