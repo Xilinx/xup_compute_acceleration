@@ -146,6 +146,8 @@ In order to build the host application we are going to use `g++`.
     When running `resize` the program will generate two output files: **resize_sw.png** (software execution of the algorithm) and **resize_hw.png** (kernel execution output).
     When running `resize & blur` the program will generate two output files **resize_blur_sw.png** and **resize_blur_hw.png**. View the output files by double-clicking on each of them in File Explorer under `sources/vision_lab/` directory. Compare that to the source input file, **fish_wallpaper.png** located at `sources/vision_lab/src/data`
 
+## TO BE UPDATED ##
+
 ### Run the kernels on Hardware
 
 Since compilation for hardware target will take a long time, the FPGA binary is provided in the solution directory. Please follow [these steps](#build-full-hardware) if you want to generate the FPGA binary outside the workshop/webinar environment
@@ -178,7 +180,7 @@ Since compilation for hardware target will take a long time, the FPGA binary is 
     ./vision_example vision_example.awsxclbin 1 src/data/fish_wallpaper.jpg 4
     ```
 
-    The host application `vision_example` will execute, programming the FPGA and running the host code. This will generate four output files: **resize_sw.png**, **resize_hw.png**, **resize_blur_sw.png** and **resize_blur_hw.png** very quickly compared to `sw_emu` execution done before. Also `xclbin.run_summary` file will be generated, which can be analyzed using `vitis_analyzer`
+    The host application `vision_example` will execute, programming the FPGA and running the host code. This will generate four output files: **resize\_sw.png**, **resize\_hw.png**, **resize_blur\_sw.png** and **resize\_blur\_hw.png** very quickly compared to `sw_emu` execution done before. Also `xclbin.run_summary` file will be generated, which can be analyzed using `vitis_analyzer`
 
 1. Explore *Profile Summary* and *Application Timeline*
 
@@ -300,4 +302,4 @@ Instance:        resize_blur_rgb_1
 ```
 
 ---------------------------------------
-<p align="center">Copyright&copy; 2020 Xilinx</p>
+<p align="center">Copyright&copy; 2021 Xilinx</p>
