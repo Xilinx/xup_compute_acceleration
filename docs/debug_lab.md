@@ -22,11 +22,12 @@ After completing this lab, you will be able to:
 
 To save time on compilation, a precompiled project will be provided with the Chipscope debug cores already included in the design.  See [Appendix](#steps-to-add-chipscope-debug-core-and-build-the-design) to learn how to add ChipScope debug cores
 
+**Note: If you are doing this lab in a new workspace, you must add the targeted platform first after opening Vitis**
+
 1. Continue with the same workspace `~/workspace`
 1. Click **File > Import...**
 1. In the *Import Projects* window, select **Vitis project exported zip file** and click **Next**
-1. Click on **Browse...** and select **debug\_system.ide.zip** from `~/xup_compute_acceleration/solutions/debug_lab` and click **OK**
-     Make sure that the three hierarchical options are checked
+1. Click on **Browse...** and select **debug\_system.ide.zip** from `~/xup_compute_acceleration/solutions/debug_lab` and click **OK**. Make sure that the three hierarchical options are checked
 1. Click **Finish**
 
 ### Hardware Debugging
@@ -171,23 +172,27 @@ Each computer may have a different value for *xvc_pub.\** so you will need to ch
 
 1. Switch to the Vitis GUI
 
+1. From *Explorer* view, Open `debug_system > debug > src > host_example.cpp` 
+
+1. Comment out lines 248-249 and save the file
+
+1. In *Assistant* view, select on `debug_system > debug` and build the application since we changed it
+
 1. In *Assistant* view, right click on **debug\_system** and select **Debug > Debug Configurations...**
 
 1. Make sure that the **Program Arguments** is set to **../binary\_container\_1.awsxclbin**
 
-1. Click **Apply** if needed, and then click **Debug**
+1. Click **Apply**, if needed, and then click **Debug**
 
-1. Click **Yes** if prompted to switch to the *Debug perspective*
+1. Click **Yes**, if prompted to switch to the *Debug perspective*
 
     The bitstream will be downloaded to the FPGA and the host application will start executing, halting at **main()** entry point
 
-1. In *host_example.cpp* view scroll down to line ~278 and double-click on the left border to set a breakpoint  At this point, three buffers would have been created
+1. In *host_example.cpp* view scroll down to line ~278 and double-click on the left border to set a breakpoint.  At this point, three buffers would have been created
 
     ![](./images/debug_lab/set_breakpoint.png)
 
 1. Click on the **Resume** button or press **F8**
-
-1. When prompted click in the console and press *Enter*
 
     The program will resume executing and stop when it reaches the breakpoint.
     At this point you can click on the various monitoring tabs (*Variables, Command Queue, Memory Buffers* etc.) and see the contents currently in scope. If you don't see them, then select **Windows > Show view...** and then select the missing views
@@ -198,11 +203,9 @@ Each computer may have a different value for *xvc_pub.\** so you will need to ch
 
     Vitis debug allows command queues and memory buffers to be examined as the program execution progresses
 
-1. Click on the **Step Over** button or press **F6**
+1. Set a breakpoint at line 343 and press **F8** or **Resume** button
 
-    The execution will progress one statement at a time
-
-1. Continue pressing **F6** until you reach line ~338 at which point kernel will finish executing
+    The execution will progress and stop at line 343 
 
 1. Select the **Memory Buffers** tab
 
@@ -220,7 +223,8 @@ Each computer may have a different value for *xvc_pub.\** so you will need to ch
     err |= clEnqueueReadBuffer( ... );
     ```
 
-1. Set a breakpoint on line 346 and press **F8** or **Resume** button to execute to the first `clEnqueueReadBuffer()` to create a read buffer command for reading operand *d_A*
+1. Set a breakpoint on line 348 and press **F8** or **Resume** button to execute to the first `clEnqueueReadBuffer()` to create a read buffer command for reading operand *d_A*
+
     Notice the Command Queue tab shows one command submitted
 
     ![](./images/debug_lab/command_queue_after_1st.png)
@@ -237,7 +241,7 @@ Each computer may have a different value for *xvc_pub.\** so you will need to ch
 
 1. Press **F6** to execute `clReleaseKernel()`
 
-    Notice the Memory Buffers tab is empty as all memories are released
+    Notice the Memory Buffers tab is empty as all memories are released. Note: Since there is a bug in the IDE, this step may or may not work properly. Click the disconnect button if it fails and skip next step
 
 1. Click **F8** to complete the execution
 
