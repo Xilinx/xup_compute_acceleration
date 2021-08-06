@@ -24,9 +24,9 @@ This labs guides you through the steps to:
 
 This lab has been verified in the following platforms (platform containing the string 2018 are not supported)
 
-* xilinx_aws-vu9p-f1_shell-v04261818_201920_2
-* xilinx_u280_xdma_201920_2
-* xilinx_u250_qdma_201920_1
+* xilinx_aws-vu9p-f1_shell-v04261818\_201920\_2
+* xilinx\_u280\_xdma\_201920\_2
+* xilinx\_u250\_qdma\_201920\_1
 
 
 ## FIR
@@ -60,23 +60,25 @@ However, in this lab we will use the transposed direct version, which is an impr
 
 ### Add source code and hardware functions
 
-1. In the *Explore* view, right-click on `src` and select `Import Sources...`
-1. Browse to `~/xup_compute_acceleration/sources/streaming_lab` and add all the files
-1. In the `Application Project Settings` view click `Add Hardware Functions...`
-1. Select `krnl_fir`, `krnl_mm2s` and `krnl_s2mm` and click OK
-1. Check that the kernels are included within the binary_container_1
+1. In the *Explore* view, right-click on `streaming_lab_system > streaming_lab > src` and select `Import Sources...`
+1. Browse to `~/xup_compute_acceleration/sources/streaming_lab` and add `host.cpp, xcl2.cpp, and xcl2.hpp` files
+1. In the *Explore* view, right-click on `streaming_lab_system > streaming_lab_kernels > src` and select `Import Sources...`
+1. Browse to `~/xup_compute_acceleration/sources/streaming_lab` and add `krnl_fir.cpp, krnl_mm2s.cpp, and krnl_s2mm.hpp` files
+1. Double-click on `streaming_lab_system > streaming_lab_kernels > streaming_lab_kernels.prj`
+1. In the `Hardware Functions` view, click the *Add Hardware Function* button icon (![alt tag](./images/Fig-hw_button.png))
+1. Select `krnl_fir`, `krnl_mm2s` and `krnl_s2mm` and click **OK**
+1. Check that the kernels are included within the *Hardware Functions* panel
 
     ![](./images/streaming_lab/hardware_functions.png)
 
-1. In the *Assistant* view, right-click on Emulation-SW and select `Settings...`
-1. Select `streaming_lab`
-1. In the *V++ linker options:* field type `--config ../src/linking.cfg -j 8` and click *Apply and Close*
+1. In the *Assistant* view, right-click on `streaming_lab_system > streaming_lab_system_hw_link > Emulation-SW > binary_container_1` and select `Settings...`
+1. In the *V++ linker options:* field type `--config ~/xup_compute_acceleration/sources/streaming_lab/linking.cfg -j 8` and click *Apply and Close*
 
     ![](./images/streaming_lab/linking.png)
 
     The linker option will take effect for all configurations.
 
-1. Open and analyze the source code of the kernels.
+1. Open and analyze the source code of the kernels and host application
 
     - `krnl_mm2s.cpp`: reads data from global memory and generates an stream
     - `krnl_s2mm.cpp`: reads data from an stream and stores the data in global memory
@@ -89,8 +91,8 @@ However, in this lab we will use the transposed direct version, which is an impr
 
 ### Run software emulation
 
-1. Build the application by clicking hammer
-1. Run the Emulation-SW, in the *Explorer* view right-click on *streaming_lab* and select `Run As > Run Configurations...`
+1. In the **Assistant** view, select *streaming\_lab\_system* and build the application by clicking hammer
+1. Run the Emulation-SW: in the *Explorer* view right-click on *streaming\_lab* and select `Run As > Run Configurations...`
 1. In the *Arguments* tab make sure *Automatically add binary container(s) to arguments* is selected.
 1. Click *Apply* and then *Run*
 1. The console output will report
@@ -108,18 +110,15 @@ However, in this lab we will use the transposed direct version, which is an impr
     Computing Software results...
     TEST PASSED
     ```
-1. Rerun the software emulation, but this time pass the number of samples and enable debug. See example below
+1. Set the program arguments, setting the number of samples to 16 and enabling debug through the Run Configuration. Invoke the Run Configuration, click **Edit...** button of the *Program Arguments*, double-click the current entry and enter `../binary_container_1.xclbin 16 debug`
+1. Click **OK** to set the arguments, click **OK** again,  click **Apply**, and then click **Run**
 
-    ```
-    ../binary_container_1.xclbin 16 debug
-    ```
-
-    Noticed that this time the results are shown
+    Notice that this time the results are shown with sample number, sw and hw computed values
 
 ### Run hardware emulation
 
-1. In the `Application Project Settings` view change Active build configuration to: **Emulation-HW**
-1. Build the application by clicking the hammer
+1. Select or open the `Hardware Kernel Project Settings` view and change *Active build* configuration to: **Emulation-HW**
+1. In the **Assistant** view, select *streaming\_lab\_system* and build the application by clicking ![alt tag](./images/Fig-build.png)
 1. Once compiled, Run the Emulation-HW, only specify the binary container as argument
 1. The console output will report
 
@@ -135,7 +134,7 @@ However, in this lab we will use the transposed direct version, which is an impr
     Launching Kernel...
     Getting Results...
     TEST PASSED
-    INFO::[ Vitis-EM 22 ] [Time elapsed: 0 minute(s) 22 seconds, Emulation time: 0.0672318 ms]
+    INFO::[ Vitis-EM 22 ] [Time elapsed: 0 minute(s) 39 seconds, Emulation time: 0.145998 ms]
     Data transfer between kernel(s) and global memory(s)
     krnl_mm2s_1:m_axi_gmem-DDR[0]          RD = 8.000 KB               WR = 0.000 KB        
     krnl_s2mm_1:m_axi_gmem-DDR[2]          RD = 0.000 KB               WR = 8.000 KB        
@@ -147,13 +146,13 @@ However, in this lab we will use the transposed direct version, which is an impr
 
     Notice that not only the data memory mapped data transfer is reported, but also, the streaming data transfer. Once again, you can rerun the application with different arguments.
 
-1. In the `Assistant` view expand *Emulation-HW -> binary_container_1 -> streaming_lab-Default* and double click `Run Summary (binary_container_1.xclbin)`
+1. In the `Assistant` view expand *streaming\_lab\_system > streaming\_lab > Emulation-HW -> SystemDebugger\_streaming\_lab\_system\_streaming\_lab* and double click `Run Summary (xclbin)`
 
-1. In Vitis Analyzer click `System Diagram` and notice the memory mapped and streaming connection (dotted lines)
+1. In Vitis Analyzer, click `System Diagram` and notice the memory mapped and streaming connection (dotted lines)
 
     ![](./images/streaming_lab/system_diagram.png)
 
-1. Open `Application Timeline` and explore the host and kernel timeline
+1. Open `Timeline Trace` and explore the host and kernel timeline. If you don't see host activity then go to Run Configurations and change runtime configuration to enable Host Code tracing
 
     ![](./images/streaming_lab/hw_emu_timeline.png)
 
@@ -174,26 +173,25 @@ Here is the list of the coefficients that are optimized.
 
 ### Run hardware
 
-1. In the `Application Project Settings` view change *Active build configuration* to: **Hardware**
+Since the Hardware build and AFI availability for AWS takes a considerable amount of time, a precompiled and preregistered AWS version is provided for you. Use the precompiled solution directory to verify the functionality
 
-    Since the Hardware build and AFI availability for AWS takes a considerable amount of time, a precompiled and preregistered AWS version is provided for you. Use the precompiled solution directory to verify the functionality.
-
-1. Copy the `binary_container_1.xclbin` and `streaming_lab` files into `~/workspace/streaming_lab/Hardware` folder. Also, make sure `streaming_lab` has executable permissions. Use the following commands:
+1. Create a solution testing directory, if not yet created, called `sol-test` in the home directory, and copy the files from the provided solution director using the following commands:
 
     ```sh
-    cp ~/xup_compute_acceleration/solutions/streaming_lab/* ~/workspace/streaming_lab/Hardware/
-    chmod +x ~/workspace/streaming_lab/Hardware/streaming_lab
+    mkdir ~/sol-test
+    mkdir ~/sol-test/streaming_lab
+    cp ~/xup_compute_acceleration/solutions/streaming_lab/* ~/sol-test/streaming_lab/.
+    chmod +x ~/sol-test/streaming_lab/streaming_lab
     ```
 
-1. Right-click on Hardware in *Assistant* view, select `Run > Run Configurations...`
+1. Run the application and analyze the output using the following commands:
 
-    Change Generate timeline trace report option from *Default* to *Yes* using the drop-down button in the Main tab.
+    ```sh
+    cd ~/sol-test/streaming_lab
+    ./streaming_lab binary_container_1.awsxclbin
+    ```
 
-1. Click on *Arguments* tab, uncheck *Automatically add binary container(s) to arguments*, add the argument ../binary_container_1.awsxclbin
-
-    You can also pass number of samples and debug as optional parameters
-
-1. Execute the application by clicking **Apply** and then **Run**. The FPGA bitstream will be downloaded and the host application will be executed showing output similar to:
+1. The FPGA bitstream will be downloaded and the host application will be executed showing output similar to:
 
     ```console
     Found Platform
@@ -210,4 +208,4 @@ Here is the list of the coefficients that are optimized.
     ```
 
 ---------------------------------------
-<p align="center">Copyright&copy; 2020-2021 Xilinx</p>
+<p align="center">Copyright&copy; 2021 Xilinx</p>

@@ -22,32 +22,13 @@ After completing this lab, you will be able to:
 
 To save time on compilation, a precompiled project will be provided with the Chipscope debug cores already included in the design.  See [Appendix](#steps-to-add-chipscope-debug-core-and-build-the-design) to learn how to add ChipScope debug cores
 
+**Note: If you are doing this lab in a new workspace, you must add the targeted platform first after opening Vitis**
+
 1. Continue with the same workspace `~/workspace`
 1. Click **File > Import...**
 1. In the *Import Projects* window, select **Vitis project exported zip file** and click **Next**
-1. Click on **Browse...** and select **debug_lab.ide.zip** from `~/xup_compute_acceleration/solutions/` and click **OK**
-     Make sure that the three hierarchical options are checked
+1. Click on **Browse...** and select **debug\_system.ide.zip** from `~/xup_compute_acceleration/solutions/debug_lab` and click **OK**. Make sure that the three hierarchical options are checked
 1. Click **Finish**
-
-#### Set active solution and permissions on executable
-
-1. In the *Explorer* view, expand the hierarchy and double-click on **debug.prj**
-1. Set **Hardware** as an *Active build configuration:*
-1. In the *Explorer* view expand **debug > Hardware**
-1. Right click on *debug* and select **Properties**
-
-    ![](./images/debug_lab/select_executable.png)
-
-1. Tick the box to add **Execute** to the *Owner* permissions, and click **Apply and Close**
-
-    ![](./images/debug_lab/rtl_kernel_exe_properties.png)
-
-1. If you do not see an option to set the permissions. Change permissions from a terminal:
-
-    ```sh
-    cd ~/workspace/debug/Hardware
-    chmod +x debug
-    ```
 
 ### Hardware Debugging
 
@@ -57,11 +38,10 @@ Review the [Appendix](#steps-to-add-chipscope-debug-core-and-build-the-design) t
 
 #### Run the application
 
-1. In *Assistant* view, right click on **debug_system > debug > Hardware** and select **Run > Run Configurations...**
-1. Expand *OpenCL* and select *debug-Default*
-1. In the *Arguments* tab, uncheck **Automatically add binary container(s) to arguments** and add *../binary_container_1.awsxclbin* as an argument
-
-1. Click **Run**
+1. In *Assistant* view, right click on **debug\_system** and select **Run > Run Configurations...**
+1. Double-click on *System Project Debug* in the left panel to create a new run configuration
+1. Click on the **Edit...** button of the *Program Arguments*, uncheck *Automatically add binary container(s) to arguments*, then enter **../binary\_container\_1.awsxclbin** after clicking in the *Program Arguments* field. Finally, click **OK**
+1. Execute the application by clicking **Apply** and then **Run**
 
     The host application will start executing, load the bitstream, and wait for user input (press any key to continue)
 
@@ -118,7 +98,7 @@ Each computer may have a different value for *xvc_pub.\** so you will need to ch
     xvc_pcie -d /dev/xfpga/xvc_pub.u513 -s TCP::10200
     launching hw_server...
     hw_server -sTCP::3121
-    
+
     ****************************
     *** Press Ctrl-C to exit ***
     ****************************
@@ -133,17 +113,17 @@ Each computer may have a different value for *xvc_pub.\** so you will need to ch
     ```
 
 1. Click on **Open Hardware Manager >**
-1. Click **Open Target > Auto Connect**
+1. Click **Open target > Auto Connect**
 
     ![](./images/debug_lab/hw_manager_open_target.png)
 
 1. Right click on *localhost (0)* and select **Add Xilinx Virtual Cable (XVC)...**
 
-   ![](./images/debug_lab/add_virtual_cable.png)
+    ![](./images/debug_lab/add_virtual_cable.png)
 
 1. Enter **localhost** as the *host name*, and **10200** as the port (or the *port number* for your machine obtained previously) and click **OK**
 
-   ![](./images/debug_lab/set_virtual_cable_port.png)
+    ![](./images/debug_lab/set_virtual_cable_port.png)
 
 1. Right click on the *debug_bridge* and select **Refresh Device**.
 
@@ -153,24 +133,24 @@ Each computer may have a different value for *xvc_pub.\** so you will need to ch
 
 1. Select the *debug_bridge* in the Hardware panel
 1. In the *Hardware Device Properties* view, click on the browse button (...) beside **Probes file**
-1. Browse to the project's **~/workspace/debug/Hardware** folder, select the **binary_container_1.ltx** file and click **OK**  
+1. Browse to the project's **~/workspace/debug\_system\_hw\_link/Hardware** folder, select the **binary\_container\_1.ltx** file and click **OK**  
 1. Select the *hw_ila_1* tab, and notice four (Slot_0 to Slot_3) probes are filled in the Waveform window
 1. Click on the **Run Trigger immediate** button and observe the waveform window is fills with data showing that the four channels were _Inactive_ for the duration of the signal capture
 
     ![](./images/debug_lab/trigger_immediate.png)
 
-1. Expand **slot_1 : KVAdd_1_m01_axi : Interface** , then find and expand  **slot_1 : KVAdd_1_m01_axi : W Channel** in the Waveform window
+1. Expand **slot\_1 : KVAdd\_1\_m01\_axi : Interface** , then find and expand  **slot\_1 : KVAdd\_1\_m01\_axi : W Channel** in the Waveform window
 1. Select the **WVALID** signal and drag it to the Trigger Setup - hw window
 
-   ![](./images/debug_lab/trigger_setup.png)
+    ![](./images/debug_lab/trigger_setup.png)
 
 1. Click on drop-down button of the Value field and select trigger condition value as **1**
 
-   ![](./images/debug_lab/trigger_value.png)
+    ![](./images/debug_lab/trigger_value.png)
 
 1. Click on the *Run trigger* button ![](./images/debug_lab/trigger_button.png) and observe the _hw_ila_1_ probe is waiting for the trigger condition to occur
 
-   ![](./images/debug_lab/trigger_wait.png)
+    ![](./images/debug_lab/trigger_wait.png)
 
 1. Switch to the Vitis GUI, and select *Console* view and press the **Enter key** to allow the program to continue executing
 
@@ -178,11 +158,11 @@ Each computer may have a different value for *xvc_pub.\** so you will need to ch
 
 1. Switch back to Vivado and notice that because the trigger condition was met, the waveform window has been populated with new captured data
 
-   ![](./images/debug_lab/triggered_waveform.png)
+    ![](./images/debug_lab/triggered_waveform.png)
 
 1. Expand **Slot_0, slot_1,** and **slot_2** groups, zoom in to the region around samples *450 to 1000*, and observe the data transfers taking place on each channels. Also note the addresses from where data are read and where the results are written to
 
-   ![](./images/debug_lab/captured_activities.png)
+    ![](./images/debug_lab/captured_activities.png)
 
 1. Zoom in on one of the transactions and hover your mouse at each successive sample and notice the data content changing
 1. When you are finished, close Vivado Manager by selecting **File > Exit**
@@ -192,33 +172,40 @@ Each computer may have a different value for *xvc_pub.\** so you will need to ch
 
 1. Switch to the Vitis GUI
 
-1. In *Assistant* view, right click on **debug_system > debug > Hardware** and select **Debug > Debug Configurations...**
+1. From *Explorer* view, Open `debug_system > debug > src > host_example.cpp` 
 
-1. Make sure that the **Arguments** tab shows **../binary_container_1.awsxclbin**
+1. Comment out lines 248-249 and save the file
 
-1. Click **Apply** if needed, and then click **Debug**
+1. In *Assistant* view, select on `debug_system > debug` and build the application since we changed it
 
-1. Click **Yes** when prompted to switch to the *Debug perspective*
+1. In *Assistant* view, right click on **debug\_system** and select **Debug > Debug Configurations...**
+
+1. Make sure that the **Program Arguments** is set to **../binary\_container\_1.awsxclbin**
+
+1. Click **Apply**, if needed, and then click **Debug**
+
+1. Click **Yes**, if prompted to switch to the *Debug perspective*
 
     The bitstream will be downloaded to the FPGA and the host application will start executing, halting at **main()** entry point
 
-1. In *host_example.cpp* view scroll down to line ~274 and double-click on the left border to set a breakpoint  At this point, three buffers would have been created
+1. In *host_example.cpp* view scroll down to line ~278 and double-click on the left border to set a breakpoint.  At this point, three buffers would have been created
 
     ![](./images/debug_lab/set_breakpoint.png)
 
 1. Click on the **Resume** button or press **F8**
 
-1. When prompted click in the console and press *Enter*
-
     The program will resume executing and stop when it reaches the breakpoint.
-    At this point you can click on the various monitoring tabs (*Variables, Command Queue, Memory Buffers* etc.) and see the contents currently in scope.
+    At this point you can click on the various monitoring tabs (*Variables, Command Queue, Memory Buffers* etc.) and see the contents currently in scope. If you don't see them, then select **Windows > Show view...** and then select the missing views
+
+    ![](./images/debug_lab/selecting_Show_View.png)
+
+    ![](./images/debug_lab/selecting_command_que_and_memory_buffers_views.png)
+
     Vitis debug allows command queues and memory buffers to be examined as the program execution progresses
 
-1. Click on the **Step Over** button or press **F6**
+1. Set a breakpoint at line 343 and press **F8** or **Resume** button
 
-    The execution will progress one statement at a time
-
-1. Continue pressing **F6** until you reach line ~332 at which point kernel will finish executing
+    The execution will progress and stop at line 343 
 
 1. Select the **Memory Buffers** tab
 
@@ -230,14 +217,15 @@ Each computer may have a different value for *xvc_pub.\** so you will need to ch
 
     ![](./images/debug_lab/command_queue.png)
 
-    Lines ~340-344 creates commands to read the data and results
+    Lines ~346-350 creates commands to read the data and results
 
     ```C
     err |= clEnqueueReadBuffer( ... );
     ```
 
-1. Press **F6** to execute the first `clEnqueueReadBuffer()` to create a read buffer command for reading operand *d_A*
-Notice the Command Queue tab shows one command submitted
+1. Set a breakpoint on line 348 and press **F8** or **Resume** button to execute to the first `clEnqueueReadBuffer()` to create a read buffer command for reading operand *d_A*
+
+    Notice the Command Queue tab shows one command submitted
 
     ![](./images/debug_lab/command_queue_after_1st.png)
 
@@ -247,13 +235,13 @@ Notice the Command Queue tab shows one command submitted
 
     ![](./images/debug_lab/command_queue_after_2nd.png)
 
-1. Set a breakpoint at line ~400 (`clReleaseKernel()`) and press **F8** to resume the execution  
+1. Set a breakpoint at line ~404 (`clReleaseKernel()`) and press **F8** to resume the execution  
 
     Notice that the Command Queue tab still shows entries
 
 1. Press **F6** to execute `clReleaseKernel()`
 
-    Notice the Memory Buffers tab is empty as all memories are released
+    Notice the Memory Buffers tab is empty as all memories are released. Note: Since there is a bug in the IDE, this step may or may not work properly. Click the disconnect button if it fails and skip next step
 
 1. Click **F8** to complete the execution
 
@@ -269,16 +257,22 @@ In this lab, you used the ChipScope Debug bridge and cores to perform hardware d
 
 ### Steps to Add ChipScope Debug core and build the design
 
-1. Set target to *Active build configuration:* to **Hardware** in *Project Settings* view
-1. In the *Assistant* view, expand **Hardware > binary_container_1 > KVadd**
-1. Select **KVAdd**, right-click and select **Settings...**
-1. In the **Hardware Function Settings** window, click **Refresh**, and then click on the *ChipScope Debug* option for the *KVAdd* kernel
+1. Set target to *Active build configuration:* to **Hardware** in *Hardware Kernel Project Settings* view
+1. In the *Assistant* view, expand **debug\_system > debug\_system\_hw\_link > Hardware**
+1. Select **binary\_container\_1**, right-click and select **Settings...**
+1. In the **binary\_container\_1** window, enter the following text  of the **V++ command line options:** to enable ChipScope code insertion
+    ```
+    -g --debug.chipscope KVAdd_1
+    ```
+
+1. Click **OK** and the string will appear as shown in marked 2
 
     ![](./images/debug_lab/enable_chipscope.png)
 
 1. Click **Apply and close**
-1. In the *Explorer* view, expand **rtl_kernel > src > vitis_rtl_kernel > KVAdd** and double-click on the **host_example.cpp** to open it in the editor window
-1. Around line 243 (after the *clCreateKernel* section) enter the following lines of code and save the file. This will pause the host software execution after creating kernel but before allocating buffer
+1. In the *Explorer* view, expand **debug\_system > debug > src** and make sure that the host_example.cpp is present. If not then import it from **debug\_system > debug\_kernels > src > vitis\_rtl\_kernel > KVAdd**
+1. Double-click on the **host\_example.cpp** from **debug\_system > debug > src** to open it in the editor window
+1. Around line 248 (after the *clCreateKernel* section) enter the following lines of code and save the file. This will pause the host software execution after creating kernel but before allocating buffer
 
     ```C
     printf("\nPress ENTER to continue after setting up ILA trigger...");
@@ -288,29 +282,5 @@ In this lab, you used the ChipScope Debug bridge and cores to perform hardware d
 
 1. Build the design
 
-### Disable automatic rebuilding of the design
-
-When you export a project, and re-import it, the file modified dates may change and cause Vitis to make the output executable and hardware kernel "out-of-date". This may cause the design to be automatically recompiled when an attempt is made to run the application from the GUI.  
-
-* To disable automatic rebuilding, right click on the project folder, and select **C/C++ Build Settings**
-
-* Select **C/C++ Build** and click on the **Behavior** tab
-
-* Uncheck the following:
-   * Build on resource save (Auto Build)
-   * Build (Incremental build)
-   * Clean
-
-When you export a project, and re-import it, these settings stop the bitstream being automatically rebuilt.
-
-![](./images/debug_lab/turn_off_autobuild.png)
-
-If you need to rebuild the project, you can re-enable these settings. If you only need to update the host application, you can run the following command in a terminal in the project folder to rebuild the executable file only (where *rtl_kernel* is the name of the executable):
-
-```sh
-cd ~/workspace/rtl_kernel/Hardware
-make rtl_kernel
-```
-
 -------------------------------------------------
-<p align="center">Copyright&copy; 2020 Xilinx</p>
+<p align="center">Copyright&copy; 2021 Xilinx</p>

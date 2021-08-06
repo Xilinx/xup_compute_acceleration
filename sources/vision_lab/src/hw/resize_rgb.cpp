@@ -71,10 +71,8 @@ extern "C"
 #pragma HLS INTERFACE s_axilite port = return bundle = control
 
         xf::cv::Mat<TYPE, MAX_IN_HEIGHT, MAX_IN_WIDTH, NPC> in_mat(height_in, width_in);
-        DYN_PRAGMA(HLS stream variable = in_mat.data depth = STREAM_DEPTH)
 
         xf::cv::Mat<TYPE, MAX_OUT_HEIGHT, MAX_OUT_WIDTH, NPC> out_mat(height_out, width_out);
-        DYN_PRAGMA(HLS stream variable = out_mat.data depth = STREAM_DEPTH)
 
 #pragma HLS DATAFLOW
 

@@ -24,7 +24,7 @@ After completing this lab, you will learn to:
 
 1. Make sure Vitis environment and and AWS tools are set
 
-    If you have opened a new terminal window then source AWS tools
+    If you have opened a new terminal window then source AWS tools, if needed
 
 1. Launch Vitis GUI
 
@@ -32,23 +32,25 @@ After completing this lab, you will learn to:
 
 1. Create a new application project giving **wide_vadd** as the project name, and click **Next >**
 
-    You should see `xilinx_aws-vu9p-f1_shell-v04261818_201920_2` as one of the platforms if you are continuing with previous lab, otherwise add it from `/home/centos/src/project_data/aws-fpga/Vitis/aws_platform/`
+    You should see `xilinx_aws-vu9p-f1_shell-v04261818_201920_2` as one of the platforms if you are continuing with previous lab, otherwise add it from `$AWS_FPGA_REPO_DIR/Vitis/aws_platform/`
 
 1. Select `Empty Application` as the template and click **Finish**
 
     The project is created
 
-1. Import provided source files
-
-    Right click on `src` directory in *Explorer* view and select `Import Sources...`
+1. Right-click on the **wide\_vadd\_system > wide\_vadd > src** folder in the *Explorer* view and select `Import Sources...`
 
     ![](./images/improving_performance/add_sources.png)
 
-1. Import all `*.cpp` and `*.hpp` files in `~/xup_compute_acceleration/sources/improving_performance_lab/` 
-    These files include both host code and hardware accelerator
 
-1. Within *Application Project Settings* view, click on ![](./images/Fig-hw_button.png) in the *Hardware Functions* window and add **wide_vadd** function as a *Hardware Function* (kernel)
-    
+1. Import all `*.cpp` and `*.hpp` files except `wide_vadd_krnl.cpp` from `~/xup_compute_acceleration/sources/improving_performance_lab/`
+
+1. Similarly, expand **wide\_vadd\_system > wide\_vadd\_kernels** folder in the Explorer view, and import `wide_vadd_krnl.cpp` in the corresponding  **src** folder
+
+1. Expand the **wide\_vadd\_system > wide\_vadd\_kernels** folder in the Explorer view, and double-click on the `wide_vadd_kernels.prj`
+
+1. Click on ![](./images/Fig-hw_button.png) in the *Hardware Functions* view and add **wide\_vadd** function as a *Hardware Function* (kernel)
+
     ![](./images/improving_performance/add_kernel.png)
 
 ### Analyze the kernel code
@@ -83,27 +85,23 @@ DDR controllers have a 512-bit wide interface internally. If we parallelize the 
 1. Notice the host code uses a 1,024 times smaller vector to run software and hardware emulations (`wide_vadd.cpp` line 60) to save emulation time
 
 1. Set dedicated location of kernel and memory interface
-  - Right click on `wide_vadd > Emulation-HW` in *Assistant* view, select `Settings`
-  - Navigate to *wide_vadd* kernel, adjust memory and SLR settings according to the screenshot below
+  - Right click on `wide_vadd_system > wide_vadd_system_hw_link > Emulation-HW > binary_container_1` in *Assistant* view, select `Settings`
+  - Adjust memory and SLR settings according to the screen shot below
   - Click *Refresh* if you do not see the ports
-  - Enable `Counter + Trace` in the Data Transfer column
+  - Verify that the  `Counter + Trace` in the Data Transfer column are selected
   - Click Apply and Close
 
 	![](./images/improving_performance/kernel_slr_setting.png)
 
 ### Build and run in hardware emulation mode
 
-1. Build in Emulation-HW mode
+1. Build in Emulation-HW mode by selecting `wide_vadd_system` in the *Explorer* view and clicking on the build (![alt tag](./images/Fig-build.png)) button
 
     This will take about 10 minutes
 
-1. After build completes, right click on **wide_vadd** *Run as > Run Configurations...*
+1. After build completes, select **wide\_vadd\_system** in the Assistant view and click on the Run (![alt tag](./images/Fig-run.png)) button
 
-1. Navigate to *Arguments* tab. Make sure *Automatically add binary container(s) to arguments* is checked
-
-1. Click **Apply** and then **Run**  
-
-    Notice the kernel wait time is about 13 seconds.
+    Notice the kernel wait time is about 8 seconds.
 
     ```
     -- Parallelizing the Data Path --
@@ -117,17 +115,17 @@ DDR controllers have a 512-bit wide interface internally. If we parallelize the 
     OCL-mapped contiguous buffer example complete successfully!
 
     --------------- Key execution times ---------------
-    OpenCL Initialization              : 27773.988 ms
-    Allocate contiguous OpenCL buffers :   15.034 ms
-    Set kernel arguments               :    0.101 ms
-    Map buffers to user space pointers :    0.832 ms
-    Populating buffer inputs           :    0.476 ms
-    Software VADD run                  :    0.215 ms
-    Memory object migration enqueue    :    4.431 ms
-    OCL Enqueue task                   :    2.819 ms
-    Wait for kernel to complete        : 13002.250 ms
-    Read back computation results      :    1.993 ms
-    INFO::[ Vitis-EM 22 ] [Time elapsed: 0 minute(s) 35 seconds, Emulation time: 0.0805678 ms]
+    OpenCL Initialization              : 23746.418 ms
+    Allocate contiguous OpenCL buffers :   13.958 ms
+    Set kernel arguments               :    0.025 ms
+    Map buffers to user space pointers :    0.374 ms
+    Populating buffer inputs           :    0.400 ms
+    Software VADD run                  :    0.212 ms
+    Memory object migration enqueue    :    3.235 ms
+    OCL Enqueue task                   :    2.314 ms
+    Wait for kernel to complete        : 8000.792 ms
+    Read back computation results      :    1.297 ms
+    INFO::[ Vitis-EM 22 ] [Time elapsed: 0 minute(s) 40 seconds, Emulation time: 0.162641 ms]
     Data transfer between kernel(s) and global memory(s)
     wide_vadd_1:m_axi_gmem-DDR[1]          RD = 128.000 KB             WR = 0.000 KB        
     wide_vadd_1:m_axi_gmem1-DDR[1]          RD = 128.000 KB             WR = 0.000 KB        
@@ -136,7 +134,7 @@ DDR controllers have a 512-bit wide interface internally. If we parallelize the 
 
 1. Check generated kernel interface
 
-    - Open Run Summary with Vitis Analyzer by double-clicking on `Emulation-HW > wide_vadd-Default > Run Summary (binary_container_1.xclbin)` in the *Assistant* view
+    - Open Run Summary with Vitis Analyzer by double-clicking on `wide_vadd_system > wide_vadd > Emulation-HW > SystemDebugger_wide_vadd_system_wide_vadd > Run Summary (xclbin)` in the *Assistant* view
     - Select **System Diagram**. Notice that all ports (in1, in2, and out) are using one bank
     - Click **Kernels** tab
     - Check the `Port Data Width` parameter. All input and output ports are 512 bits wide whereas size (scalar) port is 32 bits wide
@@ -145,13 +143,13 @@ DDR controllers have a 512-bit wide interface internally. If we parallelize the 
 
     - Select **Platform Diagram** in the left panel
 
-    Observe that there are four DDR4 memory banks and three PLRAM banks. In this design, `DDR[1]` is used for all operands, which is located in SLR2. Notice, that `DDR[2]` is also located in SLR2.
+    Observe that there are four DDR4 memory banks and three PLRAM banks. In this design, `DDR[1]` is used for all operands, which is located in SLR2(AWS)
 
     Check memory bank allocation for Alveo U200 and how it relates to AWS-F1 [here](https://github.com/aws/aws-fpga/blob/master/Vitis/docs/Alveo_to_AWS_F1_Migration.md#off-chip-ddr-memory)
 
 	![](./images/improving_performance/platform_diagram.png)
 
-1. Click on **Application Timeline**
+1. Click on **Timeline Trace**
 
 1. Zoom into area where data transfer on various ports of the kernel is taking place and observe the sequential data transfer between two input operands and a result since only one memory controller is being used
 
@@ -167,14 +165,14 @@ There are four DDR4 memory banks available on the accelerator card. In the previ
 
 This will provide the ability to perform high-bandwidth transactions simultaneously with different external memory banks. Remember, long bursts are generally better for performance than many small reads and writes, but you cannot fundamentally perform two operations on the memory at the same time.
 
-To connect a kernel to multiple memory banks, you need to: Assign the kernel's interface to a memory controller and Assign the kernel to an SLR region. 
+To connect a kernel to multiple memory banks, you need to: Assign the kernel's interface to a memory controller and Assign the kernel to an SLR region.
 
 Please note that since the DDR controllers are constrained to different SLR (Super Logic Region), the routing between two SLR may have some challenges in timing closure when the design is compiled for bitstream. This technique is valuable in the cases where one SLR has two DDR controllers.
 
 1. Assign memory banks as shown in figure below
 
-    - Right click `wide_vadd > Emulation-HW` in *Assistant* view, select `Settings`
-    - Navigate to `wide_vadd` kernel, and adjust memory and SLR settings
+    - Right click `wide_vadd_system > wide_vadd_system_hw_link > Emulation-HW > binary_container_1` in *Assistant* view, select `Settings`
+    - Adjust memory and SLR settings as shown in the snap shot
     - Click Apply and Close
 
 	![](./images/improving_performance/Using_multiple_banks.png)
@@ -187,7 +185,6 @@ Please note that since the DDR controllers are constrained to different SLR (Sup
 
     Notice that the kernel wait time has reduced from about 13 seconds (single memory bank) to 10 seconds (three memory banks) indicating performance improvement
 
-	![](./images/improving_performance/perf_multi_bank.png)
 
     ```
     -- Parallelizing the Data Path --
@@ -201,16 +198,16 @@ Please note that since the DDR controllers are constrained to different SLR (Sup
     OCL-mapped contiguous buffer example complete successfully!
 
     --------------- Key execution times ---------------
-    OpenCL Initialization              : 27536.041 ms
-    Allocate contiguous OpenCL buffers :    7.757 ms
-    Set kernel arguments               :   11.418 ms
-    Map buffers to user space pointers :    1.573 ms
-    Populating buffer inputs           :    0.497 ms
-    Software VADD run                  :    0.236 ms
-    Memory object migration enqueue    :    4.287 ms
-    OCL Enqueue task                   :    2.996 ms
-    Wait for kernel to complete        : 10001.946 ms
-    Read back computation results      :    1.815 ms
+    OpenCL Initialization              : 23538.045 ms
+    Allocate contiguous OpenCL buffers :    6.350 ms
+    Set kernel arguments               :    9.937 ms
+    Map buffers to user space pointers :    0.283 ms
+    Populating buffer inputs           :    0.276 ms
+    Software VADD run                  :    0.163 ms
+    Memory object migration enqueue    :    3.612 ms
+    OCL Enqueue task                   :    2.114 ms
+    Wait for kernel to complete        : 7000.736 ms
+    Read back computation results      :    1.389 ms
     INFO::[ Vitis-EM 22 ] [Time elapsed: 0 minute(s) 32 seconds, Emulation time: 0.0747283 ms]
     Data transfer between kernel(s) and global memory(s)
     wide_vadd_1:m_axi_gmem-DDR[0]          RD = 128.000 KB             WR = 0.000 KB        
@@ -220,7 +217,7 @@ Please note that since the DDR controllers are constrained to different SLR (Sup
 
 1. Check generated kernel interface
 
-    - Open Run Summary with Vitis Analyzer by double-clicking on `Emulation-HW > wide_vadd-Default > Run Summary (binary_container_1.xclbin)` in the *Assistant* view
+    - Open Run Summary with Vitis Analyzer by double-clicking on `wide_vadd_system > wide_vadd > Emulation-HW > SystemDebugger_wide_vadd_system_wide_vadd > Run Summary (xclbin)` in the *Assistant* view
     - Select System Diagram
     - Click **Kernels** tab
 
@@ -228,7 +225,7 @@ Please note that since the DDR controllers are constrained to different SLR (Sup
 
     ![](./images/improving_performance/multibank_system_diagram.png)
 
-1. Click on **Application Timeline**
+1. Click on **Timeline Trace**
 
 1. Zoom into area where data transfer on various ports of the kernel is taking place and observe that data fetching is taking place in parallel and result is written overlapping the fetching data, increasing the bandwidth
 
@@ -244,4 +241,4 @@ From a simple vadd application, we explored several steps to increase system per
 - Use Vitis Analyzer to view the result
 
 ---------------------------------------
-<p align="center">Copyright&copy; 2020 Xilinx</p>
+<p align="center">Copyright&copy; 2021 Xilinx</p>

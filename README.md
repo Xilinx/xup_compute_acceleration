@@ -9,7 +9,7 @@ This version of the tutorial has been verified for the following environments
 
 | Environment | Vitis | XRT | Shell | Notes |
 |-------------|-------|-----|-------|-------|
-| AWS F1 | 2020.1  | 2.6.0  | xilinx_aws-vu9p-f1_shell-v04261818_201920_2| AMI 1.9.0 |
+| AWS F1 | 2021.1  | 2.11.0  | xilinx_aws-vu9p-f1_shell-v04261818_201920_2| AMI 1.10.1(AL2) |
 
 
 ## Report an Issue
@@ -21,4 +21,4 @@ This version of the tutorial has been verified for the following environments
 You can contact us by email [xup@xilinx.com](mailto:xup@xilinx.com)
 
 ---------------------------------------
-<p align="center">Copyright&copy; 2020 Xilinx</p>
+<p align="center">Copyright&copy; 2021 Xilinx</p>
