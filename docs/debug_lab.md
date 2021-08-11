@@ -87,30 +87,30 @@ Each computer may have a different value for *xvc_pub.\** so you will need to ch
 
     Run the following command (where *u513* should be the value your obtained from the previous command):
 
-    ```sh
-    debug_hw --xvc_pcie /dev/xfpga/xvc_pub.u513 --hw_server
-    ```
+   ```sh
+   debug_hw --xvc_pcie /dev/xfpga/xvc_pub.u513 --hw_server
+   ```
 
-    The Virtual JTAG XVC Server will start listening to TCP port **10200** in this case. This is the port you will need to [connect to from Vivado](#connecting-vivado-to-xvc). Note the *hw_server* is listening to TCP port 3121. See example output below
+   The Virtual JTAG XVC Server will start listening to TCP port **10200** in this case. This is the port you will need to [connect to from Vivado   (#connecting-vivado-to-xvc). Note the *hw_server* is listening to TCP port 3121. See example output below
 
-    ```sh
-    launching xvc_pcie...
-    xvc_pcie -d /dev/xfpga/xvc_pub.u513 -s TCP::10200
-    launching hw_server...
-    hw_server -sTCP::3121
+   ```sh
+   launching xvc_pcie...
+   xvc_pcie -d /dev/xfpga/xvc_pub.u513 -s TCP::10200
+   launching hw_server...
+   hw_server -sTCP::3121
 
-    ****************************
-    *** Press Ctrl-C to exit ***
-    ****************************
-    ```
+   ****************************
+   *** Press Ctrl-C to exit ***
+   ****************************
+   ```
 
 ### Connecting Vivado to XVC
 
 1. Start Vivado from another terminal
 
-    ```sh
-    vivado
-    ```
+   ```sh
+   vivado
+   ```
 
 1. Click on **Open Hardware Manager >**
 1. Click **Open target > Auto Connect**
@@ -219,9 +219,9 @@ Each computer may have a different value for *xvc_pub.\** so you will need to ch
 
     Lines ~346-350 creates commands to read the data and results
 
-    ```C
-    err |= clEnqueueReadBuffer( ... );
-    ```
+   ```C
+   err |= clEnqueueReadBuffer( ... );
+   ```
 
 1. Set a breakpoint on line 348 and press **F8** or **Resume** button to execute to the first `clEnqueueReadBuffer()` to create a read buffer command for reading operand *d_A*
 
@@ -261,9 +261,9 @@ In this lab, you used the ChipScope Debug bridge and cores to perform hardware d
 1. In the *Assistant* view, expand **debug\_system > debug\_system\_hw\_link > Hardware**
 1. Select **binary\_container\_1**, right-click and select **Settings...**
 1. In the **binary\_container\_1** window, enter the following text  of the **V++ command line options:** to enable ChipScope code insertion
-    ```
-    -g --debug.chipscope KVAdd_1
-    ```
+   ```
+   -g --debug.chipscope KVAdd_1
+   ```
 
 1. Click **OK** and the string will appear as shown in marked 2
 
@@ -274,10 +274,10 @@ In this lab, you used the ChipScope Debug bridge and cores to perform hardware d
 1. Double-click on the **host\_example.cpp** from **debug\_system > debug > src** to open it in the editor window
 1. Around line 248 (after the *clCreateKernel* section) enter the following lines of code and save the file. This will pause the host software execution after creating kernel but before allocating buffer
 
-    ```C
-    printf("\nPress ENTER to continue after setting up ILA trigger...");
-    getc(stdin);
-    ```
+   ```C
+   printf("\nPress ENTER to continue after setting up ILA trigger...");
+   getc(stdin);
+   ```
     ![](./images/debug_lab/AddingCode.png)
 
 1. Build the design

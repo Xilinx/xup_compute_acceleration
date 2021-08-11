@@ -36,24 +36,24 @@ This document guides you through the steps to create an AWS Amazon FPGA Image (A
 
 1. Configure aws by executing following command and providing credentials
 
-    Note that anytime you want to create AFI, the credentials file content must be updated. You must rerun the command every time before you run the create_visit_afi.sh script if this is a new session
+   Note that anytime you want to create AFI, the credentials file content must be updated. You must rerun the command every time before you run the create_visit_afi.sh script if this is a new session
 
-      ```
-      aws configure
-      AWS Access Key ID [****************J5NS]:  <hit enter> 
-      AWS Secret Access Key [****************N4bG]:  <hit enter>
-      Default region name [None]: us-east-1 <make sure us-east-1 is displayed, otherwise change it to it>
-      Default output format [None]: json <make sure json is displayed, otherwise change it to it>
-      ```
+   ```
+   aws configure
+   AWS Access Key ID [****************J5NS]:  <hit enter> 
+   AWS Secret Access Key [****************N4bG]:  <hit enter>
+   Default region name [None]: us-east-1 <make sure us-east-1 is displayed, otherwise change it to it>
+   Default output format [None]: json <make sure json is displayed, otherwise change it to it>
+   ```
 
-1. Submit the xclbin to generate AFI (with extension awsxclbin) using the following command
+2. Submit the xclbin to generate AFI (with extension awsxclbin) using the following command
 
-      ```
-      $VITIS_DIR/tools/create_vitis_afi.sh -xclbin=<path to an including.xclbin> -s3_bucket=<bucket-name> -s3_dcp_key=<dcp-folder-name> -s3_logs_key=<logs-folder-name>
-      ```
+   ```
+   $VITIS_DIR/tools/create_vitis_afi.sh -xclbin=<path to an including.xclbin> -s3_bucket=<bucket-name> -s3_dcp_key=<dcp-folder-name> -s3_logs_key=<logs-folder-name>
+   ```
 
      The bucket-name, dcp-folder-name, and logs-folder-name should match the one used while creating them 
-1. Once submitted successfully, an *time_stamp*\_afi\_id.txt file will be created. Open the file and make a note of the afi-id. Execute the following command to see the status of the AFI:
+3. Once submitted successfully, an *time_stamp*\_afi\_id.txt file will be created. Open the file and make a note of the afi-id. Execute the following command to see the status of the AFI:
 
       `aws ec2 describe-fpga-images --fpga-image-ids <afi_id>`
 
@@ -66,17 +66,17 @@ You can regenerate the `.awsxclbin` file as long as you have access to `*agfi_id
 
 1. Edit these variable with the corresponding names
     
-    ```sh
-    export xclbin=<xclbin_filename>
-    export agfi_id=<*_agfi_id.txt>
-    export awsxclbin=<output_name>
-    ```
+   ```sh
+   export xclbin=<xclbin_filename>
+   export agfi_id=<*_agfi_id.txt>
+   export awsxclbin=<output_name>
+   ```
     
 1. Generate `.awsxclbin` file
 
-    ```sh
-    xclbinutil -i $xclbin --remove-section PARTITION_METADATA --remove-section SYSTEM_METADATA --replace-section BITSTREAM:RAW:${agfi_id} -o ${awsxclbin}.awsxclbin
-    ```
+   ```sh
+   xclbinutil -i $xclbin --remove-section PARTITION_METADATA --remove-section SYSTEM_METADATA --replace-section BITSTREAM:RAW:${agfi_id} -o ${awsxclbin}.awsxclbin
+   ```
 
 ---------------------------------------
 <p align="center">Copyright&copy; 2021 Xilinx</p>

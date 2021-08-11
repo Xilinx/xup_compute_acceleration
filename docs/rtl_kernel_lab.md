@@ -156,12 +156,12 @@ After completing this lab, you will be able to:
 
 1. Using a text editor like *vi* or *gedit*, create **link.cfg** file with the following content in **~/workspace/rtl\_kernel\_system\_hw\_link** from the terminal window. It will enable `Counter + Trace` functionality
 
-    ```
-    [profile]
-    data=KVAdd:KVAdd_1:A:all
-    data=KVAdd:KVAdd_1:B:all
-    data=KVAdd:KVAdd_1:Res:all
-    ```
+   ```
+   [profile]
+   data=KVAdd:KVAdd_1:A:all
+   data=KVAdd:KVAdd_1:B:all
+   data=KVAdd:KVAdd_1:Res:all
+   ```
 1. In the *Assistant* view right click on *rtl\_kernel\_system > rtl\_kernel\_system\_hw\_link > Emulation-HW > binary\_container\_1* and select *Settings...*
 
     Enter `--config ../link.cfg` in the *V++ command line options:* field. Make sure the `Execute Profiling` checkboxes are checked
@@ -182,23 +182,23 @@ After completing this lab, you will be able to:
 
 1. The Console tab shows that the test was completed successfully along with the data transfer rate
 
-    Note that three memory controllers are used, all of which targeting to the same DDR
+   Note that three memory controllers are used, all of which targeting to the same DDR
 
-    ```
-    INFO: Found 1 platforms
-    INFO: Selected platform 0 from Xilinx
-    INFO: Found 1 devices
-    CL_DEVICE_NAME xilinx_aws-vu9p-f1_shell-v04261818_201920_2
-    Selected xilinx_aws-vu9p-f1_shell-v04261818_201920_2 as the target device
-    INFO: loading xclbin ../binary_container_1.xclbin
-    INFO: [HW-EM 01] Hardware emulation runs simulation underneath....
-    INFO: Test completed successfully.
-    INFO::[ Vitis-EM 22 ] [Time elapsed: 0 minute(s) 30 seconds, Emulation time: 0.151515 ms]
-    Data transfer between kernel(s) and global memory(s)
-    KVAdd_1:m00_axi-DDR[1]          RD = 16.000 KB              WR = 16.000 KB       
-    KVAdd_1:m01_axi-DDR[1]          RD = 16.000 KB              WR = 16.000 KB       
-    KVAdd_1:m02_axi-DDR[1]          RD = 16.000 KB              WR = 16.000 KB   
-    ```
+   ```
+   INFO: Found 1 platforms
+   INFO: Selected platform 0 from Xilinx
+   INFO: Found 1 devices
+   CL_DEVICE_NAME xilinx_aws-vu9p-f1_shell-v04261818_201920_2
+   Selected xilinx_aws-vu9p-f1_shell-v04261818_201920_2 as the target device
+   INFO: loading xclbin ../binary_container_1.xclbin
+   INFO: [HW-EM 01] Hardware emulation runs simulation underneath....
+   INFO: Test completed successfully.
+   INFO::[ Vitis-EM 22 ] [Time elapsed: 0 minute(s) 30 seconds, Emulation time: 0.151515 ms]
+   Data transfer between kernel(s) and global memory(s)
+   KVAdd_1:m00_axi-DDR[1]          RD = 16.000 KB              WR = 16.000 KB       
+   KVAdd_1:m01_axi-DDR[1]          RD = 16.000 KB              WR = 16.000 KB       
+   KVAdd_1:m02_axi-DDR[1]          RD = 16.000 KB              WR = 16.000 KB   
+   ```
 
 1. In the *Assistant* view, expand **rtl\_kernel\_system > rtl\_kernel > Emulation-HW > SystemDebugger\_rtl\_kernel\_system\_rtl\_kernel**, and double-click on **Run Summary (xclbin)**
 
@@ -229,45 +229,45 @@ After completing this lab, you will be able to:
 
 1. If you have built the hardware yourself then copy the necessary files using the following commands:
 
-    ```sh
-    cp binary_container_1.awsxclbin ~/workspace/rtl_kernel/Hardware 
-    cp ~/xup_compute_acceleration/sources/xrt.ini ~/workspace/rtl_kernel/Hardware/.
-    ````
+   ```sh
+   cp binary_container_1.awsxclbin ~/workspace/rtl_kernel/Hardware 
+   cp ~/xup_compute_acceleration/sources/xrt.ini ~/workspace/rtl_kernel/Hardware/.
+   ````
 
 1. If you have not built the hardware yourself then copy the provided prebuilt solution files using the following commands:
 
-    ```sh
-    mkdir ~/workspace/rtl_kernel/Hardware
-    cp ~/xup_compute_acceleration/solutions/rtl_kernel/* ~/workspace/rtl_kernel/Hardware/. 
-    chmod +x ~/workspace/rtl_kernel/Hardware/rtl_kernel
-    ````
+   ```sh
+   mkdir ~/workspace/rtl_kernel/Hardware
+   cp ~/xup_compute_acceleration/solutions/rtl_kernel/* ~/workspace/rtl_kernel/Hardware/. 
+   chmod +x ~/workspace/rtl_kernel/Hardware/rtl_kernel
+   ````
 
 1. Execute precompiled hardware solution
 
-    ```sh
-    cd ~/workspace/rtl_kernel/Hardware/
-    ./rtl_kernel binary_container_1.awsxclbin
-    ```
+   ```sh
+   cd ~/workspace/rtl_kernel/Hardware/
+   ./rtl_kernel binary_container_1.awsxclbin
+   ```
 
-    The FPGA bitstream will be downloaded and the host application will be executed showing output similar to:
+   The FPGA bitstream will be downloaded and the host application will be executed showing output similar to:
 
-    ```
-    INFO: Found 1 platforms
-    INFO: Selected platform 0 from Xilinx
-    INFO: Found 1 devices
-    CL_DEVICE_NAME xilinx_aws-vu9p-f1_shell-v04261818_201920_2
-    Selected xilinx_aws-vu9p-f1_shell-v04261818_201920_2 as the target device
-    INFO: loading xclbin binary_container_1.awsxclbin
-    INFO: Test completed successfully.
-    ```
+   ```
+   INFO: Found 1 platforms
+   INFO: Selected platform 0 from Xilinx
+   INFO: Found 1 devices
+   CL_DEVICE_NAME xilinx_aws-vu9p-f1_shell-v04261818_201920_2
+   Selected xilinx_aws-vu9p-f1_shell-v04261818_201920_2 as the target device
+   INFO: loading xclbin binary_container_1.awsxclbin
+   INFO: Test completed successfully.
+   ```
 
 ### Analyze hardware application timeline and profile summary
 
 1. Execute the following command to open Vitis Analyzer and click *Application Timeline*
 
-    ```sh
-    vitis_analyzer xclbin.run_summary
-    ```
+   ```sh
+   vitis_analyzer xclbin.run_summary
+   ```
 
 1. Zoom in into the tail end of the execution and see various activities
 

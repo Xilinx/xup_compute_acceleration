@@ -84,4 +84,4 @@ These labs are intended for hardware designers who may want to use RTL to build 
 	This lab will show you how to carry out host application debug, and debug of the hardware kernel.
 
 ---------------------------------------
-<p align="center">Copyright&copy; 2020 Xilinx</p>
+<p align="center">Copyright&copy; 2021 Xilinx</p>

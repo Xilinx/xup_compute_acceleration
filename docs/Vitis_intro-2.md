@@ -76,25 +76,25 @@ This lab is a continuation of previous *Introduction to Vitis* lab. You ended th
 1. Observe the application has run, and the output is displayed in the *Console* view. Compared to software emulation, the output also shows data transfer information. Notice the data transfer between kernel and global memory is 16 KB on each port
 
 
-    ```
-    Found Platform
-    Platform Name: Xilinx
-    INFO: Reading /home/ec2-user/workspace/vadd_system/Emulation-HW//binary_container_1.xclbin
-    Loading: '/home/ec2-user/workspace/vadd_system/Emulation-HW//binary_container_1.xclbin'
-    Trying to program device[0]: xilinx_aws-vu9p-f1_shell-v04261818_201920_2
-    INFO: [HW-EM 01] Hardware emulation runs simulation underneath. Using a large data set will result in ...
-    Device[0]: program successful!
-    Running Vector add with 4096 elements
-    Launching Hardware Kernel...
-    Getting Hardware Results...
-    TEST PASSED
-    INFO::[ Vitis-EM 22 ] [Time elapsed: 0 minute(s) 30 seconds, Emulation time: 0.137666 ms]
-    Data transfer between kernel(s) and global memory(s)
-    krnl_vadd_1:m_axi_gmem-DDR[1]          RD = 32.000 KB              WR = 16.000 KB       
+   ```
+   Found Platform
+   Platform Name: Xilinx
+   INFO: Reading /home/ec2-user/workspace/vadd_system/Emulation-HW//binary_container_1.xclbin
+   Loading: '/home/ec2-user/workspace/vadd_system/Emulation-HW//binary_container_1.xclbin'
+   Trying to program device[0]: xilinx_aws-vu9p-f1_shell-v04261818_201920_2
+   INFO: [HW-EM 01] Hardware emulation runs simulation underneath. Using a large data set will result in ...
+   Device[0]: program successful!
+   Running Vector add with 4096 elements
+   Launching Hardware Kernel...
+   Getting Hardware Results...
+   TEST PASSED
+   INFO::[ Vitis-EM 22 ] [Time elapsed: 0 minute(s) 30 seconds, Emulation time: 0.137666 ms]
+   Data transfer between kernel(s) and global memory(s)
+   krnl_vadd_1:m_axi_gmem-DDR[1]          RD = 32.000 KB              WR = 16.000 KB       
 
-    INFO: [HW-EM 06-0] Waiting for the simulator process to exit
-    INFO: [HW-EM 06-1] All the simulator processes exited successfully
-    ```    
+   INFO: [HW-EM 06-0] Waiting for the simulator process to exit
+   INFO: [HW-EM 06-1] All the simulator processes exited successfully
+   ```    
 
 1. View Timeline Trace
 
@@ -174,20 +174,20 @@ This lab is a continuation of previous *Introduction to Vitis* lab. You ended th
 
 1. If you have built the hardware yourself then copy the necessary files using the following commands:
 
-    ```sh
-    cp binary_container_1.awsxclbin ~/workspace/vadd/Hardware 
-    cp ~/xup_compute_acceleration/sources/xrt.ini ~/workspace/vadd/Hardware/.
-    ````
+   ```sh
+   cp binary_container_1.awsxclbin ~/workspace/vadd/Hardware 
+   cp ~/xup_compute_acceleration/sources/xrt.ini ~/workspace/vadd/Hardware/.
+   ````
 
 1. If you have not built the hardware yourself then copy the provided prebuilt solution files using the following commands:
 
-    ```sh
-    mkdir ~/workspace/vadd/Hardware
-    cp ~/xup_compute_acceleration/solutions/vadd/* ~/workspace/vadd/Hardware/. 
-    chmod +x ~/workspace/vadd/Hardware/vadd
-    ````
+   ```sh
+   mkdir ~/workspace/vadd/Hardware
+   cp ~/xup_compute_acceleration/solutions/vadd/* ~/workspace/vadd/Hardware/. 
+   chmod +x ~/workspace/vadd/Hardware/vadd
+   ````
 
-    Setup the run configuration so you can run the application and then analyze results from GUI
+   Setup the run configuration so you can run the application and then analyze results from GUI
 
 1. Right-click on `vadd_system` in *Assistant* view, select `Run > Run Configurations...`
 
@@ -199,15 +199,15 @@ This lab is a continuation of previous *Introduction to Vitis* lab. You ended th
 
 1. Execute the application by clicking **Apply** and then **Run**. The FPGA bitstream will be downloaded and the host application will be executed showing output similar to:
 
-    ```
-    Loading: '/home/ec2-user/workspace/vadd_system/Hardware/binary_container_1.awsxclbin'
-    Trying to program device[0]: xilinx_aws-vu9p-f1_shell-v04261818_201920_2
-    Device[0]: program successful!
-    Running Vector add with 16777216 elements
-    Launching Hardware Kernel...
-    Getting Hardware Results...
-    TEST PASSED
-    ```
+   ```
+   Loading: '/home/ec2-user/workspace/vadd_system/Hardware/binary_container_1.awsxclbin'
+   Trying to program device[0]: xilinx_aws-vu9p-f1_shell-v04261818_201920_2
+   Device[0]: program successful!
+   Running Vector add with 16777216 elements
+   Launching Hardware Kernel...
+   Getting Hardware Results...
+   TEST PASSED
+   ```
 
 1. In the *Assistant* view, double click `vadd_system > vadd > Hardware > SystemDebugger_vadd_system_vadd > Run Summary (xclbin)` to open Vitis Analyzer
 
@@ -240,17 +240,17 @@ This lab is a continuation of previous *Introduction to Vitis* lab. You ended th
 
     Earlier, when you set kernel profiling and trace settings, `xrt.ini` file gets updated. During the execution, this updated file is used to generate the profile and application timeline data which are seen using Vitis Analyzer.
 
-    ```
-    [Debug]
-    opencl_summary=true
-    power_profile=false
-    opencl_trace=true
-    lop_trace=false
-    xrt_trace=false
-    data_transfer_trace=coarse
-    stall_trace=off
-    app_debug=true
-    ```
+   ```
+   [Debug]
+   opencl_summary=true
+   power_profile=false
+   opencl_trace=true
+   lop_trace=false
+   xrt_trace=false
+   data_transfer_trace=coarse
+   stall_trace=off
+   app_debug=true
+   ```
 
 ## Conclusion
 

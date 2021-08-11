@@ -35,23 +35,23 @@ After completing Introduction to Vitis Part 1 and 2, you will learn to:
 
     Make sure Vitis and XRT environment has been setup. XRT setup is necessary before launching Vitis because building and running acceleration applications requires XRT. To do so, the following commands should return a valid path.
 
-    ```sh
-    echo $XILINX_VITIS
-    echo $XILINX_XRT
-    ```
+   ```sh
+   echo $XILINX_VITIS
+   echo $XILINX_XRT
+   ```
 
     If either of the variables above are empty, then execute the following two commands:
 
-    ```sh
-    source $AWS_FPGA_REPO_DIR/vitis_setup.sh
-    source $AWS_FPGA_REPO_DIR/vitis_runtime_setup.sh
-    ```
+   ```sh
+   source $AWS_FPGA_REPO_DIR/vitis_setup.sh
+   source $AWS_FPGA_REPO_DIR/vitis_runtime_setup.sh
+   ```
 
 1. Invoke GUI by executing the following command from a terminal window:
 
-    ```sh
-    vitis &
-    ```
+   ```sh
+   vitis &
+   ```
 1. Set workspace to any empty folder, such as `~/workspace` and click **Launch**  
    
     Substitute `~` with `/home/ec2-user` (AWSEducate user), `/home/centos` (CentOS based instance user), or `/home/ubuntu` (Ubuntu based instance user)
@@ -146,18 +146,18 @@ After completing Introduction to Vitis Part 1 and 2, you will learn to:
 
 1. Observe the application has run and the output is displayed in the *Console* view
 
-    ```
-    Found Platform
-    Platform Name: Xilinx
-    INFO: Reading /home/ec2-user/workspace/vadd_system/Emulation-SW/binary_container_1.xclbin
-    Loading: '/home/ec2-user/workspace/vadd_system/Emulation-SW/binary_container_1.xclbin'
-    Trying to program device[0]: xilinx_aws-vu9p-f1_shell-v04261818_201920_2
-    Device[0]: program successful!
-    Running Vector add with 32768 elements
-    Launching Hardware Kernel...
-    Getting Hardware Results...
-    TEST PASSED
-    ```
+   ```
+   Found Platform
+   Platform Name: Xilinx
+   INFO: Reading /home/ec2-user/workspace/vadd_system/Emulation-SW/binary_container_1.xclbin
+   Loading: '/home/ec2-user/workspace/vadd_system/Emulation-SW/binary_container_1.xclbin'
+   Trying to program device[0]: xilinx_aws-vu9p-f1_shell-v04261818_201920_2
+   Device[0]: program successful!
+   Running Vector add with 32768 elements
+   Launching Hardware Kernel...
+   Getting Hardware Results...
+   TEST PASSED
+   ```
 
 ## Conclusion
 

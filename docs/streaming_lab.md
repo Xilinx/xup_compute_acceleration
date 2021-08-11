@@ -49,9 +49,9 @@ However, in this lab we will use the transposed direct version, which is an impr
 1. If you have a previous Vitis session open, close it
 1. In the terminal run
 
-    ```sh
-    export LIBRARY_PATH=$LIBRARY_PATH:/usr/lib/x86_64-linux-gnu
-    ```
+   ```sh
+   export LIBRARY_PATH=$LIBRARY_PATH:/usr/lib/x86_64-linux-gnu
+   ```
 1. Launch Vitis
 1. Create a new *Application Project*
 1. In the *Platform* window select AWS F1 platform
@@ -97,19 +97,19 @@ However, in this lab we will use the transposed direct version, which is an impr
 1. Click *Apply* and then *Run*
 1. The console output will report
 
-    ```console
-    Found Platform
-    Platform Name: Xilinx
-    INFO: Reading ../binary_container_1.xclbin
-    Loading: '../binary_container_1.xclbin'
-    Trying to program device[0]: xilinx_aws-vu9p-f1_shell-v04261818_201920_2
-    Device[0]: program successful!
-    Running FIR filter with 128 samples, each sample is a 32-bit signed element
-    Launching Hardware Kernels...
-    Getting Hardware Results...
-    Computing Software results...
-    TEST PASSED
-    ```
+   ```console
+   Found Platform
+   Platform Name: Xilinx
+   INFO: Reading ../binary_container_1.xclbin
+   Loading: '../binary_container_1.xclbin'
+   Trying to program device[0]: xilinx_aws-vu9p-f1_shell-v04261818_201920_2
+   Device[0]: program successful!
+   Running FIR filter with 128 samples, each sample is a 32-bit signed element
+   Launching Hardware Kernels...
+   Getting Hardware Results...
+   Computing Software results...
+   TEST PASSED
+   ```
 1. Set the program arguments, setting the number of samples to 16 and enabling debug through the Run Configuration. Invoke the Run Configuration, click **Edit...** button of the *Program Arguments*, double-click the current entry and enter `../binary_container_1.xclbin 16 debug`
 1. Click **OK** to set the arguments, click **OK** again,  click **Apply**, and then click **Run**
 
@@ -122,27 +122,27 @@ However, in this lab we will use the transposed direct version, which is an impr
 1. Once compiled, Run the Emulation-HW, only specify the binary container as argument
 1. The console output will report
 
-    ```console
-    Found Platform
-    Platform Name: Xilinx
-    INFO: Reading ../binary_container_1.xclbin
-    Loading: '../binary_container_1.xclbin'
-    Trying to program device[0]: xilinx_aws-vu9p-f1_shell-v04261818_201920_2
-    INFO: [HW-EM 01] Hardware emulation runs simulation underneath. Using a large data set will result .............
-    Device[0]: program successful!
-    Running FIR filter with 2048 samples, each sample is a 32-bit signed element
-    Launching Kernel...
-    Getting Results...
-    TEST PASSED
-    INFO::[ Vitis-EM 22 ] [Time elapsed: 0 minute(s) 39 seconds, Emulation time: 0.145998 ms]
-    Data transfer between kernel(s) and global memory(s)
-    krnl_mm2s_1:m_axi_gmem-DDR[0]          RD = 8.000 KB               WR = 0.000 KB        
-    krnl_s2mm_1:m_axi_gmem-DDR[2]          RD = 0.000 KB               WR = 8.000 KB        
+   ```console
+   Found Platform
+   Platform Name: Xilinx
+   INFO: Reading ../binary_container_1.xclbin
+   Loading: '../binary_container_1.xclbin'
+   Trying to program device[0]: xilinx_aws-vu9p-f1_shell-v04261818_201920_2
+   INFO: [HW-EM 01] Hardware emulation runs simulation underneath. Using a large data set will result .............
+   Device[0]: program successful!
+   Running FIR filter with 2048 samples, each sample is a 32-bit signed element
+   Launching Kernel...
+   Getting Results...
+   TEST PASSED
+   INFO::[ Vitis-EM 22 ] [Time elapsed: 0 minute(s) 39 seconds, Emulation time: 0.145998 ms]
+   Data transfer between kernel(s) and global memory(s)
+   krnl_mm2s_1:m_axi_gmem-DDR[0]          RD = 8.000 KB               WR = 0.000 KB        
+   krnl_s2mm_1:m_axi_gmem-DDR[2]          RD = 0.000 KB               WR = 8.000 KB        
 
-    Data transfer on stream interfaces
-    krnl_fir_1:y-->krnl_s2mm_1:s2m               8.000 KB        
-    krnl_mm2s_1:m2s-->krnl_fir_1:x               8.000 KB   
-    ```
+   Data transfer on stream interfaces
+   krnl_fir_1:y-->krnl_s2mm_1:s2m               8.000 KB        
+   krnl_mm2s_1:m2s-->krnl_fir_1:x               8.000 KB   
+   ```
 
     Notice that not only the data memory mapped data transfer is reported, but also, the streaming data transfer. Once again, you can rerun the application with different arguments.
 
@@ -177,35 +177,35 @@ Since the Hardware build and AFI availability for AWS takes a considerable amoun
 
 1. Create a solution testing directory, if not yet created, called `sol-test` in the home directory, and copy the files from the provided solution director using the following commands:
 
-    ```sh
-    mkdir ~/sol-test
-    mkdir ~/sol-test/streaming_lab
-    cp ~/xup_compute_acceleration/solutions/streaming_lab/* ~/sol-test/streaming_lab/.
-    chmod +x ~/sol-test/streaming_lab/streaming_lab
-    ```
+   ```sh
+   mkdir ~/sol-test
+   mkdir ~/sol-test/streaming_lab
+   cp ~/xup_compute_acceleration/solutions/streaming_lab/* ~/sol-test/streaming_lab/.
+   chmod +x ~/sol-test/streaming_lab/streaming_lab
+   ```
 
 1. Run the application and analyze the output using the following commands:
 
-    ```sh
-    cd ~/sol-test/streaming_lab
-    ./streaming_lab binary_container_1.awsxclbin
-    ```
+   ```sh
+   cd ~/sol-test/streaming_lab
+   ./streaming_lab binary_container_1.awsxclbin
+   ```
 
 1. The FPGA bitstream will be downloaded and the host application will be executed showing output similar to:
 
-    ```console
-    Found Platform
-    Platform Name: Xilinx
-    INFO: Reading binary_container_1.awsxclbin
-    Loading: 'binary_container_1.awsxclbin'
-    Trying to program device[0]: xilinx_aws-vu9p-f1_dynamic_5_0
-    Device[0]: program successful!
-    Running FIR filter with 4194304 samples, each sample is a 32-bit signed element
-    Launching Hardware Kernels...
-    Getting Hardware Results...
-    Computing Software results...
-    TEST PASSED
-    ```
+   ```console
+   Found Platform
+   Platform Name: Xilinx
+   INFO: Reading binary_container_1.awsxclbin
+   Loading: 'binary_container_1.awsxclbin'
+   Trying to program device[0]: xilinx_aws-vu9p-f1_dynamic_5_0
+   Device[0]: program successful!
+   Running FIR filter with 4194304 samples, each sample is a 32-bit signed element
+   Launching Hardware Kernels...
+   Getting Hardware Results...
+   Computing Software results...
+   TEST PASSED
+   ```
 
 ---------------------------------------
 <p align="center">Copyright&copy; 2021 Xilinx</p>
