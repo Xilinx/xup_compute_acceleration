@@ -239,4 +239,4 @@ Known issues:
     sudo systemctl stop firewalld
     ```
 ---------------------------------------
-<p align="center">Copyright&copy; 2020 Xilinx</p>
+<p align="center">Copyright&copy; 2021 Xilinx</p>
