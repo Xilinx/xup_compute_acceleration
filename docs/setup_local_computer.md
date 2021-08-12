@@ -21,4 +21,4 @@ export PLATFORM_REPO_PATHS=$ALVEO_PLATFORM_INSTALLATION_DIRECTORY
 ```
 
 ---------------------------------------
-<p align="center">Copyright&copy; 2020 Xilinx</p>
+<p align="center">Copyright&copy; 2021 Xilinx</p>

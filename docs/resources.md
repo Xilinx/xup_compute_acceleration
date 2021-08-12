@@ -48,4 +48,4 @@ Please review the Vitis HLS migration guide [here](https://www.xilinx.com/html_d
 To understand the differences between the AWS F1 and Alveo U200 platforms and how to migrate your application between these platforms, review [Alveo to AWS Migration guide](https://github.com/aws/aws-fpga/blob/master/Vitis/docs/Alveo_to_AWS_F1_Migration.md)
 
 ---------------------------------------
-<p align="center">Copyright&copy; 2020-2021 Xilinx</p>
+<p align="center">Copyright&copy; 2021 Xilinx</p>
