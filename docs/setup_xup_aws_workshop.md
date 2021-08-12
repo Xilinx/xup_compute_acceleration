@@ -172,15 +172,15 @@ Known issues:
 
 1. Execute the following to clone the *aws-fpga* repository and setup the Xilinx tools. `aws-fpga` includes the AWS F1 tools, Hardware Development Kit (HDK) and documentation
 
-    ```sh
-    git clone https://github.com/aws/aws-fpga $AWS_FPGA_REPO_DIR -b v1.4.16
-    echo "export PLATFORM_REPO_PATHS=$AWS_FPGA_REPO_DIR/Vitis/aws_platform/xilinx_aws-vu9p-f1_shell-v04261818_201920_2/" >> ~/.bashrc
-    echo "source /opt/xilinx/xrt/setup.sh" >> ~/.bashrc
-    git clone https://github.com/Xilinx/xup_compute_acceleration.git
-    source ~/.bashrc
-    source $AWS_FPGA_REPO_DIR/vitis_setup.sh
-    source $AWS_FPGA_REPO_DIR/vitis_runtime_setup.sh
-    ```
+   ```sh
+   git clone https://github.com/aws/aws-fpga $AWS_FPGA_REPO_DIR -b v1.4.16
+   echo "export PLATFORM_REPO_PATHS=$AWS_FPGA_REPO_DIR/Vitis/aws_platform/xilinx_aws-vu9p-f1_shell-v04261818_201920_2/" >> ~/.bashrc
+   echo "source /opt/xilinx/xrt/setup.sh" >> ~/.bashrc
+   git clone https://github.com/Xilinx/xup_compute_acceleration.git
+   source ~/.bashrc
+   source $AWS_FPGA_REPO_DIR/vitis_setup.sh
+   source $AWS_FPGA_REPO_DIR/vitis_runtime_setup.sh
+   ```
 
     The previous commands will:
     - Clone the AWS F1 tools
@@ -218,25 +218,25 @@ Known issues:
 
 1. On the terminal, enter the following command to start the DCV server:
 
-    ```sh
-    dcv create-session --user centos centos
-    ```
-    By default NICE DCV runs in the TCP port `8443`
+   ```sh
+   dcv create-session --user centos centos
+   ```
+   By default NICE DCV runs in the TCP port `8443`
 
 1. Verify dcv session
 
-    If the output of `dcv list-sessions` should look like:
+   If the output of `dcv list-sessions` should look like:
 
-    ```sh
-    Session: 'centos' (owner: centos)
-    ```
+   ```sh
+   Session: 'centos' (owner: centos)
+   ```
 
 
 1. Stop the firewall
 
-    ```sh
-    sudo systemctl disable firewalld
-    sudo systemctl stop firewalld
-    ```
+   ```sh
+   sudo systemctl disable firewalld
+   sudo systemctl stop firewalld
+   ```
 ---------------------------------------
 <p align="center">Copyright&copy; 2021 Xilinx</p>

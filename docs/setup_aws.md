@@ -87,24 +87,24 @@ source ~/.bashrc
 
 1. Execute the following to clone the *aws-fpga* repository and setup the Xilinx tools. `aws-fpga` includes the AWS F1 tools, Hardware Development Kit (HDK) and documentation
 
-    ```sh
-    git clone https://github.com/aws/aws-fpga $AWS_FPGA_REPO_DIR -b v1.4.16
-    echo "export PLATFORM_REPO_PATHS=$AWS_FPGA_REPO_DIR/Vitis/aws_platform/xilinx_aws-vu9p-f1_shell-v04261818_201920_2/" >> ~/.bashrc
-    echo "source /opt/xilinx/xrt/setup.sh" >> ~/.bashrc
-    git clone https://github.com/Xilinx/xup_compute_acceleration.git
-    source ~/.bashrc
-    source $AWS_FPGA_REPO_DIR/vitis_setup.sh
-    source $AWS_FPGA_REPO_DIR/vitis_runtime_setup.sh
-    ```
+   ```sh
+   git clone https://github.com/aws/aws-fpga $AWS_FPGA_REPO_DIR -b v1.4.16
+   echo "export PLATFORM_REPO_PATHS=$AWS_FPGA_REPO_DIR/Vitis/aws_platform/xilinx_aws-vu9p-f1_shell-v04261818_201920_2/" >> ~/.bashrc
+   echo "source /opt/xilinx/xrt/setup.sh" >> ~/.bashrc
+   git clone https://github.com/Xilinx/xup_compute_acceleration.git
+   source ~/.bashrc
+   source $AWS_FPGA_REPO_DIR/vitis_setup.sh
+   source $AWS_FPGA_REPO_DIR/vitis_runtime_setup.sh
+   ```
 
-    The previous commands will: 
-    - Clone the AWS F1 tools
-    - Setup the platform directory
-    - Clone this repository to get source code
-    - Source XRT
-    - Source AWS F1 tools
+   The previous commands will: 
+   - Clone the AWS F1 tools
+   - Setup the platform directory
+   - Clone this repository to get source code
+   - Source XRT
+   - Source AWS F1 tools
 
-    For more details see: https://github.com/aws/aws-fpga/blob/master/Vitis/README.md
+   For more details see: https://github.com/aws/aws-fpga/blob/master/Vitis/README.md
 
 
   Note that `AWS_FPGA_REPO_DIR` is defined in /etc/profile.d/aws-f1.sh

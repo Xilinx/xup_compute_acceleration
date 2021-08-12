@@ -59,24 +59,24 @@ DDR controllers have a 512-bit wide interface internally. If we parallelize the 
 
 1. Double-click on `wide_vadd_krnl.cpp` to view its content
 
-    Look at lines 62-67 and note wider (512-bit) kernel interface. `uint512_dt` is used in stead of `unsigned int` for input, output and internal variables for data storage. Notice `uint512_dt` is defined as an arbitrary precision data type `ap_uint<512>` in line 46
+   Look at lines 62-67 and note wider (512-bit) kernel interface. `uint512_dt` is used in stead of `unsigned int` for input, output and internal variables for data   storage. Notice `uint512_dt` is defined as an arbitrary precision data type `ap_uint<512>` in line 46
 
-    ```C
-    void wide_vadd(
-      const uint512_dt *in1, // Read-Only Vector 1
-      const uint512_dt *in2, // Read-Only Vector 2
-      uint512_dt       *out, // Output Result
-      int size               // Size in integer
-    )
-    ```
+   ```C
+   void wide_vadd(
+     const uint512_dt *in1, // Read-Only Vector 1
+     const uint512_dt *in2, // Read-Only Vector 2
+     uint512_dt       *out, // Output Result
+     int size               // Size in integer
+   )
+   ```
 
 1. Scroll down further and look at lines 78-80 where local memories are defined of the same data type and width (512-bit)
 
-    ```C
-    uint512_dt v1_local[BUFFER_SIZE]; // Local memory to store vector1
-    uint512_dt v2_local[BUFFER_SIZE];
-    uint512_dt result_local[BUFFER_SIZE]; // Local Memory to store result
-    ```
+   ```C
+   uint512_dt v1_local[BUFFER_SIZE]; // Local memory to store vector1
+   uint512_dt v2_local[BUFFER_SIZE];
+   uint512_dt result_local[BUFFER_SIZE]; // Local Memory to store result
+   ```
 
 ### Setup Hardware Emulation
 
@@ -103,34 +103,34 @@ DDR controllers have a 512-bit wide interface internally. If we parallelize the 
 
     Notice the kernel wait time is about 8 seconds.
 
-    ```
-    -- Parallelizing the Data Path --
+   ```
+   -- Parallelizing the Data Path --
 
-    Loading ../binary_container_1.xclbin to program the board
+   Loading ../binary_container_1.xclbin to program the board
 
-    INFO: [HW-EM 01] Hardware emulation runs simulation underneath....
-    Running kernel test XRT-allocated buffers and wide data path:
+   INFO: [HW-EM 01] Hardware emulation runs simulation underneath....
+   Running kernel test XRT-allocated buffers and wide data path:
 
 
-    OCL-mapped contiguous buffer example complete successfully!
+   OCL-mapped contiguous buffer example complete successfully!
 
-    --------------- Key execution times ---------------
-    OpenCL Initialization              : 23746.418 ms
-    Allocate contiguous OpenCL buffers :   13.958 ms
-    Set kernel arguments               :    0.025 ms
-    Map buffers to user space pointers :    0.374 ms
-    Populating buffer inputs           :    0.400 ms
-    Software VADD run                  :    0.212 ms
-    Memory object migration enqueue    :    3.235 ms
-    OCL Enqueue task                   :    2.314 ms
-    Wait for kernel to complete        : 8000.792 ms
-    Read back computation results      :    1.297 ms
-    INFO::[ Vitis-EM 22 ] [Time elapsed: 0 minute(s) 40 seconds, Emulation time: 0.162641 ms]
-    Data transfer between kernel(s) and global memory(s)
-    wide_vadd_1:m_axi_gmem-DDR[1]          RD = 128.000 KB             WR = 0.000 KB        
-    wide_vadd_1:m_axi_gmem1-DDR[1]          RD = 128.000 KB             WR = 0.000 KB        
-    wide_vadd_1:m_axi_gmem2-DDR[1]          RD = 0.000 KB               WR = 128.000 KB
-    ```
+   --------------- Key execution times ---------------
+   OpenCL Initialization              : 23746.418 ms
+   Allocate contiguous OpenCL buffers :   13.958 ms
+   Set kernel arguments               :    0.025 ms
+   Map buffers to user space pointers :    0.374 ms
+   Populating buffer inputs           :    0.400 ms
+   Software VADD run                  :    0.212 ms
+   Memory object migration enqueue    :    3.235 ms
+   OCL Enqueue task                   :    2.314 ms
+   Wait for kernel to complete        : 8000.792 ms
+   Read back computation results      :    1.297 ms
+   INFO::[ Vitis-EM 22 ] [Time elapsed: 0 minute(s) 40 seconds, Emulation time: 0.162641 ms]
+   Data transfer between kernel(s) and global memory(s)
+   wide_vadd_1:m_axi_gmem-DDR[1]          RD = 128.000 KB             WR = 0.000 KB        
+   wide_vadd_1:m_axi_gmem1-DDR[1]          RD = 128.000 KB             WR = 0.000 KB        
+   wide_vadd_1:m_axi_gmem2-DDR[1]          RD = 0.000 KB               WR = 128.000 KB
+   ```
 
 1. Check generated kernel interface
 
@@ -186,34 +186,34 @@ Please note that since the DDR controllers are constrained to different SLR (Sup
     Notice that the kernel wait time has reduced from about 13 seconds (single memory bank) to 10 seconds (three memory banks) indicating performance improvement
 
 
-    ```
-    -- Parallelizing the Data Path --
+   ```
+   -- Parallelizing the Data Path --
 
-    Loading ../binary_container_1.xclbin to program the board
+   Loading ../binary_container_1.xclbin to program the board
 
-    INFO: [HW-EM 01] Hardware emulation runs simulation underneath....
-    Running kernel test XRT-allocated buffers and wide data path:
+   INFO: [HW-EM 01] Hardware emulation runs simulation underneath....
+   Running kernel test XRT-allocated buffers and wide data path:
 
 
-    OCL-mapped contiguous buffer example complete successfully!
+   OCL-mapped contiguous buffer example complete successfully!
 
-    --------------- Key execution times ---------------
-    OpenCL Initialization              : 23538.045 ms
-    Allocate contiguous OpenCL buffers :    6.350 ms
-    Set kernel arguments               :    9.937 ms
-    Map buffers to user space pointers :    0.283 ms
-    Populating buffer inputs           :    0.276 ms
-    Software VADD run                  :    0.163 ms
-    Memory object migration enqueue    :    3.612 ms
-    OCL Enqueue task                   :    2.114 ms
-    Wait for kernel to complete        : 7000.736 ms
-    Read back computation results      :    1.389 ms
-    INFO::[ Vitis-EM 22 ] [Time elapsed: 0 minute(s) 32 seconds, Emulation time: 0.0747283 ms]
-    Data transfer between kernel(s) and global memory(s)
-    wide_vadd_1:m_axi_gmem-DDR[0]          RD = 128.000 KB             WR = 0.000 KB        
-    wide_vadd_1:m_axi_gmem1-DDR[2]          RD = 128.000 KB             WR = 0.000 KB        
-    wide_vadd_1:m_axi_gmem2-DDR[1]          RD = 0.000 KB               WR = 128.000 KB  
-    ```
+   --------------- Key execution times ---------------
+   OpenCL Initialization              : 23538.045 ms
+   Allocate contiguous OpenCL buffers :    6.350 ms
+   Set kernel arguments               :    9.937 ms
+   Map buffers to user space pointers :    0.283 ms
+   Populating buffer inputs           :    0.276 ms
+   Software VADD run                  :    0.163 ms
+   Memory object migration enqueue    :    3.612 ms
+   OCL Enqueue task                   :    2.114 ms
+   Wait for kernel to complete        : 7000.736 ms
+   Read back computation results      :    1.389 ms
+   INFO::[ Vitis-EM 22 ] [Time elapsed: 0 minute(s) 32 seconds, Emulation time: 0.0747283 ms]
+   Data transfer between kernel(s) and global memory(s)
+   wide_vadd_1:m_axi_gmem-DDR[0]          RD = 128.000 KB             WR = 0.000 KB        
+   wide_vadd_1:m_axi_gmem1-DDR[2]          RD = 128.000 KB             WR = 0.000 KB        
+   wide_vadd_1:m_axi_gmem2-DDR[1]          RD = 0.000 KB               WR = 128.000 KB  
+   ```
 
 1. Check generated kernel interface
 

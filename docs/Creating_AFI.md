@@ -84,7 +84,7 @@ Note: When AFI creation is in progress, the *State* will be `pending`. When the 
        "Code": "available"
    },
 
-   ...
+    ...
 ```
 
 Wait until the AFI becomes available before proceeding to execute on the F1 instance.
@@ -95,17 +95,17 @@ You can regenerate the `.awsxclbin` file as long as you have access to `*agfi_id
 
 1. Edit these variable with the corresponding names
     
-    ```sh
-    export xclbin=<xclbin_filename>
-    export agfi_id=<*_agfi_id.txt>
-    export awsxclbin=<output_name>
-    ```
+   ```sh
+   export xclbin=<xclbin_filename>
+   export agfi_id=<*_agfi_id.txt>
+   export awsxclbin=<output_name>
+   ```
     
 1. Generate `.awsxclbin` file
 
-    ```sh
-    xclbinutil -i $xclbin --remove-section PARTITION_METADATA --remove-section SYSTEM_METADATA --replace-section BITSTREAM:RAW:${agfi_id} -o ${awsxclbin}.awsxclbin
-    ```
+   ```sh
+   xclbinutil -i $xclbin --remove-section PARTITION_METADATA --remove-section SYSTEM_METADATA --replace-section BITSTREAM:RAW:${agfi_id} -o ${awsxclbin}.awsxclbin
+   ```
 
 ---------------------------------------
 <p align="center">Copyright&copy; 2021 Xilinx</p>
