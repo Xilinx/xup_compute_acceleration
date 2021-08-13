@@ -121,7 +121,7 @@ p-list {
 }
 
 @media print,
-screen and (min-width: 969px) {
+screen and (min-width: 1201px) {
     nav {
         background-color: #171717;
         color: #FDFDFB;
@@ -441,7 +441,7 @@ footer {
 }
 
 @media print,
-screen and (max-width: 968px) {
+screen and (max-width: 1200px) {
     div.wrapper {
         width: auto;
         margin: 0
