@@ -67,7 +67,7 @@ The complete set of labs includes the following modules; it is recommended to co
 1. [**Optimization**](Optimization_lab.md):
 	This lab guides you through the steps to analyze various generated reports and then apply optimization techniques, such as `DATAFLOW` on the host program and `PIPELINING` on kernel side to improve throughput and data transfer rate.
 
-1. [**Vision Accelerated Library**](Vision_lab.md):
+1. [**Vision Lab**](Vision_lab.md):
     In this lab you will create a Vitis design using the command line. The design uses two kernels from the [Vitis Accelerated Libraries](https://xilinx.github.io/Vitis_Libraries/), **image resize** and **image resize & blur**. You will run software emulation and test the kernels in hardware.
 
 1. [**PYNQ Labs**](pynq_labs.md):
@@ -77,11 +77,14 @@ The complete set of labs includes the following modules; it is recommended to co
 
 These labs are intended for hardware designers who may want to use RTL to build kernels, and learn how to use lower level hardware debug features in Vitis.
 
-1. [**RTL-Kernel Wizard**](rtl_kernel_lab.md):
+1. [**RTL-Kernel**](rtl_kernel_lab.md):
 	This lab guides you through the steps involved in using a RTL Kernel wizard to wrap a user RTL-based IP so the generated IP can be used in a Vitis project and application development.
 
-1. [**Debug**](debug_lab.md):
+1. [**Hardware Debugging**](debug_lab.md):
 	This lab will show you how to carry out host application debug, and debug of the hardware kernel.
+
+1. [**Streaming**](streaming_lab.md):
+	This lab will show you how to incorporate kernels having streaming interfaces.
 
 ---------------------------------------
 <p align="center">Copyright&copy; 2021 Xilinx</p>

@@ -23,7 +23,7 @@ After completing this lab, you will be able to:
 Clone the open source Vitis Accelerated Libraries repository in your home directory
 
 ```sh
-git clone https://github.com/Xilinx/Vitis_Libraries.git ~/Vitis_Libraries -b v2020.1_update1
+git clone https://github.com/Xilinx/Vitis_Libraries.git ~/Vitis_Libraries
 ```
 
 ### Build FPGA binary file
@@ -98,6 +98,17 @@ git clone https://github.com/Xilinx/Vitis_Libraries.git ~/Vitis_Libraries -b v20
 
 In order to build the host application we are going to use `g++`.
 
+1. Since the image does not have opencv-devel package installed, install it using the following command
+
+   ```sh
+   sudo yum install opencv-devel
+   ```
+1. Since the image does not have image (png) viewer package installed, install it using the following command
+
+   ```sh
+   sudo yum install eog
+   ```
+
 1. Create the object files `*.o` for every `*.cpp` file of the host code
 
    ```sh
@@ -109,7 +120,7 @@ In order to build the host application we are going to use `g++`.
 
    ```sh
    g++ -std=c++11 -o vision_example $(ls output/*.o) `pkg-config --libs --cflags opencv` \
-   -lxilinxopencl -lxml2 -L$XILINX_XRT/lib/ -L/usr/lib64/
+   -lxilinxopencl -L$XILINX_XRT/lib/ -L/usr/lib64/
    ```
 
 ### Execute the kernels (emulation only)
@@ -145,8 +156,6 @@ In order to build the host application we are going to use `g++`.
 
     When running `resize` the program will generate two output files: **resize_sw.png** (software execution of the algorithm) and **resize_hw.png** (kernel execution output).
     When running `resize & blur` the program will generate two output files **resize_blur_sw.png** and **resize_blur_hw.png**. View the output files by double-clicking on each of them in File Explorer under `sources/vision_lab/` directory. Compare that to the source input file, **fish_wallpaper.png** located at `sources/vision_lab/src/data`
-
-## TO BE UPDATED ##
 
 ### Run the kernels on Hardware
 
