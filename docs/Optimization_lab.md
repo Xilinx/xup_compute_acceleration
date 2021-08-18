@@ -430,8 +430,10 @@ Note if you disable the profiling you can get an acceleration of \~6.2x.
 
 **Set the build configuration to Hardware and build the system (Note that since the building of the project takes over two hours skip this step in the workshop environment).**  
 
-1. Click on the drop-down button of *Active build configuration:* and select **Hardware**  
+1. Click on the drop-down button of *Active build configuration:* and select **Hardware**
+
 1. Set the [Vitis Kernel Linker flag as before](#configure-the-system-port-in-the-vitis-gui) but for Hardware
+
 1. Either select **Project > Build Project** or click on the (![alt tag](./images/Fig-build.png)) button.    
 This will build the project under the **Hardware** directory. The built project will include **optimization\_lab** file along with **binary\_container\_1.xclbin** file. This step takes about two hours  
 

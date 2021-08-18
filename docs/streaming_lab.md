@@ -61,12 +61,19 @@ However, in this lab we will use the transposed direct version, which is an impr
 ### Add source code and hardware functions
 
 1. In the *Explore* view, right-click on `streaming_lab_system > streaming_lab > src` and select `Import Sources...`
+
 1. Browse to `~/xup_compute_acceleration/sources/streaming_lab` and add `host.cpp, xcl2.cpp, and xcl2.hpp` files
+
 1. In the *Explore* view, right-click on `streaming_lab_system > streaming_lab_kernels > src` and select `Import Sources...`
+
 1. Browse to `~/xup_compute_acceleration/sources/streaming_lab` and add `krnl_fir.cpp, krnl_mm2s.cpp, and krnl_s2mm.hpp` files
+
 1. Double-click on `streaming_lab_system > streaming_lab_kernels > streaming_lab_kernels.prj`
+
 1. In the `Hardware Functions` view, click the *Add Hardware Function* (![alt tag](./images/Fig-hw_button.png)) button icon
+
 1. Select `krnl_fir`, `krnl_mm2s` and `krnl_s2mm` and click **OK**
+
 1. Check that the kernels are included within the *Hardware Functions* panel
 
     ![](./images/streaming_lab/hardware_functions.png)
@@ -92,9 +99,13 @@ However, in this lab we will use the transposed direct version, which is an impr
 ### Run software emulation
 
 1. In the **Assistant** view, select *streaming\_lab\_system* and build the application by clicking hammer
+
 1. Run the Emulation-SW: in the *Explorer* view right-click on *streaming\_lab* and select `Run As > Run Configurations...`
+
 1. In the *Arguments* tab make sure *Automatically add binary container(s) to arguments* is selected.
+
 1. Click *Apply* and then *Run*
+
 1. The console output will report
 
    ```console
