@@ -309,7 +309,7 @@ In the *idct.cpp* file, locate lines 286-297. Note that two memory buffers, *mIn
 
 #### Run Hardware Emulation
 
-1. Build the application by clicking on the (![](./images/Fig-build.png)) button
+1. Build the application by clicking on the (![alt tag](./images/Fig-build.png)) button
 
     Since only the idct.cpp file was changed, only the host code is rebuilt. This should be much faster as no recompiling of the hardware kernel is required.
 
@@ -320,8 +320,8 @@ In the *idct.cpp* file, locate lines 286-297. Note that two memory buffers, *mIn
 1. On *Vitis Analyzer* window click on **Timeline Trace**
 
     Observe how **software pipelining** enables overlapping of data transfers and kernel execution.
-​
-	![](./images/optimization_lab/application_timeline_after_host_optimization.png)
+
+    ![](./images/optimization_lab/application_timeline_after_host_optimization.png)
 
     Note: system tasks might slow down communication between the application and the hardware simulation, impacting on the performance results. The effect of software pipelining is considerably higher when running on the actual hardware.
 
@@ -354,7 +354,7 @@ In the *idct.cpp* file, locate lines 286-297. Note that two memory buffers, *mIn
    ```sh
    cp binary_container_1.awsxclbin ~/workspace/optimization_lab/Hardware 
    cp ~/xup_compute_acceleration/sources/xrt.ini ~/workspace/optimization_lab/Hardware/.
-   ````
+   ```
 
 1. If you have not built the hardware yourself then copy the provided prebuilt solution files using the following commands:
 
@@ -362,7 +362,7 @@ In the *idct.cpp* file, locate lines 286-297. Note that two memory buffers, *mIn
    mkdir ~/workspace/optimization_lab/Hardware
    cp ~/xup_compute_acceleration/solutions/optimization_lab/* ~/workspace/optimization_lab/Hardware/. 
    chmod +x ~/workspace/optimization_lab/Hardware/optimization_lab
-   ````
+   ```
 
    Setup the run configuration so you can run the application and then analyze results from GUI
 
@@ -432,7 +432,7 @@ Note if you disable the profiling you can get an acceleration of \~6.2x.
 
 1. Click on the drop-down button of *Active build configuration:* and select **Hardware**  
 1. Set the [Vitis Kernel Linker flag as before](#configure-the-system-port-in-the-vitis-gui) but for Hardware
-1. Either select **Project > Build Project** or click on the (![](./images/Fig-build.png)) button.    
+1. Either select **Project > Build Project** or click on the (![alt tag](./images/Fig-build.png)) button.    
 This will build the project under the **Hardware** directory. The built project will include **optimization\_lab** file along with **binary\_container\_1.xclbin** file. This step takes about two hours  
 
 ### AWS-F1

@@ -75,7 +75,6 @@ This lab is a continuation of previous *Introduction to Vitis* lab. You ended th
 
 1. Observe the application has run, and the output is displayed in the *Console* view. Compared to software emulation, the output also shows data transfer information. Notice the data transfer between kernel and global memory is 16 KB on each port
 
-
    ```
    Found Platform
    Platform Name: Xilinx
@@ -177,7 +176,7 @@ This lab is a continuation of previous *Introduction to Vitis* lab. You ended th
    ```sh
    cp binary_container_1.awsxclbin ~/workspace/vadd/Hardware 
    cp ~/xup_compute_acceleration/sources/xrt.ini ~/workspace/vadd/Hardware/.
-   ````
+   ```
 
 1. If you have not built the hardware yourself then copy the provided prebuilt solution files using the following commands:
 
@@ -185,7 +184,7 @@ This lab is a continuation of previous *Introduction to Vitis* lab. You ended th
    mkdir ~/workspace/vadd/Hardware
    cp ~/xup_compute_acceleration/solutions/vadd/* ~/workspace/vadd/Hardware/. 
    chmod +x ~/workspace/vadd/Hardware/vadd
-   ````
+   ```
 
    Setup the run configuration so you can run the application and then analyze results from GUI
 

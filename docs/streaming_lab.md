@@ -65,7 +65,7 @@ However, in this lab we will use the transposed direct version, which is an impr
 1. In the *Explore* view, right-click on `streaming_lab_system > streaming_lab_kernels > src` and select `Import Sources...`
 1. Browse to `~/xup_compute_acceleration/sources/streaming_lab` and add `krnl_fir.cpp, krnl_mm2s.cpp, and krnl_s2mm.hpp` files
 1. Double-click on `streaming_lab_system > streaming_lab_kernels > streaming_lab_kernels.prj`
-1. In the `Hardware Functions` view, click the *Add Hardware Function* button icon (![alt tag](./images/Fig-hw_button.png))
+1. In the `Hardware Functions` view, click the *Add Hardware Function* (![alt tag](./images/Fig-hw_button.png)) button icon
 1. Select `krnl_fir`, `krnl_mm2s` and `krnl_s2mm` and click **OK**
 1. Check that the kernels are included within the *Hardware Functions* panel
 
@@ -118,7 +118,7 @@ However, in this lab we will use the transposed direct version, which is an impr
 ### Run hardware emulation
 
 1. Select or open the `Hardware Kernel Project Settings` view and change *Active build* configuration to: **Emulation-HW**
-1. In the **Assistant** view, select *streaming\_lab\_system* and build the application by clicking ![alt tag](./images/Fig-build.png)
+1. In the **Assistant** view, select *streaming\_lab\_system* and build the application by clicking ![alt tag](./images/Fig-build.png) button
 1. Once compiled, Run the Emulation-HW, only specify the binary container as argument
 1. The console output will report
 

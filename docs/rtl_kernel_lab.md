@@ -162,6 +162,7 @@ After completing this lab, you will be able to:
    data=KVAdd:KVAdd_1:B:all
    data=KVAdd:KVAdd_1:Res:all
    ```
+
 1. In the *Assistant* view right click on *rtl\_kernel\_system > rtl\_kernel\_system\_hw\_link > Emulation-HW > binary\_container\_1* and select *Settings...*
 
     Enter `--config ../link.cfg` in the *V++ command line options:* field. Make sure the `Execute Profiling` checkboxes are checked
@@ -232,7 +233,7 @@ After completing this lab, you will be able to:
    ```sh
    cp binary_container_1.awsxclbin ~/workspace/rtl_kernel/Hardware 
    cp ~/xup_compute_acceleration/sources/xrt.ini ~/workspace/rtl_kernel/Hardware/.
-   ````
+   ```
 
 1. If you have not built the hardware yourself then copy the provided prebuilt solution files using the following commands:
 
@@ -240,7 +241,7 @@ After completing this lab, you will be able to:
    mkdir ~/workspace/rtl_kernel/Hardware
    cp ~/xup_compute_acceleration/solutions/rtl_kernel/* ~/workspace/rtl_kernel/Hardware/. 
    chmod +x ~/workspace/rtl_kernel/Hardware/rtl_kernel
-   ````
+   ```
 
 1. Execute precompiled hardware solution
 
