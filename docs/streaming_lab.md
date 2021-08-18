@@ -129,8 +129,11 @@ However, in this lab we will use the transposed direct version, which is an impr
 ### Run hardware emulation
 
 1. Select or open the `Hardware Kernel Project Settings` view and change *Active build* configuration to: **Emulation-HW**
+
 1. In the **Assistant** view, select *streaming\_lab\_system* and build the application by clicking ![alt tag](./images/Fig-build.png) button
+
 1. Once compiled, Run the Emulation-HW, only specify the binary container as argument
+
 1. The console output will report
 
    ```console
