@@ -312,11 +312,8 @@ Since compilation for hardware target will take a long time, the FPGA binary is 
      Info: Context created
      Info: Command queue created
      Found Device=xilinx_aws-vu9p-f1_shell-v04261818_201920_2
-     INFO: Importing build_dir.hw_emu.xilinx_aws-vu9p-f1_shell-v04261818_201920_2/shortestPath_top.xclbin
-     Loading: 'build_dir.hw_emu.xilinx_aws-vu9p-f1_shell-v04261818_201920_2/shortestPath_top.xclbin'
-     INFO: [HW-EMU 01] Hardware emulation runs simulation underneath. Using a large data set will result in long simulation times. It is recommended that a small dataset is used for faster execution. The flow uses approximate models for Global memories and interconnect and hence the performance data generated is approximate.
-     configuring penguin scheduler mode
-     scheduler config ert(0), dataflow(1), slots(16), cudma(1), cuisr(0), cdma(0), cus(1)
+     INFO: Importing ./shortestPath_top.awsxclbin
+     Loading: './shortestPath_top.awsxclbin'
      Info: Program created
      Info: Kernel created
      kernel has been created
@@ -324,17 +321,6 @@ Since compilation for hardware target will take a long time, the FPGA binary is 
      kernel end------
      ============================================================
      Info: Test passed
-     INFO::[ Vitis-EM 22 ] [Time elapsed: 1 minute(s) 36 seconds, Emulation time: 0.260477 ms]
-     Data transfer between kernel(s) and global memory(s)
-     shortestPath_top:m_axi_gmem0-DDR[0]          RD = 1.500 KB               WR = 0.000 KB        
-     shortestPath_top:m_axi_gmem1-DDR[0]          RD = 6.625 KB               WR = 0.000 KB        
-     shortestPath_top:m_axi_gmem2-DDR[0]          RD = 0.000 KB               WR = 0.000 KB        
-     shortestPath_top:m_axi_gmem3-DDR[0]          RD = 0.500 KB               WR = 5.812 KB        
-     shortestPath_top:m_axi_gmem4-DDR[0]          RD = 20.625 KB              WR = 9.875 KB        
-     shortestPath_top:m_axi_gmem5-DDR[0]          RD = 0.000 KB               WR = 9.812 KB        
-
-     INFO: [HW-EMU 06-0] Waiting for the simulator process to exit
-     INFO: [HW-EMU 06-1] All the simulator processes exited successfully
 
      ```    
 
