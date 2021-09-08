@@ -37,12 +37,17 @@ git clone https://github.com/Xilinx/Vitis_Libraries.git ~/Vitis_Libraries
 
 1. Since the source files are targeting Alveo U50 card which has HBM, whereas Amazon AWS FPGA card does not. The Amazon AWS FPGA card is not an Alveo card. Some modifications will have to be done
 
-    * Modify Makefile to target AWS FPGA platform 
-      `Replace line 46 with DEVICE ?= xilinx_aws-vu9p-f1_shell-v04261818_201920_2
-       Comment out lines 57, 58, 59
-       Comment out lines 110,111, 112
-       Comment out lines 124 and 126`
-    * Update conn_u50.cfg file to target DDR[0] bank and use SLR1 instead of DDR[1] and SLR2. Replace the content with
+   * Modify Makefile to target AWS FPGA platform 
+
+      ```
+      Replace line 46 with DEVICE ?= xilinx_aws-vu9p-f1_shell-v04261818_201920_2
+      Comment out lines 57, 58, 59
+      Comment out lines 110,111, 112
+      Comment out lines 124 and 126
+      ```
+
+   * Update conn_u50.cfg file to target DDR[0] bank and use SLR1 instead of DDR[1] and SLR2. Replace the content with
+
       `[connectivity]
        sp=shortestPath_top.m_axi_gmem0:DDR[0]
        sp=shortestPath_top.m_axi_gmem1:DDR[0]
@@ -52,10 +57,14 @@ git clone https://github.com/Xilinx/Vitis_Libraries.git ~/Vitis_Libraries
        sp=shortestPath_top.m_axi_gmem5:DDR[0]
        slr=shortestPath_top:SLR1
        nk=shortestPath_top:1:shortestPath_top`
+
     * Update utils.mk file to enable profile and
+
       `On line 22 change PROFILE := no to PROFILE := yes  
        In line 34 insert -g flag so the line  will read like VPP_LDFLAGS += -g --profile_kernel data:all:all:all`
+
     * Update host/main.cpp so it uses BANK0 instead of BANK1
+
       `Change BANK0 to BANK1 in lines 221 through 228 so they will read like
        mext_o[0] = {XCL_MEM_DDR_BANK1, offset512, 0};
        mext_o[1] = {XCL_MEM_DDR_BANK1, column512, 0};
@@ -65,7 +74,9 @@ git clone https://github.com/Xilinx/Vitis_Libraries.git ~/Vitis_Libraries
        mext_o[5] = {XCL_MEM_DDR_BANK1, ddrQue, 0};
        mext_o[6] = {XCL_MEM_DDR_BANK1, result, 0};
        mext_o[7] = {XCL_MEM_DDR_BANK1, pred, 0};`
+
     * Create xrt.ini in the project home directory having the following content. 
+
       `[Debug]
 	   opencl_summary=true
 	   power_profile=false
