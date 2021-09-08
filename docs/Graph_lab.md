@@ -60,47 +60,52 @@ git clone https://github.com/Xilinx/Vitis_Libraries.git ~/Vitis_Libraries
      nk=shortestPath_top:1:shortestPath_top
      ```
 
-    * Update utils.mk file to enable profile and
+   * Update utils.mk file to enable profile and
 
-      `On line 22 change PROFILE := no to PROFILE := yes  
-       In line 34 insert -g flag so the line  will read like VPP_LDFLAGS += -g --profile_kernel data:all:all:all`
+     ```
+     On line 22 change PROFILE := no to PROFILE := yes  
+     In line 34 insert -g flag so the line  will read like VPP_LDFLAGS += -g --profile_kernel data:all:all:all
+     ```
 
-    * Update host/main.cpp so it uses BANK0 instead of BANK1
+   * Update host/main.cpp so it uses BANK0 instead of BANK1
 
-      `Change BANK0 to BANK1 in lines 221 through 228 so they will read like
-       mext_o[0] = {XCL_MEM_DDR_BANK1, offset512, 0};
-       mext_o[1] = {XCL_MEM_DDR_BANK1, column512, 0};
-       mext_o[2] = {XCL_MEM_DDR_BANK1, weight512, 0};
-       mext_o[3] = {XCL_MEM_DDR_BANK1, info, 0};
-       mext_o[4] = {XCL_MEM_DDR_BANK1, config, 0};
-       mext_o[5] = {XCL_MEM_DDR_BANK1, ddrQue, 0};
-       mext_o[6] = {XCL_MEM_DDR_BANK1, result, 0};
-       mext_o[7] = {XCL_MEM_DDR_BANK1, pred, 0};`
+     ```
+     Change BANK0 to BANK1 in lines 221 through 228 so they will read like
+     mext_o[0] = {XCL_MEM_DDR_BANK1, offset512, 0};
+     mext_o[1] = {XCL_MEM_DDR_BANK1, column512, 0};
+     mext_o[2] = {XCL_MEM_DDR_BANK1, weight512, 0};
+     mext_o[3] = {XCL_MEM_DDR_BANK1, info, 0};
+     mext_o[4] = {XCL_MEM_DDR_BANK1, config, 0};
+     mext_o[5] = {XCL_MEM_DDR_BANK1, ddrQue, 0};
+     mext_o[6] = {XCL_MEM_DDR_BANK1, result, 0};
+     mext_o[7] = {XCL_MEM_DDR_BANK1, pred, 0};
+     ```
 
-    * Create xrt.ini in the project home directory having the following content. 
+   * Create xrt.ini in the project home directory having the following content. 
 
-      `[Debug]
-	   opencl_summary=true
-	   power_profile=false
-	   opencl_trace=true
-	   lop_trace=false
-	   xrt_trace=false
-	   data_transfer_trace=coarse
-	   stall_trace=off
-	   app_debug=true
-	   [Emulation]
-	   debug_mode=gui`
-
+     ```
+     [Debug]
+	 opencl_summary=true
+	 power_profile=false
+	 opencl_trace=true
+	 lop_trace=false
+	 xrt_trace=false
+	 data_transfer_trace=coarse
+	 stall_trace=off
+	 app_debug=true
+	 [Emulation]
+	 debug_mode=gui
+     ```
 
 1. Set environmental variables
 
 	 We need to define `PLATFORM_REPO_PATH` to point to the AWS platform. We also need to define a path to the Graph library's L2 directory 
 
 
-   ```
-    export PLATFORM_REPO_PATHS=/home/ec2-user/aws-fpga/Vitis/aws_platform/   
-    export VITIS_LIBS=~/Vitis_Libraries/graph/L2/include
-   ```
+     ```
+     export PLATFORM_REPO_PATHS=/home/ec2-user/aws-fpga/Vitis/aws_platform/   
+     export VITIS_LIBS=~/Vitis_Libraries/graph/L2/include
+     ```
 
 ### Makefile flow
 
@@ -109,14 +114,15 @@ git clone https://github.com/Xilinx/Vitis_Libraries.git ~/Vitis_Libraries
 1. Compile kernels for the Emulation-SW using Makefile
 
     Execute `make build TARGET=sw_emu`
-    The kernel will be compiled and device binary file (shortestPath_top.xclbin) will be build under the `build_dir.sw_emu.xilinx__aws-vu9p-f1_shell-v04261818_201920_2`
+
+    The kernel will be compiled and device binary file (shortestPath_top.xclbin) will be build under the `build_dir.sw_emu.xilinx_aws-vu9p-f1_shell-v04261818_201920_2`
 
 1. Compile the host application for the Emulation-SW using Makefile and run the application
 
     Execute `make run TARGET=sw_emu`
-    The host application (host.exe) will be compiled under the `build_dir.sw_emu.xilinx__aws-vu9p-f1_shell-v04261818_201920_2`. The application will then be run producing the result similar to:
+    The host application (host.exe) will be compiled under the `build_dir.sw_emu.xilinx_aws-vu9p-f1_shell-v04261818_201920_2`. The application will then be run producing the result similar to:
 
-    ```
+     ```
      ---------------------Shortest Path----------------
      id: 92 max out: 13
      Found Platform
@@ -135,7 +141,7 @@ git clone https://github.com/Xilinx/Vitis_Libraries.git ~/Vitis_Libraries
      kernel end------
      ============================================================
      Info: Test passed
-    ```    
+     ```    
 
     Notice that the application uses three parameters: -o, -c, -g requiring offset, indicesweights, and golden data respectively. These files are provided in the `data` directory under the project directory
 
@@ -143,7 +149,7 @@ git clone https://github.com/Xilinx/Vitis_Libraries.git ~/Vitis_Libraries
 
 1. Start the vitis_analyzer by executing `vitis_analyzer xclbin.run_summary`
 
-    Vitis Analyzer shows **Summary**, **Run Guidance**, **Profile Summary** and `Timeline Trace` tabs on the left-hand side. Click **Profile Summary**
+    Vitis Analyzer shows **Summary**, **Run Guidance**, **Profile Summary** and **Timeline Trace** tabs on the left-hand side. Click **Profile Summary**
 
 1. Click on the `Profile Summary` on the left and then click **Kernels & Compute Units** on the right to see kernel and compute units execution times
 
@@ -167,14 +173,15 @@ git clone https://github.com/Xilinx/Vitis_Libraries.git ~/Vitis_Libraries
 1. Compile kernels for the Emulation-HW using Makefile
 
     Execute `make build TARGET=hw_emu`
-    The kernel will be compiled and device binary file (shortestPath_top.xclbin) will be build under the `build_dir.hw_emu.xilinx__aws-vu9p-f1_shell-v04261818_201920_2`
+
+    The kernel will be compiled and device binary file (shortestPath_top.xclbin) will be build under the `build_dir.hw_emu.xilinx_aws-vu9p-f1_shell-v04261818_201920_2`
 
 1. Compile the host application for the Emulation-HW using Makefile and run the application
 
     Execute `make run TARGET=hw_emu`
-    The host application (host.exe) will be compiled under the `build_dir.hw_emu.xilinx__aws-vu9p-f1_shell-v04261818_201920_2`. The application will then be run. Notice that Vivado simulator is opened and simulation waveforms are generated, and the application producing the result similar to:
+    The host application (host.exe) will be compiled under the `build_dir.hw_emu.xilinx_aws-vu9p-f1_shell-v04261818_201920_2`. The application will then be run. Notice that Vivado simulator is opened and simulation waveforms are generated, and the application producing the result similar to:
 
-    ```
+     ```
      ---------------------Shortest Path----------------
      id: 92 max out: 13
      Found Platform
@@ -205,7 +212,7 @@ git clone https://github.com/Xilinx/Vitis_Libraries.git ~/Vitis_Libraries
 
      INFO: [HW-EMU 06-0] Waiting for the simulator process to exit
      INFO: [HW-EMU 06-1] All the simulator processes exited successfully
-    ```    
+     ```    
 
 1. Click on the Full zoom button in the simulator window. Select the area of interest by left clicking on the start of the area of interest and dragging mouse to the end of the area of interest
 
@@ -255,22 +262,25 @@ git clone https://github.com/Xilinx/Vitis_Libraries.git ~/Vitis_Libraries
 
 ### Hardware verification in a non-training session
 
-Note that this step will take about about two hours to generate xclbin and registering it with AWS to generate awsxclbin. **You will execute following steps ONLY if you are not in a training session**
+Note that this step will take about about two hours to generate xclbin and registering it with AWS to generate awsxclbin. **You will execute following steps ONLY if you are not in a training session environment**
 
 1. Compile kernels, using Makefile, for the hardware verification
     
     Execute `make build TARGET=hw`
-    The kernel will be compiled and device binary file (shortestPath_top.xclbin) will be build under the `build_dir.hw.xilinx__aws-vu9p-f1_shell-v04261818_201920_2`
 
-1. Once the hardware system is built producing xclbin, you create an AFI by following the steps listed in [create an AFI](Creating_AFI.md) from the `build_dir.hw.xilinx__aws-vu9p-f1_shell-v04261818_201920_2` directory
+    The kernel will be compiled and device binary file (shortestPath_top.xclbin) will be build under the `build_dir.hw.xilinx_aws-vu9p-f1_shell-v04261818_201920_2`
 
-1. After the AFI is available, build the host application by executing `make host TARGET=hw` from the project directory which will create `host.exe` file in the `build_dir.hw.xilinx__aws-vu9p-f1_shell-v04261818_201920_2` directory
+1. Once the hardware system is built producing xclbin, you create an AFI by following the steps listed in [create an AFI](Creating_AFI.md) from the `build_dir.hw.xilinx_aws-vu9p-f1_shell-v04261818_201920_2` directory
 
-1. Copy the xrt.ini file from the project directory into the `build_dir.hw.xilinx__aws-vu9p-f1_shell-v04261818_201920_2` directory
+1. After the AFI is available, build the host application by executing `make host TARGET=hw` from the project directory which will create `host.exe` file in the `build_dir.hw.xilinx_aws-vu9p-f1_shell-v04261818_201920_2` directory
 
-1. Run the application by executing the following command from the `build_dir.hw.xilinx__aws-vu9p-f1_shell-v04261818_201920_2` directory
+1. Copy the **xrt.ini** file from the project directory into the `build_dir.hw.xilinx_aws-vu9p-f1_shell-v04261818_201920_2` directory
 
-    ./host.exe -xclbin ./shortestPath_top.awsxclbin -o ~/Vitis_Libraries/graph/L2/tests/shortest_path_unweighted_pred/data/data-csr-offset.mtx -c ~/Vitis_Libraries/graph/L2/tests/shortest_path_unweighted_pred/data/data-csr-indicesweights.mtx -g ~/Vitis_Libraries/graph/L2/tests/shortest_path_unweighted_pred/data/data-golden.sssp.mtx     
+1. Run the application by executing the following command from the `build_dir.hw.xilinx_aws-vu9p-f1_shell-v04261818_201920_2` directory
+
+     ```
+     ./host.exe -xclbin ./shortestPath_top.awsxclbin -o ~/Vitis_Libraries/graph/L2/tests/shortest_path_unweighted_pred/data/data-csr-offset.mtx -c ~/Vitis_Libraries/graph/L2/tests/shortest_path_unweighted_pred/data/data-csr-indicesweights.mtx -g ~/Vitis_Libraries/graph/L2/tests/shortest_path_unweighted_pred/data/data-golden.sssp.mtx
+     ```   
 
 
 ### Hardware verification in a training session
@@ -279,22 +289,22 @@ Since compilation for hardware target will take a long time, the FPGA binary is 
 
 1. Go to the solution directory
 
-   ```sh
-   cd ~/xup_compute_acceleration/solutions/graph_lab/
-   ```
+     ```
+     cd ~/xup_compute_acceleration/solutions/graph_lab/
+     ```
 
     The solution directory has the awsxclbin, host.exe, and data directory containng required files needed by the host.exe program
 
 1. Run the kernels on hardware 
     
-   ```sh
-   ./host.exe -xclbin ./shortestPath_top.awsxclbin -o ./data/data-csr-offset.mtx -c ./data/data-csr-indicesweights.mtx -g ./data/data-golden.sssp.mtx
-   ```
+     ```
+     ./host.exe -xclbin ./shortestPath_top.awsxclbin -o ./data/data-csr-offset.mtx -c ./data/data-csr-indicesweights.mtx -g ./data/data-golden.sssp.mtx
+     ```
 
 1. The host application will execute, programming the FPGA and running the host code and displaying result as shown below. Also `xclbin.run_summary` file will be generated, which can be analyzed using **vitis_analyzer**
 
 
-    ```sh
+     ```
      ---------------------Shortest Path----------------
      id: 92 max out: 13
      Found Platform
@@ -326,7 +336,7 @@ Since compilation for hardware target will take a long time, the FPGA binary is 
      INFO: [HW-EMU 06-0] Waiting for the simulator process to exit
      INFO: [HW-EMU 06-1] All the simulator processes exited successfully
 
-    ```    
+     ```    
 
 ### Analyze the run output
 
