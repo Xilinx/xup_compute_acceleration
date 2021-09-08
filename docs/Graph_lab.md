@@ -39,24 +39,26 @@ git clone https://github.com/Xilinx/Vitis_Libraries.git ~/Vitis_Libraries
 
    * Modify Makefile to target AWS FPGA platform 
 
-      ```
-      Replace line 46 with DEVICE ?= xilinx_aws-vu9p-f1_shell-v04261818_201920_2
-      Comment out lines 57, 58, 59
-      Comment out lines 110,111, 112
-      Comment out lines 124 and 126
-      ```
+     ```
+     Replace line 46 with DEVICE ?= xilinx_aws-vu9p-f1_shell-v04261818_201920_2
+     Comment out lines 57, 58, 59
+     Comment out lines 110,111, 112
+     Comment out lines 124 and 126
+     ```
 
    * Update conn_u50.cfg file to target DDR[0] bank and use SLR1 instead of DDR[1] and SLR2. Replace the content with
 
-      `[connectivity]
-       sp=shortestPath_top.m_axi_gmem0:DDR[0]
-       sp=shortestPath_top.m_axi_gmem1:DDR[0]
-       sp=shortestPath_top.m_axi_gmem2:DDR[0]
-       sp=shortestPath_top.m_axi_gmem3:DDR[0]
-       sp=shortestPath_top.m_axi_gmem4:DDR[0]
-       sp=shortestPath_top.m_axi_gmem5:DDR[0]
-       slr=shortestPath_top:SLR1
-       nk=shortestPath_top:1:shortestPath_top`
+     ```
+     [connectivity]
+     sp=shortestPath_top.m_axi_gmem0:DDR[0]
+     sp=shortestPath_top.m_axi_gmem1:DDR[0]
+     sp=shortestPath_top.m_axi_gmem2:DDR[0]
+     sp=shortestPath_top.m_axi_gmem3:DDR[0]
+     sp=shortestPath_top.m_axi_gmem4:DDR[0]
+     sp=shortestPath_top.m_axi_gmem5:DDR[0]
+     slr=shortestPath_top:SLR1
+     nk=shortestPath_top:1:shortestPath_top
+     ```
 
     * Update utils.mk file to enable profile and
 
