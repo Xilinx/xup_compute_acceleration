@@ -104,9 +104,6 @@ source ~/.bashrc
    - Source XRT
    - Source AWS F1 tools
 
-   For more details see: https://github.com/aws/aws-fpga/blob/master/Vitis/README.md
-
-
   Note that `AWS_FPGA_REPO_DIR` is defined in /etc/profile.d/aws-f1.sh
 
 1. If you are using the AWSEducate instances then execute the following to clone the *xup\_compute\_acceleration* repository. No additional variables need to be set as the provided AMI has all necessary files including `aws-fpga` repository cloning, the AWS F1 tools, Hardware Development Kit (HDK) and documentation
