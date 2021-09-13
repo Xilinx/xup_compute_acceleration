@@ -10,7 +10,7 @@ This lab walks you through the steps to create a Vitis design with one kernel **
 
 After completing this lab, you will be able to:
 
-* Use Vitis from command line and GUI
+* Use Vitis from command line 
 * Modify source files to target Amazon AWS FPGA board
 * Compile kernels to Xilinx objects (`*.xo`)
 * Build FPGA binary file from `*.xo` files
@@ -65,20 +65,6 @@ git clone https://github.com/Xilinx/Vitis_Libraries.git ~/Vitis_Libraries
      ```
      On line 22 change PROFILE := no to PROFILE := yes  
      In line 34 insert -g flag so the line  will read like VPP_LDFLAGS += -g --profile_kernel data:all:all:all
-     ```
-
-   * Update host/main.cpp so it uses BANK0 instead of BANK1
-
-     ```
-     Change BANK0 to BANK1 in lines 221 through 228 so they will read like
-     mext_o[0] = {XCL_MEM_DDR_BANK1, offset512, 0};
-     mext_o[1] = {XCL_MEM_DDR_BANK1, column512, 0};
-     mext_o[2] = {XCL_MEM_DDR_BANK1, weight512, 0};
-     mext_o[3] = {XCL_MEM_DDR_BANK1, info, 0};
-     mext_o[4] = {XCL_MEM_DDR_BANK1, config, 0};
-     mext_o[5] = {XCL_MEM_DDR_BANK1, ddrQue, 0};
-     mext_o[6] = {XCL_MEM_DDR_BANK1, result, 0};
-     mext_o[7] = {XCL_MEM_DDR_BANK1, pred, 0};
      ```
 
    * Create xrt.ini in the project home directory having the following content. 
@@ -353,17 +339,6 @@ Since compilation for hardware target will take a long time, the FPGA binary is 
     ![](images/graph_lab/hw_application_timeline.png)
 
 1. When finished, close the analyzer by clicking `File > Exit` and clicking **OK**
-
-
-### GUI flow (Do we need it? - to be completed if needed)
-
-1. Explore *Profile Summary* and *Application Timeline*
-
-   ```sh
-   vitis_analyzer xclbin.run_summary
-   ```
-
-1. Close Vitis Analyzer
 
 
 ## Conclusion
