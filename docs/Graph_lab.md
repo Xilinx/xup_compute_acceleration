@@ -71,27 +71,26 @@ git clone https://github.com/Xilinx/Vitis_Libraries.git ~/Vitis_Libraries
 
      ```
      [Debug]
-	 opencl_summary=true
-	 power_profile=false
-	 opencl_trace=true
-	 lop_trace=false
-	 xrt_trace=false
-	 data_transfer_trace=coarse
-	 stall_trace=off
-	 app_debug=true
-	 [Emulation]
-	 debug_mode=gui
+     opencl_summary=true
+     power_profile=false
+     opencl_trace=true
+     lop_trace=false
+     xrt_trace=false
+     data_transfer_trace=coarse
+     stall_trace=off
+     app_debug=true
+     [Emulation]
+     debug_mode=gui
      ```
 
 1. Set environmental variables
 
-	 We need to define `PLATFORM_REPO_PATH` to point to the AWS platform. We also need to define a path to the Graph library's L2 directory 
+   We need to define `PLATFORM_REPO_PATH` to point to the AWS platform. We also need to define a path to the Graph library's L2 directory
 
-
-     ```
-     export PLATFORM_REPO_PATHS=/home/ec2-user/aws-fpga/Vitis/aws_platform/   
-     export VITIS_LIBS=~/Vitis_Libraries/graph/L2/include
-     ```
+   ```sh
+   export PLATFORM_REPO_PATHS=/home/ec2-user/aws-fpga/Vitis/aws_platform/
+   export VITIS_LIBS=~/Vitis_Libraries/graph/L2/include
+   ```
 
 ### Makefile flow
 
@@ -105,33 +104,33 @@ git clone https://github.com/Xilinx/Vitis_Libraries.git ~/Vitis_Libraries
 
 1. Compile the host application for the Emulation-SW using Makefile and run the application
 
-    Execute `make run TARGET=sw_emu`
-    The host application (host.exe) will be compiled under the `build_dir.sw_emu.xilinx_aws-vu9p-f1_shell-v04261818_201920_2`. The application will then be run producing the result similar to:
+   Execute `make run TARGET=sw_emu`
+   The host application (host.exe) will be compiled under the `build_dir.sw_emu.xilinx_aws-vu9p-f1_shell-v04261818_201920_2`. The application will then be run producing the result similar to:
 
-     ```
-     ---------------------Shortest Path----------------
-     id: 92 max out: 13
-     Found Platform
-     Platform Name: Xilinx
-     Info: Context created
-     Info: Command queue created
-     Found Device=xilinx_aws-vu9p-f1_shell-v04261818_201920_2
-     INFO: Importing build_dir.sw_emu.xilinx_aws-vu9p-f1_shell-v04261818_201920_2/shortestPath_top.xclbin
-     Loading: 'build_dir.sw_emu.xilinx_aws-vu9p-f1_shell-v04261818_201920_2/shortestPath_top.xclbin'
-     Info: Program created
-     Info: Kernel created
-     kernel has been created
-     kernel start------
-     kernel call success
-     kernel call finish
-     kernel end------
-     ============================================================
-     Info: Test passed
-     ```    
+   ```console
+   ---------------------Shortest Path----------------
+   id: 92 max out: 13
+   Found Platform
+   Platform Name: Xilinx
+   Info: Context created
+   Info: Command queue created
+   Found Device=xilinx_aws-vu9p-f1_shell-v04261818_201920_2
+   INFO: Importing build_dir.sw_emu.xilinx_aws-vu9p-f1_shell-v04261818_201920_2/shortestPath_top.xclbin
+   Loading: 'build_dir.sw_emu.xilinx_aws-vu9p-f1_shell-v04261818_201920_2/shortestPath_top.xclbin'
+   Info: Program created
+   Info: Kernel created
+   kernel has been created
+   kernel start------
+   kernel call success
+   kernel call finish
+   kernel end------
+   ============================================================
+   Info: Test passed
+   ```
 
-    Notice that the application uses three parameters: -o, -c, -g requiring offset, indicesweights, and golden data respectively. These files are provided in the `data` directory under the project directory
+   Notice that the application uses three parameters: -o, -c, -g requiring offset, indicesweights, and golden data respectively. These files are provided in the `data` directory under the project directory
 
-    Notice that `xclbin.run_summary` file is generated based on the settings in xrt.ini 
+   Notice that `xclbin.run_summary` file is generated based on the settings in xrt.ini
 
 1. Start the vitis_analyzer by executing `vitis_analyzer xclbin.run_summary`
 
@@ -164,41 +163,41 @@ git clone https://github.com/Xilinx/Vitis_Libraries.git ~/Vitis_Libraries
 
 1. Compile the host application for the Emulation-HW using Makefile and run the application
 
-    Execute `make run TARGET=hw_emu`
-    The host application (host.exe) will be compiled under the `build_dir.hw_emu.xilinx_aws-vu9p-f1_shell-v04261818_201920_2`. The application will then be run. Notice that Vivado simulator is opened and simulation waveforms are generated, and the application producing the result similar to:
+   Execute `make run TARGET=hw_emu`
+   The host application (host.exe) will be compiled under the `build_dir.hw_emu.xilinx_aws-vu9p-f1_shell-v04261818_201920_2`. The application will then be run. Notice that Vivado simulator is opened and simulation waveforms are generated, and the application producing the result similar to:
 
-     ```
-     ---------------------Shortest Path----------------
-     id: 92 max out: 13
-     Found Platform
-     Platform Name: Xilinx
-     Info: Context created
-     Info: Command queue created
-     Found Device=xilinx_aws-vu9p-f1_shell-v04261818_201920_2
-     INFO: Importing build_dir.hw_emu.xilinx_aws-vu9p-f1_shell-v04261818_201920_2/shortestPath_top.xclbin
-     Loading: 'build_dir.hw_emu.xilinx_aws-vu9p-f1_shell-v04261818_201920_2/shortestPath_top.xclbin'
-     INFO: [HW-EMU 01] Hardware emulation runs simulation underneath. Using a large data set will result in long simulation times. It is recommended that a small dataset is used for faster execution. The flow uses approximate models for Global memories and interconnect and hence the performance data generated is approximate.
-     configuring penguin scheduler mode
-     scheduler config ert(0), dataflow(1), slots(16), cudma(1), cuisr(0), cdma(0), cus(1)
-     Info: Program created
-     Info: Kernel created
-     kernel has been created
-     kernel start------
-     kernel end------
-     ============================================================
-     Info: Test passed
-     INFO::[ Vitis-EM 22 ] [Time elapsed: 1 minute(s) 36 seconds, Emulation time: 0.260477 ms]
-     Data transfer between kernel(s) and global memory(s)
-     shortestPath_top:m_axi_gmem0-DDR[0]          RD = 1.500 KB               WR = 0.000 KB        
-     shortestPath_top:m_axi_gmem1-DDR[0]          RD = 6.625 KB               WR = 0.000 KB        
-     shortestPath_top:m_axi_gmem2-DDR[0]          RD = 0.000 KB               WR = 0.000 KB        
-     shortestPath_top:m_axi_gmem3-DDR[0]          RD = 0.500 KB               WR = 5.812 KB        
-     shortestPath_top:m_axi_gmem4-DDR[0]          RD = 20.625 KB              WR = 9.875 KB        
-     shortestPath_top:m_axi_gmem5-DDR[0]          RD = 0.000 KB               WR = 9.812 KB        
+   ```console
+   ---------------------Shortest Path----------------
+   id: 92 max out: 13
+   Found Platform
+   Platform Name: Xilinx
+   Info: Context created
+   Info: Command queue created
+   Found Device=xilinx_aws-vu9p-f1_shell-v04261818_201920_2
+   INFO: Importing build_dir.hw_emu.xilinx_aws-vu9p-f1_shell-v04261818_201920_2/shortestPath_top.xclbin
+   Loading: 'build_dir.hw_emu.xilinx_aws-vu9p-f1_shell-v04261818_201920_2/shortestPath_top.xclbin'
+   INFO: [HW-EMU 01] Hardware emulation runs simulation underneath. Using a large data set will result in long simulation times. It is recommended that a small dataset is used for faster execution. The flow uses approximate models for Global memories and interconnect and hence the performance data generated is approximate.
+   configuring penguin scheduler mode
+   scheduler config ert(0), dataflow(1), slots(16), cudma(1), cuisr(0), cdma(0), cus(1)
+   Info: Program created
+   Info: Kernel created
+   kernel has been created
+   kernel start------
+   kernel end------
+   ============================================================
+   Info: Test passed
+   INFO::[ Vitis-EM 22 ] [Time elapsed: 1 minute(s) 36 seconds, Emulation time: 0.260477 ms]
+   Data transfer between kernel(s) and global memory(s)
+   shortestPath_top:m_axi_gmem0-DDR[0]          RD = 1.500 KB               WR = 0.000 KB
+   shortestPath_top:m_axi_gmem1-DDR[0]          RD = 6.625 KB               WR = 0.000 KB
+   shortestPath_top:m_axi_gmem2-DDR[0]          RD = 0.000 KB               WR = 0.000 KB
+   shortestPath_top:m_axi_gmem3-DDR[0]          RD = 0.500 KB               WR = 5.812 KB
+   shortestPath_top:m_axi_gmem4-DDR[0]          RD = 20.625 KB              WR = 9.875 KB
+   shortestPath_top:m_axi_gmem5-DDR[0]          RD = 0.000 KB               WR = 9.812 KB
 
-     INFO: [HW-EMU 06-0] Waiting for the simulator process to exit
-     INFO: [HW-EMU 06-1] All the simulator processes exited successfully
-     ```    
+   INFO: [HW-EMU 06-0] Waiting for the simulator process to exit
+   INFO: [HW-EMU 06-1] All the simulator processes exited successfully
+   ```
 
 1. Click on the Full zoom button in the simulator window. Select the area of interest by left clicking on the start of the area of interest and dragging mouse to the end of the area of interest
 
@@ -264,10 +263,9 @@ Note that this step will take about about two hours to generate xclbin and regis
 
 1. Run the application by executing the following command from the `build_dir.hw.xilinx_aws-vu9p-f1_shell-v04261818_201920_2` directory
 
-     ```
-     ./host.exe -xclbin ./shortestPath_top.awsxclbin -o ~/Vitis_Libraries/graph/L2/tests/shortest_path_unweighted_pred/data/data-csr-offset.mtx -c ~/Vitis_Libraries/graph/L2/tests/shortest_path_unweighted_pred/data/data-csr-indicesweights.mtx -g ~/Vitis_Libraries/graph/L2/tests/shortest_path_unweighted_pred/data/data-golden.sssp.mtx
-     ```   
-
+   ```sh
+   ./host.exe -xclbin ./shortestPath_top.awsxclbin -o ~/Vitis_Libraries/graph/L2/tests/shortest_path_unweighted_pred/data/data-csr-offset.mtx -c ~/Vitis_Libraries/graph/L2/tests/shortest_path_unweighted_pred/data/data-csr-indicesweights.mtx -g ~/Vitis_Libraries/graph/L2/tests/shortest_path_unweighted_pred/data/data-golden.sssp.mtx
+   ```
 
 ### Hardware verification in a training session
 
@@ -275,40 +273,39 @@ Since compilation for hardware target will take a long time, the FPGA binary is 
 
 1. Go to the solution directory
 
-     ```
-     cd ~/xup_compute_acceleration/solutions/graph_lab/
-     ```
+   ```sh
+   cd ~/xup_compute_acceleration/solutions/graph_lab/
+   ```
 
     The solution directory has the awsxclbin, host.exe, and data directory containng required files needed by the host.exe program
 
 1. Run the kernels on hardware 
     
-     ```
-     ./host.exe -xclbin ./shortestPath_top.awsxclbin -o ./data/data-csr-offset.mtx -c ./data/data-csr-indicesweights.mtx -g ./data/data-golden.sssp.mtx
-     ```
+   ```sh
+   ./host.exe -xclbin ./shortestPath_top.awsxclbin -o ./data/data-csr-offset.mtx -c ./data/data-csr-indicesweights.mtx -g ./data/data-golden.sssp.mtx
+   ```
 
 1. The host application will execute, programming the FPGA and running the host code and displaying result as shown below. Also `xclbin.run_summary` file will be generated, which can be analyzed using **vitis_analyzer**
 
 
-     ```
-     ---------------------Shortest Path----------------
-     id: 92 max out: 13
-     Found Platform
-     Platform Name: Xilinx
-     Info: Context created
-     Info: Command queue created
-     Found Device=xilinx_aws-vu9p-f1_shell-v04261818_201920_2
-     INFO: Importing ./shortestPath_top.awsxclbin
-     Loading: './shortestPath_top.awsxclbin'
-     Info: Program created
-     Info: Kernel created
-     kernel has been created
-     kernel start------
-     kernel end------
-     ============================================================
-     Info: Test passed
-
-     ```    
+   ```console
+   ---------------------Shortest Path----------------
+   id: 92 max out: 13
+   Found Platform
+   Platform Name: Xilinx
+   Info: Context created
+   Info: Command queue created
+   Found Device=xilinx_aws-vu9p-f1_shell-v04261818_201920_2
+   INFO: Importing ./shortestPath_top.awsxclbin
+   Loading: './shortestPath_top.awsxclbin'
+   Info: Program created
+   Info: Kernel created
+   kernel has been created
+   kernel start------
+   kernel end------
+   ============================================================
+   Info: Test passed
+   ```
 
 ### Analyze the run output
 
