@@ -24,7 +24,7 @@ After completing this lab, you will be able to:
 Clone the open source Vitis Accelerated Libraries repository in your home directory, if it is not already done
 
 ```sh
-git clone https://github.com/Xilinx/Vitis_Libraries.git ~/Vitis_Libraries
+git clone https://github.com/Xilinx/Vitis_Libraries.git -b v2021.1_rel --depth 1 ~/Vitis_Libraries
 ```
 
 ### Modify some source files and set environment variables
