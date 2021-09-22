@@ -39,7 +39,7 @@ After completing this lab, you will be able to:
 
 1. Make sure the **rtl\_kernel.prj** under **rtl\_kernel\_system > _rtl\_kernel_** in the *Explorer* view is selected
 
-1. In the menu bar on top click **Xilinx > Launch RTL Kernel Wizard > RTL\_kernel\_kernels**  
+1. In the menu bar on top click **Xilinx > Launch RTL Kernel Wizard > rtl\_kernel\_kernels**
 
     Wizard will be opened showing welcome package
 
@@ -125,7 +125,7 @@ After completing this lab, you will be able to:
 
 ### Analyze the RTL kernel added to the Vitis project
 
-1. Expand the *src* folder under the **rtl\_kernel\_system > rtl\_kernel\_kernels**  
+1. Expand the *src* folder under the **rtl\_kernel\_system > rtl\_kernel\_kernels**
 
     Notice that the *vitis\_rtl\_kernel* folder  has been added to the project. Expanding this folder (*KVAdd*) shows the kernel (.xo) and a C++ file which have been automatically included
 
@@ -154,18 +154,13 @@ After completing this lab, you will be able to:
 
     ![](./images/rtlkernel_lab/hw_emu_selection.png)
 
-1. Using a text editor like *vi* or *gedit*, create **link.cfg** file with the following content in **~/workspace/rtl\_kernel\_system\_hw\_link** from the terminal window. It will enable `Counter + Trace` functionality
+1. In the Assistant View, expand *rtl\_kernel\_system > rtl\_kernel\_system\_hw\_link > Emulation-HW > binary\_container\_1* and right-click KVAdd [RTL KO] and select Refresh
 
-   ```
-   [profile]
-   data=KVAdd:KVAdd_1:A:all
-   data=KVAdd:KVAdd_1:B:all
-   data=KVAdd:KVAdd_1:Res:all
-   ```
+    ![](./images/rtlkernel_lab/kernelxo_refresh.png)
 
 1. In the *Assistant* view right click on *rtl\_kernel\_system > rtl\_kernel\_system\_hw\_link > Emulation-HW > binary\_container\_1* and select *Settings...*
 
-    Enter `--config ../link.cfg` in the *V++ command line options:* field. Make sure the `Execute Profiling` checkboxes are checked
+    Make sure the binary\_container\_1 is configured as shown in the image below
 
     ![](./images/rtlkernel_lab/hw_emu_kernel_config.png)
 
@@ -196,9 +191,9 @@ After completing this lab, you will be able to:
    INFO: Test completed successfully.
    INFO::[ Vitis-EM 22 ] [Time elapsed: 0 minute(s) 30 seconds, Emulation time: 0.151515 ms]
    Data transfer between kernel(s) and global memory(s)
-   KVAdd_1:m00_axi-DDR[1]          RD = 16.000 KB              WR = 16.000 KB       
-   KVAdd_1:m01_axi-DDR[1]          RD = 16.000 KB              WR = 16.000 KB       
-   KVAdd_1:m02_axi-DDR[1]          RD = 16.000 KB              WR = 16.000 KB   
+   KVAdd_1:m00_axi-DDR[1]          RD = 16.000 KB              WR = 16.000 KB
+   KVAdd_1:m01_axi-DDR[1]          RD = 16.000 KB              WR = 16.000 KB
+   KVAdd_1:m02_axi-DDR[1]          RD = 16.000 KB              WR = 16.000 KB
    ```
 
 1. In the *Assistant* view, expand **rtl\_kernel\_system > rtl\_kernel > Emulation-HW > SystemDebugger\_rtl\_kernel\_system\_rtl\_kernel**, and double-click on **Run Summary (xclbin)**
@@ -239,7 +234,9 @@ After completing this lab, you will be able to:
 
    ```sh
    mkdir ~/workspace/rtl_kernel/Hardware
-   cp ~/xup_compute_acceleration/solutions/rtl_kernel/* ~/workspace/rtl_kernel/Hardware/. 
+   mkdir ~/workspace/rtl_kernel_system/Hardware
+   cp ~/xup_compute_acceleration/solutions/rtlkernel_lab/* ~/workspace/rtl_kernel/Hardware/
+   cp ~/xup_compute_acceleration/solutions/rtlkernel_lab/binary_container_1.awsxclbin ~/workspace/rtl_kernel_system/Hardware/binary_container_1.xclbin
    chmod +x ~/workspace/rtl_kernel/Hardware/rtl_kernel
    ```
 

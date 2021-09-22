@@ -45,7 +45,7 @@ This lab is a continuation of previous *Introduction to Vitis* lab. You ended th
 
     ![](images/Vitis_intro/sw_emu_application_timeline.png)
 
-1. When finished, close the analyzer by clicking `File > Exit` and clicking **OK**
+1. When finished, close the Vitis Analyzer by clicking `File > Exit` and clicking **OK**
 
 ### Build and run hardware emulation
 
@@ -175,14 +175,16 @@ This lab is a continuation of previous *Introduction to Vitis* lab. You ended th
 
    ```sh
    cp binary_container_1.awsxclbin ~/workspace/vadd/Hardware 
-   cp ~/xup_compute_acceleration/sources/xrt.ini ~/workspace/vadd/Hardware/.
+   cp ~/xup_compute_acceleration/sources/xrt.ini ~/workspace/vadd/Hardware/
    ```
 
 1. If you have not built the hardware yourself then copy the provided prebuilt solution files using the following commands:
 
    ```sh
    mkdir ~/workspace/vadd/Hardware
-   cp ~/xup_compute_acceleration/solutions/vadd/* ~/workspace/vadd/Hardware/. 
+   mkdir ~/workspace/vadd_system/Hardware
+   cp ~/xup_compute_acceleration/solutions/vitis_intro_lab/* ~/workspace/vadd/Hardware/
+   cp ~/xup_compute_acceleration/solutions/vitis_intro_lab/binary_container_1.awsxclbin ~/workspace/vadd_system/Hardware/binary_container_1.xclbin
    chmod +x ~/workspace/vadd/Hardware/vadd
    ```
 
