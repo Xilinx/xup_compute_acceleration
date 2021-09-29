@@ -140,6 +140,20 @@ After completing this lab, you will be able to:
   * Around line 343 results are read back (`clEnqueueReadBuffer()`) and compared to the expected results.
   * The *Shutdown and cleanup section* shows releasing of the memory, program, and kernel
 
+1. If you are using a platform that is not AWS F1, make the following changes in the *host\_example.cpp* code
+
+   - Replace line 84 `char target_device_name[1001] = TARGET_DEVICE;` with the following
+
+     ```C
+     char target_device_name[1001] = TARGET_DEVICE; target_device_name[23] = '\0';
+     ```
+
+   - Replace line 163  `if(strcmp(cl_device_name, target_device_name) == 0) {` with the following
+
+     ```C
+     if(strstr(cl_device_name, target_device_name) != NULL){
+     ```
+
 ### Define a hardware kernel, and build the project
 
 1. Import the *host\_example.cpp* file from **rtl\_kernel\_system > rtl\_kernel\_kernels > src > vitis\_rtl\_kernel > KVAdd** into the **rtl\_kernel\_system > rtl\_kernel > src** folder
