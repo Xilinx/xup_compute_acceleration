@@ -98,16 +98,11 @@ git clone https://github.com/Xilinx/Vitis_Libraries.git -b v2021.1_rel --depth 1
 
 In order to build the host application we are going to use `g++`.
 
-1. Since the image does not have opencv-devel package installed, install it using the following command
+Install `opencv-devel` and `eog`, this is in case these packages are not already available.
 
-   ```sh
-   sudo yum install opencv-devel
-   ```
-1. Since the image does not have image (png) viewer package installed, install it using the following command
-
-   ```sh
-   sudo yum install eog
-   ```
+```sh
+sudo yum install opencv-devel eog -y
+```
 
 1. Create the object files `*.o` for every `*.cpp` file of the host code
 
