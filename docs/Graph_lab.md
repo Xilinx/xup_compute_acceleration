@@ -37,13 +37,13 @@ git clone https://github.com/Xilinx/Vitis_Libraries.git -b v2021.1_rel --depth 1
 
 1. Since the source files are targeting Alveo U50 card which has HBM, whereas Amazon AWS FPGA card does not and the Amazon AWS FPGA card is not an Alveo card. Some modifications will have to be done
 
-   To apply patch file run
+   To apply the modification using the provided patch file run the following command
 
    ```sh
    patch -s -p0 < ~/xup_compute_acceleration/sources/graph_lab/graph.patch
    ```
 
-   This patch a) sets the AWS-F1 platform as default, b) specifies to use DDR memory (instead of HMB) and c) enables profiling as well as debug.
+   This patch a) sets the AWS-F1 platform as default, b) specifies to use DDR memory (instead of HMB) and c) enables profiling as well as debug
 
 1. Copy `xrt.ini`
 
