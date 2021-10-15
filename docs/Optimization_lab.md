@@ -359,8 +359,9 @@ In the *idct.cpp* file, locate lines 286-297. Note that two memory buffers, *mIn
 1. If you have not built the hardware yourself then copy the provided prebuilt solution files using the following commands:
 
    ```sh
-   mkdir ~/workspace/optimization_lab/Hardware
-   cp ~/xup_compute_acceleration/solutions/optimization_lab/* ~/workspace/optimization_lab/Hardware/. 
+   mkdir -p ~/workspace/optimization_lab/Hardware && mkdir -p ~/workspace/optimization_lab_system/Hardware
+   cp ~/xup_compute_acceleration/solutions/optimization_lab/* ~/workspace/optimization_lab/Hardware/
+   cp ~/xup_compute_acceleration/solutions/optimization_lab/binary_container_1.awsxclbin ~/workspace/optimization_lab_system/Hardware/binary_container_1.xclbin
    chmod +x ~/workspace/optimization_lab/Hardware/optimization_lab
    ```
 

@@ -181,8 +181,7 @@ This lab is a continuation of previous *Introduction to Vitis* lab. You ended th
 1. If you have not built the hardware yourself then copy the provided prebuilt solution files using the following commands:
 
    ```sh
-   mkdir ~/workspace/vadd/Hardware
-   mkdir ~/workspace/vadd_system/Hardware
+   mkdir -p ~/workspace/vadd/Hardware && mkdir -p  ~/workspace/vadd_system/Hardware
    cp ~/xup_compute_acceleration/solutions/vitis_intro_lab/* ~/workspace/vadd/Hardware/
    cp ~/xup_compute_acceleration/solutions/vitis_intro_lab/binary_container_1.awsxclbin ~/workspace/vadd_system/Hardware/binary_container_1.xclbin
    chmod +x ~/workspace/vadd/Hardware/vadd
