@@ -1,0 +1,93 @@
+--- Makefile
++++ Makefile
+@@ -43,7 +43,7 @@ help::
+ TARGET ?= sw_emu
+ 
+ # ################### Setting up default value of DEVICE ##############################
+-DEVICE ?= xilinx_u50_gen3x16_xdma_201920_3
++DEVICE ?= xilinx_aws-vu9p-f1_shell-v04261818_201920_2
+ 
+ # ###################### Setting up default value of HOST_ARCH ####################### 
+ HOST_ARCH ?= x86
+@@ -53,11 +53,6 @@ ifeq ($(findstring zc, $(DEVICE)), zc)
+ $(error [ERROR]: This project is not supported for $(DEVICE).)
+ endif
+ 
+-# #################### Checking if DEVICE in whitelist ############################
+-ifneq ($(findstring u50, $(DEVICE)), u50)
+-$(warning [WARNING]: This project has not been tested for $(DEVICE). It may or may not work.)
+-endif
+-
+ # ######################## Setting up Project Variables #################################
+ MK_PATH := $(abspath $(lastword $(MAKEFILE_LIST)))
+ XF_PROJ_ROOT ?= $(shell bash -c 'export MK_PATH=$(MK_PATH); echo $${MK_PATH%/L2/*}')
+@@ -107,9 +102,6 @@ CXXFLAGS += -I$(CUR_DIR)/src/
+ ifeq ($(HOST_ARCH), x86)
+ LDFLAGS += -L$(XILINX_HLS)/lnx64/tools/fpo_v7_0 -Wl,--as-needed -lgmp -lmpfr -lIp_floating_point_v7_0_bitacc_cmodel
+ endif
+-ifneq (,$(shell echo $(XPLATFORM) | awk '/u50/'))
+-CXXFLAGS += -D USE_HBM
+-endif
+ 
+ # ################### Setting package and image directory #######################
+ 
+@@ -121,9 +113,7 @@ HOST_ARGS :=  -xclbin $(BUILD_DIR)/shortestPath_top.xclbin -o $(XFLIB_DIR)/L2/te
+ VPP_FLAGS += -t $(TARGET) --platform $(XPLATFORM) --save-temps --optimize 2
+ VPP_FLAGS += --hls.jobs 8
+ VPP_LDFLAGS += --vivado.synth.jobs 8 --vivado.impl.jobs 8
+-ifneq (,$(shell echo $(XPLATFORM) | awk '/u50/'))
+ VPP_FLAGS += --config $(CUR_DIR)/conn_u50.cfg
+-endif
+ 
+ VPP_FLAGS += -I$(XFLIB_DIR)/L2/include
+ VPP_FLAGS += -I$(XFLIB_DIR)/../database/L1/include/hw
+
+--- conn_u50.cfg
++++ conn_u50.cfg
+@@ -1,9 +1,9 @@
+ [connectivity]
+-sp=shortestPath_top.m_axi_gmem0:HBM[0]
+-sp=shortestPath_top.m_axi_gmem1:HBM[2]
+-sp=shortestPath_top.m_axi_gmem2:HBM[4]
+-sp=shortestPath_top.m_axi_gmem3:HBM[0]
+-sp=shortestPath_top.m_axi_gmem4:HBM[2]
+-sp=shortestPath_top.m_axi_gmem5:HBM[4]
+-slr=shortestPath_top:SLR0
++sp=shortestPath_top.m_axi_gmem0:DDR[0]
++sp=shortestPath_top.m_axi_gmem1:DDR[0]
++sp=shortestPath_top.m_axi_gmem2:DDR[0]
++sp=shortestPath_top.m_axi_gmem3:DDR[0]
++sp=shortestPath_top.m_axi_gmem4:DDR[0]
++sp=shortestPath_top.m_axi_gmem5:DDR[0]
++slr=shortestPath_top:SLR1
+ nk=shortestPath_top:1:shortestPath_top
+
+--- utils.mk
++++ utils.mk
+@@ -19,7 +19,7 @@
+ #+-------------------------------------------------------------------------------
+ 
+ REPORT := no
+-PROFILE := no
++PROFILE := yes
+ DEBUG := no
+ 
+ #'estimate' for estimate report generation
+@@ -31,7 +31,7 @@ endif
+ 
+ #Generates profile summary report
+ ifeq ($(PROFILE), yes)
+-VPP_LDFLAGS += --profile_kernel data:all:all:all
++VPP_LDFLAGS +=  -g --profile_kernel data:all:all:all
+ endif
+ 
+ #Generates debug summary report
+@@ -148,7 +148,7 @@ ifeq ($(filter $(TARGET),sw_emu hw_emu hw),)
+ $(error TARGET is not sw_emu, hw_emu or hw)
+ endif
+ 
+-ifneq (,$(wildcard $(DEVICE)))
++ifeq (,$(wildcard $(DEVICE)))
+ # Use DEVICE as a file path
+ XPLATFORM := $(DEVICE)
+ else
