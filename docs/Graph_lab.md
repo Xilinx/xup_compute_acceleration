@@ -275,9 +275,10 @@ Since compilation for hardware target will take a long time, the FPGA binary is 
 
    The solution directory has the awsxclbin, host.exe, and data directory containing the required files needed by the `host.exe` program
 
-1. Run the kernels on hardware 
+1. Make host.exe executable and un the kernels on hardware 
     
    ```sh
+   chown +x host.exe
    ./host.exe -xclbin ./shortestPath_top.awsxclbin -o ./data/data-csr-offset.mtx -c ./data/data-csr-indicesweights.mtx -g ./data/data-golden.sssp.mtx
    ```
 
