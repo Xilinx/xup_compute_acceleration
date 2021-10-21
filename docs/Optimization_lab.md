@@ -27,7 +27,7 @@ After completing this lab, you will be able to:
 
 1. Select your target platform and click **Next >**
 
-    You should see `xilinx_aws-vu9p-f1_shell-v04261818_201920_2` as one of the platforms if you are continuing with previous lab, otherwise add it from `$AWS_FPGA_REPO_DIR/Vitis/aws_platform`
+    You should see `xilinx_aws-vu9p-f1_shell-v04261818_201920_2` as one of the platforms if you are continuing with previous lab, otherwise add it from `~/aws-fpga/Vitis/aws_platform`
 
 1. In the *Application Project Details* page enter **optimization\_lab** in the *Application project name:* field and click **Next >**
 

@@ -32,7 +32,7 @@ After completing this lab, you will learn to:
 
 1. Create a new application project giving **wide_vadd** as the project name, and click **Next >**
 
-    You should see `xilinx_aws-vu9p-f1_shell-v04261818_201920_2` as one of the platforms if you are continuing with previous lab, otherwise add it from `$AWS_FPGA_REPO_DIR/Vitis/aws_platform/`
+    You should see `xilinx_aws-vu9p-f1_shell-v04261818_201920_2` as one of the platforms if you are continuing with previous lab, otherwise add it from `~/aws-fpga/Vitis/aws_platform/`
 
 1. Select `Empty Application` as the template and click **Finish**
 

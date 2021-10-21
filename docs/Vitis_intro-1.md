@@ -43,8 +43,8 @@ After completing Introduction to Vitis Part 1 and 2, you will learn to:
     If either of the variables above are empty, then execute the following two commands:
 
    ```sh
-   source $AWS_FPGA_REPO_DIR/vitis_setup.sh
-   source $AWS_FPGA_REPO_DIR/vitis_runtime_setup.sh
+   source ~/aws-fpga/vitis_setup.sh
+   source ~/aws-fpga/vitis_runtime_setup.sh
    ```
 
 1. Invoke GUI by executing the following command from a terminal window:
@@ -74,7 +74,7 @@ After completing Introduction to Vitis Part 1 and 2, you will learn to:
 
 1. Select `xilinx_aws-vu9p-f1_shell-v04261818_201920_2` platform and click **Next >**
 
-    If you do not see this platform, make sure to [set up](setup_xup_aws_workshop.md#lab-setup) `PLATFORM_REPO_PATHS` variable. Or you can include the platform manually by clicking `+` button and browse to `$AWS_FPGA_REPO_DIR/Vitis/aws_platform/` and select `xilinx_aws-vu9p-f1_shell-v04261818_201920_2`
+    If you do not see this platform, make sure to [set up](setup_xup_aws_workshop.md#lab-setup) `PLATFORM_REPO_PATHS` variable. Or you can include the platform manually by clicking `+` button and browse to `~/aws-fpga/Vitis/aws_platform/` and select `xilinx_aws-vu9p-f1_shell-v04261818_201920_2`
 
     ![New Application Project Platform](./images/Vitis_intro/select_platform.png)
 

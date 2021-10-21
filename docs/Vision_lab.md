@@ -46,7 +46,7 @@ git clone https://github.com/Xilinx/Vitis_Libraries.git -b v2021.1_rel --depth 1
    ```sh
    export XCL_EMULATION_MODE=sw_emu
    export AWS_PFM=xilinx_aws-vu9p-f1_shell-v04261818_201920_2
-   export PFM=$AWS_FPGA_REPO_DIR/Vitis/aws_platform/$AWS_PFM/$AWS_PFM.xpfm
+   export PFM=~/aws-fpga/Vitis/aws_platform/$AWS_PFM/$AWS_PFM.xpfm
    export VITIS_LIBS=~/Vitis_Libraries/vision/L1/include
    ```
 

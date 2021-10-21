@@ -29,7 +29,7 @@ $VITIS_DIR/tools/create_vitis_afi.sh
 Before running the commands below, make sure the Vitis setup script has been sourced (the following command assumes the aws-fpga Git repository is cloned to the user home area)
 
 ```sh
-source $AWS_FPGA_REPO_DIR/vitis_setup.sh
+source ~/aws-fpga/vitis_setup.sh
 ```
 
 * Create an AFI by running the `create_vitis_afi.sh` script and wait for the completion of the AFI creation process
