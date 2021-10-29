@@ -100,7 +100,7 @@ After completing Introduction to Vitis Part 1 and 2, you will learn to:
 
     ![](./images/Vitis_intro/add_host_sources.png)
 
-1. In the *Import Sources* window, click *Browse* and navigate to `~/xup_compute_acceleration/sources/vadd_lab/` and click **OK**. Then select the **vadd.cpp, xcl2.cpp, and xcl2.cpp** files as they will be executed on the host. Finally click *Finish*
+1. In the *Import Sources* window, click *Browse* and navigate to `~/xup_compute_acceleration/sources/vadd_lab/` and click **OK**. Then select the **vadd.cpp, xcl2.cpp, and xcl2.hpp** files as they will be executed on the host. Finally click *Finish*
 
     ![](./images/Vitis_intro/import_sources.png)
 
@@ -142,7 +142,6 @@ After completing Introduction to Vitis Part 1 and 2, you will learn to:
 
 1. Select the **Launch SW Emulator** option and click **OK**
 
-    ![](./images/vitis_intro/run_as.png)
 
 1. Observe the application has run and the output is displayed in the *Console* view
 
