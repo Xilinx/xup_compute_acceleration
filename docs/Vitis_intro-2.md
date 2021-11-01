@@ -65,7 +65,7 @@ This lab is a continuation of previous *Introduction to Vitis* lab. You ended th
 
     ![](images/Vitis_intro/hw_emu_krnl_profile_settings.png)
 
-1. Build the project by selecting **vadd_system"" in `Assistant` view and clicking the build button. This may take about 10 minutes
+1. Build the project by selecting *vadd\_system* in `Assistant` view and clicking the build button. This may take about 10 minutes
 
 1. Run Hardware Emulation in GUI mode
 
