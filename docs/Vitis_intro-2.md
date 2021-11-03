@@ -160,14 +160,15 @@ Building the hardware can take 1-2 hours. You will test the design in hardware u
    mkdir -p ~/workspace/vadd/Hardware && mkdir -p  ~/workspace/vadd_system/Hardware
    cp ~/xup_compute_acceleration/solutions/vitis_intro_lab/* ~/workspace/vadd/Hardware/
    cp ~/xup_compute_acceleration/solutions/vitis_intro_lab/binary_container_1.awsxclbin ~/workspace/vadd_system/Hardware/binary_container_1.xclbin
-   chmod +x ~/workspace/vadd/Hardware/vadd
    ```
 
 Set `Active build configuration:` to `Hardware` on the upper right corner of *Application Project Settings* view
 
 ![](./images/Vitis_intro/hardware.png)
 
-* In the explorer view, right click on *vadd* and select **Build Project** to rebuild the host application only. 
+* In the explorer view, right click on *vadd* and select **Build Project** to rebuild the host application only.
+
+  ![](./images/Vitis_intro/rebuild_hostcode.png)
 
 Setup the run configuration so you can run the application and then analyze results from GUI
 
@@ -175,7 +176,7 @@ Setup the run configuration so you can run the application and then analyze resu
 
 1. Click on the **Edit...** button of the *Program Arguments*, uncheck *Automatically add binary container(s) to arguments*, then enter **../binary\_container\_1.awsxclbin** after clicking in the *Program Arguments* field. Finally, click **OK**
 
-    ![](images/Vitis_intro/hw_arguments_settings.png)
+   ![](images/Vitis_intro/hw_arguments_settings.png)
 
 1. click on the `Edit...` button of the *Xilinx Runtime Profiling* section, select the **OpenCL trace** option and click **OK**
 
@@ -195,34 +196,34 @@ Setup the run configuration so you can run the application and then analyze resu
 
 1. Click **Timeline Trace**. 
 
-    Zoom in at the end of the timeline and observe the activities in various parts of the system. Note that the kernel processes data in one shot
+   Zoom in at the end of the timeline and observe the activities in various parts of the system. Note that the kernel processes data in one shot
 
-    ![](images/Vitis_intro/hw_application_timeline.png)
+   ![](images/Vitis_intro/hw_application_timeline.png)
 
 1. Click on the *Profile Summary* entry in the left panel, and check information reported in each of the four sections:
 
-    - Kernels & Compute Units
+   - Kernels & Compute Units
 
-    ![](images/Vitis_intro/hw_profile_kernel_compute_units.png)
+   ![](images/Vitis_intro/hw_profile_kernel_compute_units.png)
 
-    - Kernel Data Transfers 
+   - Kernel Data Transfers
 
-    ![](images/Vitis_intro/hw_profile_kernel_data_transfer.png)
+   ![](images/Vitis_intro/hw_profile_kernel_data_transfer.png)
 
-    - Host Data Transfer
+   - Host Data Transfer
 
-    ![](images/Vitis_intro/hw_profile_data_transfer.png)
+   ![](images/Vitis_intro/hw_profile_data_transfer.png)
 
-    - OpenCL APIs
+   - OpenCL APIs
 
-    ![](images/Vitis_intro/hw_profile_API_calls.png)
+   ![](images/Vitis_intro/hw_profile_API_calls.png)
 
 
 1. Close the Analyzer when finished. 
 
 1. Review `xrt.ini` file in `Hardware` folder within *Explorer* view
 
-    Earlier, when you set kernel profiling and trace settings, `xrt.ini` file gets updated. During the execution, this updated file is used to generate the profile and application timeline data which are seen using Vitis Analyzer.
+   Earlier, when you set kernel profiling and trace settings, `xrt.ini` file gets updated. During the execution, this updated file is used to generate the profile and application timeline data which are seen using Vitis Analyzer.
 
    ```
    [Debug]
@@ -284,10 +285,10 @@ Once the full system is built, you can create an AFI by following the steps list
 
 Copy the necessary files to the appropriate directory using the following commands:
 
-   ```sh
-   cp binary_container_1.awsxclbin ~/workspace/vadd/Hardware 
-   cp ~/xup_compute_acceleration/sources/xrt.ini ~/workspace/vadd/Hardware/
-   ```
+```sh
+cp binary_container_1.awsxclbin ~/workspace/vadd/Hardware
+cp ~/xup_compute_acceleration/sources/xrt.ini ~/workspace/vadd/Hardware/
+```
 
 ---------------------------------------
 <p align="center">Copyright&copy; 2021 Xilinx</p>

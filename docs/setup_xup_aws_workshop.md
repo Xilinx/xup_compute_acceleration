@@ -222,14 +222,15 @@ You can now proceed to [Lab 1: Introduction to Vitis Part 1](https://xilinx.gith
 
 If you are using the AWSEducate instances then execute the following to clone the *xup\_compute\_acceleration* repository. No additional variables need to be set as the provided AMI has all necessary files including `aws-fpga` repository cloning, the AWS F1 tools, Hardware Development Kit (HDK) and documentation
 
-   ```sh
-   git clone https://github.com/Xilinx/xup_compute_acceleration.git
-   ```
+```sh
+git clone https://github.com/Xilinx/xup_compute_acceleration.git
+```
 
-   The previous command will: 
-   - Clone this repository to get source code and solutions
+The previous command will:
 
-   For more details visit: [aws-fpga/Vitis/README.md](https://github.com/aws/aws-fpga/blob/master/Vitis/README.md)
+- Clone this repository to get source code and solutions
+
+  For more details visit: [aws-fpga/Vitis/README.md](https://github.com/aws/aws-fpga/blob/master/Vitis/README.md)
 
 ---------------------------------------
 
