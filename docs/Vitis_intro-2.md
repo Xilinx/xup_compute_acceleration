@@ -159,6 +159,7 @@ Building the hardware can take 1-2 hours. You will test the design in hardware u
    ```sh
    mkdir -p ~/workspace/vadd/Hardware && mkdir -p  ~/workspace/vadd_system/Hardware
    cp ~/xup_compute_acceleration/solutions/vitis_intro_lab/* ~/workspace/vadd/Hardware/
+   cp ~/xup_compute_acceleration/solutions/vitis_intro_lab/binary_container_1.awsxclbin ~/workspace/vadd_system/Hardware/binary_container_1.xclbin
    chmod +x ~/workspace/vadd/Hardware/vadd
    ```
 
