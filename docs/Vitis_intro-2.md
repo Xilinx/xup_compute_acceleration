@@ -4,76 +4,81 @@ layout: default
 
 # Introduction to Vitis Part 2
 
-This lab is a continuation of previous *Introduction to Vitis* lab. You ended the previous lab by running a software emulation of the vector addition kernel. In this lab you will profile both software and hardware emulation and you will run the design in hardware.
+This lab is a continuation of the previous *Introduction to Vitis* lab. You ended the previous lab by running a software emulation of the vector addition kernel. In this lab you will profile both software and hardware emulation and run the design in hardware.
 
 ## Steps
 
 ### View Emulation Timeline
-1. Make sure you ran the [software emulation](Vitis_intro-1.md#build-and-run-software-emulation)
+1. Make sure you competed [software emulation](Vitis_intro-1.md#build-and-run-software-emulation) in the previous part of the lab. 
 
-1. In the *Assistant* view, double-click `vadd_system > vadd > Emulation-SW > SystemDebugger_vadd_system_vadd > Run Summary (xclbin)` to open Vitis Analyzer
+1. In the *Assistant* view, expand the following if necessary, and double-click `vadd_system > vadd > Emulation-SW > SystemDebugger_vadd_system_vadd > Run Summary (xclbin)` to open Vitis Analyzer
 
     ![](images/Vitis_intro/sw_emu_run_profile.png)
 
-1. Vitis Analyzer shows **Summary**, **Run Guidance** and **Profile Summary** tabs on the left-hand side. Notice that the **Timeline Trace** is not available as by default it is turned-off for the software emulation. Click **Profile Summary**
+1. Vitis Analyzer shows **Summary**, **Run Guidance** and **Profile Summary** tabs on the left-hand side. 
 
-1. Click **Kernels & Compute Units** on the right to see kernel and compute units execution times
+1. Select **Profile Summary** and then select **Kernels & Compute Units** to see *kernel and compute units* execution times. Notice the reported times. 
 
     ![](images/Vitis_intro/sw_emu_kernel_compute_units.png)
 
-1. Click **Host Data Transfer** on the right to see read and write buffer sizes, buffer addresses, and the related execution parameters
+1. Click **Host Data Transfer** to see *read and write buffer sizes*, *buffer addresses*, and the related execution parameters
 
     ![](images/Vitis_intro/sw_emu_host_data_transfer.png)
 
 1. Select **File > Exit** to close the Analyzer
 
-1. In order to see the **Timeline Trace**, you need to enable it in the **Run configuration** settings. Right click on **vadd\_system** in the *Assistant* view, select **Run configuration**
+    
 
-1. Click on the `Edit...` button of the **Xilinx Runtime Profiling** section
+### Timeline trace
 
-    ![](images/Vitis_intro/sw_emu_run_configuration.png)
+In order to see a *Timeline Trace*, you need to enable it in the *Run configuration* settings. 
 
-1. Select the *OpenCL trace* option and click **OK**
+1. Right click on **vadd\_system** in the *Assistant* view and select **Run> Run configurations**
+2. Under the *Xilinx Runtime Profiling* section, click the *Configuration* **Edit...** button   
 
-    ![](images/Vitis_intro/sw_emu_enable_timeline_trace.png)
+![](images/Vitis_intro/sw_emu_run_configuration.png)
 
-1. Re-run and double-click `vadd_system > vadd > Emulation-SW > Run Summary (xclbin)` to open Vitis Analyzer. Select the `Timeline Trace` panel on the left
+3. Select the **OpenCL trace** option,  click **OK** to save the change and click **Run** 
 
-1. Scroll right, click on the graph at around 26 ms (you may see different timeline depending on what else was executed earlier), then using the mouse cursor, select an area of interest
+![](images/Vitis_intro/sw_emu_enable_timeline_trace.png)
 
-    Observe the various events at different time intervals  
+1. Open the Vitis Analyzer again (**vadd_system > vadd > Emulation-SW > Run Summary (xclbin)`**) and select the **Timeline Trace** 
+
+1. Scroll and zoom if necessary to view application events. You can select an area of interest with the mouse cursor. This is a software emulation so the absolute numbers for your timeline may vary compared to the image below.
+
+    Observe the various events at different times in the trace.
 
     ![](images/Vitis_intro/sw_emu_application_timeline.png)
 
-1. When finished, close the Vitis Analyzer by clicking `File > Exit` and clicking **OK**
+1. You can close close the Vitis Analyzer when you are finished. 
 
-### Build and run hardware emulation
+## Build and run Hardware Emulation
 
-1. Set `Active build configuration:` to `Emulation-HW` on the upper right corner of *System Project Settings* view of the *vadd_system* tab
+1. In the *vadd_system* panel, set the *Active build configuration* to **Emulation-HW**:
 
     ![](./images/Vitis_intro/hw_emu_setup.png)
 
-    In order to collect the profiling data and run Timing Analyzer on the application run in hardware, we need to setup some options
+In order to collect the profiling data and run Timing Analyzer on the application run in hardware, we need to configure some settings. 
 
-1. Right-click on `vadd_system > vadd_system_hw_link > Emulation-HW > binary_container_1 > krnl_vadd` in *Assistant* view and then click on *Settings*
+1. In the *Assistant* view, right-click on `vadd_system > vadd_system_hw_link > Emulation-HW > binary_container_1 > krnl_vadd` and click  **Settings**
 
     ![](images/Vitis_intro/hw_emu_settings_invoke.png)
 
-1. Select *krnl\_vadd* on the right-hand side, make sure that the *Data Transfer* shows *Counters+Trace* and Execute Profiling is checked. If not, then click on the *Data Transfer* drop-down button in *krnl\_vadd* row and select *Counters+Trace* option. Notice the same monitoring options will be applied to all items in the hierarchy under the top level selection. Click **Apply and Close**
-
-    At this point the settings should look like shown below
+1. Expand this window if necessary and select *krnl\_vadd* on the right-hand side. Make sure that the *Data Transfer* shows *Counters+Trace* and Execute Profiling is enabled. If it is not, click on the *Data Transfer* drop-down button in *krnl\_vadd* row and select *Counters+Trace*. Notice the same monitoring options will be applied to all items in the hierarchy under the top level selection. 
 
     ![](images/Vitis_intro/hw_emu_krnl_profile_settings.png)
 
-1. Build the project by selecting *vadd\_system* in `Assistant` view and clicking the build button. This may take about 10 minutes
+1. Click **Apply and Close**
 
-1. Run Hardware Emulation in GUI mode
+1. Build the project by selecting *vadd\_system* in `Assistant` view and clicking the *build* button. This may take about 10 minutes
 
-    To launch hardware emulation in GUI mode, first select **vadd_system** in the *Assistant* view, then click run button on icon bar and select **Launch HW Emulator**
+### Run Hardware Emulation
+
+1. Select **vadd_system** in the *Assistant* view, then click run button on icon bar and select **Launch HW Emulator**
 
     ![](./images/Vitis_intro/hw_emu_run.png)
 
-1. Observe the application has run, and the output is displayed in the *Console* view. Compared to software emulation, the output also shows data transfer information. Notice the data transfer between kernel and global memory is 16 KB on each port
+1. Observe the application has run, and the output is displayed in the *Console* view. Compared to software emulation, the output also shows data transfer information. Notice the data transfer between kernel and global memory is 32KB read (16KB each for A and B) and 16 KB write (C). 
 
    ```
    Found Platform
@@ -90,18 +95,18 @@ This lab is a continuation of previous *Introduction to Vitis* lab. You ended th
    INFO::[ Vitis-EM 22 ] [Time elapsed: 0 minute(s) 30 seconds, Emulation time: 0.137666 ms]
    Data transfer between kernel(s) and global memory(s)
    krnl_vadd_1:m_axi_gmem-DDR[1]          RD = 32.000 KB              WR = 16.000 KB       
-
+   
    INFO: [HW-EM 06-0] Waiting for the simulator process to exit
    INFO: [HW-EM 06-1] All the simulator processes exited successfully
-   ```    
+   ```
 
-1. View Timeline Trace
+### View the Timeline Trace
 
-    In the *Assistant* view, double-click `vadd_system > vadd > Emulation-HW > SystemDebugger_vadd_system_vadd > Run Summary (xclbin)` to open Vitis Analyzer
+1. In the *Assistant* view, double-click `vadd_system > vadd > Emulation-HW > SystemDebugger_vadd_system_vadd > Run Summary (xclbin)` to open Vitis Analyzer
 
-    Vitis Analyzer shows **Summary**, **System Diagram**, **Platform Diagram**, **Run Guidance**, **Profile Summary**, and **Timeline Trace** tabs on the left-hand side. Click **Timeline Trace**. Zoom in between the 20 and 40 second area and observe the events that occurred. Note that data is processed in smaller chunks in the kernel and in a sequential manner. Only activities occurring in the FPGA is shown. No host activities are displayed. 
+Click **Timeline Trace**. Scroll and Zoom (20-40 seconds in the image below) and observe the events that occurred. Note that data is processed in smaller chunks in the kernel and in a sequential manner. Notice the Only events related to the FPGA hardware are shown. No host events are visible in this view. 
 
-    ![](images/Vitis_intro/hw_emu_application_timeline.png)
+![](images/Vitis_intro/hw_emu_application_timeline.png)
 
 1. Click on the **Profile Summary** entry in the left panel, and observe different entries, each containing reports on various performance metrics, we will focus on four of them
 
@@ -130,10 +135,14 @@ This lab is a continuation of previous *Introduction to Vitis* lab. You ended th
 
     ![](images/Vitis_intro/hw_emu_profile_API_calls.png)
 
+* Close the analyzer when you are finished. 
 
-1. When finished, close the analyzer by clicking `File > Exit` and clicking **OK**
+### Host profiling
 
-1. In order to see host activities also, right click on **vadd\_system** in the *Assistant* view, select **Run configuration**, click on the `Edit...` button of the *Xilinx Runtime Profiling* section, select the **OpenCL trace** option and click **OK**
+
+1. In order to see host events, enable OpenCL trace again for a HW emulation run. Right click on **vadd\_system** in the *Assistant* view, select **Run > Run configurations**. Notice a new configuration is created for the HW emulation
+
+1. Click on the `Edit...` button of the *Xilinx Runtime Profiling* section, select the **OpenCL trace** option and click **OK**
 
 1. Rerun and double-click `vadd_system > vadd > Emulation-HW > SystemDebugger_vadd_system_vadd > Run Summary (xclbin)` to open Vitis Analyzer. Select the `Timeline Trace` panel on the left
 
@@ -141,55 +150,27 @@ This lab is a continuation of previous *Introduction to Vitis* lab. You ended th
 
     ![](images/Vitis_intro/hw_emu_application_timeline_trace.png)
 
-### Build system hardware with profiling and timing analysis options if are continuing with the lab OTHERWISE skip to [Prebuilt](#run-the-system-in-hardware)
+## Run the system in hardware
 
-1. Set `Active build configuration:` to `Hardware` on the upper right corner of *Application Project Settings* view
+Building the hardware can take 1-2 hours. You will test the design in hardware using a prebuilt binaries. 
 
-    ![](./images/Vitis_intro/hardware.png)
-
-    In order to collect the profiling data and run Timing Analyzer on the application run in hardware, we need to setup some options.
-
-1. Select `vadd_system > vadd_system_hw_link > Hardware > binary_container_1` in *Assistant* view and then click on *Settings*. Click on the *Data Transfer* drop-down button in *binary\_container\_1* row and select **Counters+Trace** option. This should also enable *Execute Profiling* option. If not, then click on the corresponding check box.
-
-1. In the *V++ command line options:* field, enter `--profile.data all` to enable kernel profiling
-
-1. Select *Trace Memory* to be FIFO type and size of 64K. This is the memory where traces will be stored. You also have the option to store this information in DDR (max limit 4 GB) and PLRAM
-
-    At this point the settings should look like shown below
-
-    ![](images/Vitis_intro/hw_krnl_profile_settings.png)
-
-1. Click **Apply and Close**
-
-1. Build the project by selecting **vadd\_system** in `Assistant` view and clicking the build button 
-
-    Normally, you would build the hardware, but since it can take approximately two hours you should **NOT BUILD** it now. Instead you can use the precompiled solution. If you wish to rebuild the hardware later, see the [Appendix](#appendix-build-full-hardware) below for instructions on how to do this.
-
-1. A `binary_container_1.xclbin` and `vadd` application will be generated in the `vadd/Hardware` directory
-
-1. Register the generated xclbin file to generate binary\_container\_1.awsxclbin by running the shell script. Follow instructions available [here](Creating_AFI_AWSEducate.md)
-
-### Run the system in hardware
-
-1. If you have built the hardware yourself then copy the necessary files using the following commands:
-
-   ```sh
-   cp binary_container_1.awsxclbin ~/workspace/vadd/Hardware 
-   cp ~/xup_compute_acceleration/sources/xrt.ini ~/workspace/vadd/Hardware/
-   ```
-
-1. If you have not built the hardware yourself then copy the provided prebuilt solution files using the following commands:
+1. Copy the prebuilt solution files into the project with the following commands:
 
    ```sh
    mkdir -p ~/workspace/vadd/Hardware && mkdir -p  ~/workspace/vadd_system/Hardware
    cp ~/xup_compute_acceleration/solutions/vitis_intro_lab/* ~/workspace/vadd/Hardware/
-   cp ~/xup_compute_acceleration/solutions/vitis_intro_lab/binary_container_1.awsxclbin ~/workspace/vadd_system/Hardware/binary_container_1.xclbin
    chmod +x ~/workspace/vadd/Hardware/vadd
    ```
 
-   Setup the run configuration so you can run the application and then analyze results from GUI
+Set `Active build configuration:` to `Hardware` on the upper right corner of *Application Project Settings* view
 
-1. Right-click on `vadd_system` in *Assistant* view, select `Run > Run Configurations...`
+![](./images/Vitis_intro/hardware.png)
+
+* In the explorer view, right click on *vadd* and select **Build Project** to rebuild the host application only. 
+
+Setup the run configuration so you can run the application and then analyze results from GUI
+
+1. Right-click on `vadd_system` in *Assistant* view, select **Run > Run Configurations...**
 
 1. Click on the **Edit...** button of the *Program Arguments*, uncheck *Automatically add binary container(s) to arguments*, then enter **../binary\_container\_1.awsxclbin** after clicking in the *Program Arguments* field. Finally, click **OK**
 
@@ -211,11 +192,13 @@ This lab is a continuation of previous *Introduction to Vitis* lab. You ended th
 
 1. In the *Assistant* view, double click `vadd_system > vadd > Hardware > SystemDebugger_vadd_system_vadd > Run Summary (xclbin)` to open Vitis Analyzer
 
-    Click **Timeline Trace**. Zoom in at the end of the timeline and observe the activities in various parts of the system. Note that the kernel processes data in one shot
+1. Click **Timeline Trace**. 
+
+    Zoom in at the end of the timeline and observe the activities in various parts of the system. Note that the kernel processes data in one shot
 
     ![](images/Vitis_intro/hw_application_timeline.png)
 
-1. Click on the *Profile Summary* entry in the left panel, and observe multi-tab (four tabs) output
+1. Click on the *Profile Summary* entry in the left panel, and check information reported in each of the four sections:
 
     - Kernels & Compute Units
 
@@ -234,7 +217,7 @@ This lab is a continuation of previous *Introduction to Vitis* lab. You ended th
     ![](images/Vitis_intro/hw_profile_API_calls.png)
 
 
-1. When finished, close the analyzer by clicking `File > Exit` and clicking **OK**
+1. Close the Analyzer when finished. 
 
 1. Review `xrt.ini` file in `Hardware` folder within *Explorer* view
 
@@ -262,7 +245,31 @@ In this lab you used the Vitis IDE to create a new project. You then ran the des
 
 Note that building the project can take around two hours. Skip this step in a tutorial environment.
 
-1. After setting up the project as described above, you can build the system
+1. Set `Active build configuration:` to `Hardware` on the upper right corner of *Application Project Settings* view
+
+   ![](./images/Vitis_intro/hardware.png)
+
+   In order to collect the profiling data and run Timing Analyzer on the application run in hardware, we need to setup some options.
+
+1. Select `vadd_system > vadd_system_hw_link > Hardware > binary_container_1` in *Assistant* view and then click on *Settings*. Click on the *Data Transfer* drop-down button in *binary\_container\_1* row and select **Counters+Trace** option. This should also enable *Execute Profiling* option. If not, then click on the corresponding check box.
+
+1. In the *V++ command line options:* field, enter `--profile.data all` to enable kernel profiling
+
+1. Select *Trace Memory* to be FIFO type and size of 64K. This is the memory where traces will be stored. You also have the option to store this information in DDR (max limit 4 GB) and PLRAM
+
+   At this point the settings should look like shown below
+
+   ![](images/Vitis_intro/hw_krnl_profile_settings.png)
+
+1. Click **Apply and Close**
+
+1. Build the project by selecting **vadd\_system** in `Assistant` view and clicking the build button 
+
+   Normally, you would build the hardware, but since it can take approximately two hours you should **NOT BUILD** it now. Instead you can use the precompiled solution. If you wish to rebuild the hardware later, see the [Appendix](#appendix-build-full-hardware) below for instructions on how to do this.
+
+1. A `binary_container_1.xclbin` and `vadd` application will be generated in the `vadd/Hardware` directory
+
+1. Register the generated xclbin file to generate binary\_container\_1.awsxclbin by running the shell script. Follow instructions available [here](Creating_AFI_AWSEducate.md)
 
 1. Click on the (![alt tag](./images/Fig-build.png)) button or select **Project > Build Project**
 
@@ -273,6 +280,13 @@ Note that building the project can take around two hours. Skip this step in a tu
 Before the design can be run on AWS an AFI (Amazon FPGA Image) is required
 
 Once the full system is built, you can create an AFI by following the steps listed in [create an AFI](Creating_AFI.md)
+
+Copy the necessary files to the appropriate directory using the following commands:
+
+   ```sh
+   cp binary_container_1.awsxclbin ~/workspace/vadd/Hardware 
+   cp ~/xup_compute_acceleration/sources/xrt.ini ~/workspace/vadd/Hardware/
+   ```
 
 ---------------------------------------
 <p align="center">Copyright&copy; 2021 Xilinx</p>
