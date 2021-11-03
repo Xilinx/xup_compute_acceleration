@@ -285,10 +285,10 @@ Once the full system is built, you can create an AFI by following the steps list
 
 Copy the necessary files to the appropriate directory using the following commands:
 
-   ```sh
-   cp binary_container_1.awsxclbin ~/workspace/vadd/Hardware 
-   cp ~/xup_compute_acceleration/sources/xrt.ini ~/workspace/vadd/Hardware/
-   ```
+```sh
+cp binary_container_1.awsxclbin ~/workspace/vadd/Hardware
+cp ~/xup_compute_acceleration/sources/xrt.ini ~/workspace/vadd/Hardware/
+```
 
 ---------------------------------------
 <p align="center">Copyright&copy; 2021 Xilinx</p>
