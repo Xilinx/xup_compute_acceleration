@@ -106,8 +106,7 @@ The NICE DCV session has already been started on the pre-configured instance. Se
 
 1. Continue to [Lab setup](#lab-setup)
 
-<? 
-<!-- 
+<!---
 ### Connect using noVNC
 
 [noVNC](https://github.com/novnc/noVNC) allows you to connect to your instance using a browser. You do not need to install anything.
@@ -138,7 +137,6 @@ Known issues:
   - Remote Resizing does not work
   - Keyboard shortcuts only works in full screen mode
 -->
-?>
 ### Connect using RDP
 
 The following instructions are for Windows *Remote Desktop Connection* (pre-installed on Windows 10 and recent versions). For Mac VNC is recommended (see the next section). For Linux you can use *Remmina* or *Vinagre* (search for instructions on how to install this for your OS). Detailed instructions are not provided for Linux. You can follow the steps below and carry out the corresponding actions in your Linux RDP client.  
