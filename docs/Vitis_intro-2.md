@@ -159,7 +159,7 @@ If you wish to rebuild the hardware later, see the [Appendix](#appendix-build-fu
 
 1. In the Explorer view, right click on *vadd* and select **Build Project** to rebuild the host application only.
 
-  ![](./images/Vitis_intro/rebuild_hostcode.png)
+   ![](./images/Vitis_intro/rebuild_hostcode.png)
 
 1. In the *Assistant* view, right-click on `vadd_system` and select **Run > Run Configurations...**
 
@@ -260,7 +260,7 @@ Note that building the project can take around two hours. Skip this step in a tu
 
 1. Build the project by selecting **vadd\_system** in `Assistant` view and clicking the build button 
 
-  This will build the project under the **Hardware** directory. The built project will include **vadd** (executable) file along with **binary\_container\_1.xclbin** file
+   This will build the project under the **Hardware** directory. The built project will include **vadd** (executable) file along with **binary\_container\_1.xclbin** file
 
 1. A `binary_container_1.xclbin` and `vadd` application will be generated in the `vadd/Hardware` directory
 
