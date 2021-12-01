@@ -35,7 +35,7 @@ After completing this lab (part 1 and part 2), you will learn how to:
 
 1. If you have not run [lab setup](setup_xup_aws_workshop.md#lab-setup), run it now
 
-1. Start the Vitis GUI by running in a terminal:
+1. In a terminal, start the Vitis GUI by running
 
    ```sh
    vitis
