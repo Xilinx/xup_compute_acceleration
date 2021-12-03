@@ -285,7 +285,7 @@ The kernel was highly optimized as well as the system. However, the data movemen
 
 The compute intensity ratio is defined as:
 
-compute_intensity = <sup>compute operations</sup>&frasl; <sub>memory accesses</sub>
+<b> compute intensity = <sup>compute operations</sup> &frasl; <sub>memory accesses</sub> </b>
 
 The bigger this number is, the more opportunities to achieve acceleration.
 
