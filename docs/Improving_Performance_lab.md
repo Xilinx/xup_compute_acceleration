@@ -6,24 +6,24 @@ layout: default
 
 ## Introduction
 
-In Introduction to Vitis [Part 1](Vitis_intro-1.md) and [Part 2](Vitis_intro-2.md), you learned how to create a Vitis project using the GUI and went through entire design flow. At the end of the lab, you saw the limited transfer bandwidth due to 32-bit data operations. This bandwidth can be improved, and in turn system performance can be improved, by transferring wider data and performing multiple operations in parallel.  This is one of the common optimization methods to improve the kernel's bandwidth.
+In Introduction to Vitis [Part 1](Vitis_intro-1.md) and [Part 2](Vitis_intro-2.md), you learned how to create a Vitis project using the GUI and went through the entire design flow. At the end of the lab, you saw the limited transfer bandwidth due to 32-bit data operations. This bandwidth can be improved, and in turn system performance can be improved, by transferring wider data and performing multiple operations in parallel (vectorization).  This is one of the common optimization methods to improve kernel performance.
 
 ## Objectives
 
 After completing this lab, you will learn to:
 
-- Use updated source files that improve the bandwidth of the vadd kernel
-- Run Hardware Emulation to see a difference in bandwidth
-- Build the system and test it in hardware
+- Guide the tool to automatically widen the kernel interfaces
+- Run Hardware Emulation to see an improvement in bandwidth and runtime
 - Perform profile and application timeline analysis in hardware emulation
+- Assign AXI4-MM adapters to specific memory banks
 
 ## Steps
 
 ### Create a Vitis Project
 
-1. Launch Vitis or continue with your previous session. 
+1. Launch Vitis or continue with your previous session
 
-    You can use the same workspace you used in the previous lab  
+   You can use the same workspace you used in the previous lab
 
 1. Create a new application project and click **Next**
 
@@ -33,217 +33,261 @@ After completing this lab, you will learn to:
 
 1. Select `Empty Application` as the template and click **Finish**
 
-    
-
 1. Right-click on the **wide\_vadd\_system > wide\_vadd > src** folder in the *Explorer* view and select `Import Sources...`
 
-    ![](./images/improving_performance/add_sources.png)
+   ![](./images/improving_performance/add_sources.png)
 
+   We are going to reuse the host and kernel code from the vadd lab
 
-1. Import all `*.cpp` and `*.hpp` files except `wide_vadd_krnl.cpp` from `~/xup_compute_acceleration/sources/improving_performance_lab/`
+1. Import all `*.cpp` and `*.hpp` files except `vadd_krnl.cpp` from `~/xup_compute_acceleration/sources/vadd_lab/`
 
-1. Similarly, expand **wide\_vadd\_system > wide\_vadd\_kernels** folder in the Explorer view, and import `wide_vadd_krnl.cpp` in the corresponding  **src** folder
+1. Similarly, expand **wide\_vadd\_system > wide\_vadd\_kernels** folder in the Explorer view, and import `vadd_krnl.cpp` in the corresponding  **src** folder
 
-1. Expand the **wide\_vadd\_system > wide\_vadd\_kernels** folder in the Explorer view, and double-click on the `wide_vadd_kernels.prj`
+1. In the Explorer view, expand the **wide\_vadd\_system > wide\_vadd\_kernels** folder, and double-click on the `wide_vadd_kernels.prj`
 
-1. Click on ![](./images/Fig-hw_button.png) in the *Hardware Functions* view and add **wide\_vadd** function as a *Hardware Function* (kernel)
+1. Click on ![](./images/Fig-hw_button.png) in the *Hardware Functions* view and add **krnl_vadd** function as a *Hardware Function* (kernel)
 
-    ![](./images/improving_performance/add_kernel.png)
+   ![](./images/improving_performance/add_kernel.png)
 
 ### Analyze the kernel code
 
-DDR controllers have a 512-bit wide interface internally. If we parallelize the dataﬂow in the accelerator, we will be able to read/write 16x 32-bit elements per clock tick instead of one. 
+DDR controllers have a 512-bit wide interface internally. If we parallelize the dataﬂow in the accelerator, we will be able to read/write 16x 32-bit elements per clock tick instead of one. Thus increasing the effective bandwidth.
 
-1. Double-click on `wide_vadd_krnl.cpp` to view its content
+1. Double-click on kernel file `krnl_vadd.cpp` to view its content
 
-   Look at lines 62-67 and note wider (512-bit) kernel interface. `uint512_dt` is used in stead of `unsigned int` for input, output and internal variables for data   storage. Notice `uint512_dt` is defined as an arbitrary precision data type `ap_uint<512>` in line 46
-
-   ```C
-   void wide_vadd(
-     const uint512_dt *in1, // Read-Only Vector 1
-     const uint512_dt *in2, // Read-Only Vector 2
-     uint512_dt       *out, // Output Result
-     int size               // Size in integer
-   )
-   ```
-
-1. Scroll down further and look at lines 78-80 where local memories are defined of the same data type and width (512-bit)
+   Look at lines 40-43 the input vector and output vector are `int` (32-bit wide). With small changes in the code and a few directives, we can guide the compiler to widen the the input and output bus to match the memory controller bus, 512-bit wide for this platform.
 
    ```C
-   uint512_dt v1_local[BUFFER_SIZE]; // Local memory to store vector1
-   uint512_dt v2_local[BUFFER_SIZE];
-   uint512_dt result_local[BUFFER_SIZE]; // Local Memory to store result
+   void krnl_vadd(const int* in1, // Read-Only Vector 1
+                  const int* in2, // Read-Only Vector 2
+                  int* out,       // Output Result
+                  int elements    // Number of elements
    ```
 
-### Setup Hardware Emulation
+2. The vector add computation is straightforward
 
-1. Set *Active build configuration:* to **Emulation-HW**
+   ```C
+   for (int i = 0; i < elements; i++) {
+      out[i] = in1[i] + in2[i];
+   }
+   ```
 
-1. Notice the host code uses smaller BUFFSIZE (1024 x 32) for software and hardware emulation (`wide_vadd.cpp` line 60) to save emulation time and a larger BUFFSIZE (1024 x 1024 x 32) for the real hardware kernel. 
-
-#### Set the location of the kernel and memory interface
-
-  - Right click on `wide_vadd_system > wide_vadd_system_hw_link > Emulation-HW > binary_container_1` in *Assistant* view, select `Settings`
-
-  - Under *wide_vadd_system_hw_link > Emulation-HW > binary _container* select **SLR2** for the binary_container
-
-  - Click *Refresh* if you do not see the ports
-
-  - Verify that the  `Counter + Trace` in the Data Transfer column are selected
-
-  - Click Apply and Close
-
-	![](./images/improving_performance/kernel_slr_setting.png)
+   You will also notice this directive `#pragma HLS LOOP_TRIPCOUNT avg=4096 max=4096 min=4096`. As the loop bound is unknown at synthesis, this directive helps the tool to use estimate bounds in the report. This directive has no effect in the synthesized hardware.
 
 ### Build and run in hardware emulation mode
 
+1. Set *Active build configuration:* to **Emulation-HW**
+
 1. Build in Emulation-HW mode by selecting `wide_vadd_system` in the *Explorer* view and clicking on the build (![alt tag](./images/Fig-build.png)) button
 
-    This will take about 10 minutes
+   This will take about 10 minutes
 
-1. After build completes, select **wide\_vadd\_system** in the Assistant view and click on the Run (![alt tag](./images/Fig-run.png)) button
+1. After build completes, in the Assistant view select **wide\_vadd\_system** and click on the Run (![alt tag](./images/Fig-run.png)) button then select *Launch HW Emulator*
 
-    Notice the kernel wait time is about 8 seconds.
+### Analyze the generated design
 
-```
-   -- Parallelizing the Data Path --
-   
-   Loading ../binary_container_1.xclbin to program the board
-   
-   INFO: [HW-EM 01] Hardware emulation runs simulation underneath....
-   Running kernel test XRT-allocated buffers and wide data path:
+1. In the *Assistant* view, double-clicking on `wide_vadd_system > wide_vadd > Emulation-HW > SystemDebugger_wide_vadd_system_wide_vadd > Run Summary (xclbin)`
 
+1. Select **System Diagram** and click on the **Kernels** tab on the bottom
 
-   OCL-mapped contiguous buffer example complete successfully!
+   Notice that all ports (in1, in2, and out) are using one memory bank. The `Port Data Width` parameter is 32-bit for all arguments
 
-   --------------- Key execution times ---------------
-   OpenCL Initialization              : 23746.418 ms
-   Allocate contiguous OpenCL buffers :   13.958 ms
-   Set kernel arguments               :    0.025 ms
-   Map buffers to user space pointers :    0.374 ms
-   Populating buffer inputs           :    0.400 ms
-   Software VADD run                  :    0.212 ms
-   Memory object migration enqueue    :    3.235 ms
-   OCL Enqueue task                   :    2.314 ms
-   Wait for kernel to complete        : 8000.792 ms
-   Read back computation results      :    1.297 ms
-   INFO::[ Vitis-EM 22 ] [Time elapsed: 0 minute(s) 40 seconds, Emulation time: 0.162641 ms]
-   Data transfer between kernel(s) and global memory(s)
-   wide_vadd_1:m_axi_gmem-DDR[1]          RD = 128.000 KB             WR = 0.000 KB        
-   wide_vadd_1:m_axi_gmem1-DDR[1]          RD = 128.000 KB             WR = 0.000 KB        
-   wide_vadd_1:m_axi_gmem2-DDR[1]          RD = 0.000 KB               WR = 128.000 KB
+   ![](./images/improving_performance/system_diagram.png)
 
-```
+1. Select **Platform Diagram** in the left panel
 
-1. Check generated kernel interface
+   Observe that there are four DDR4 memory banks and three PLRAM banks. In this design, `DDR[1]` is used for all operands, which is located in SLR2 (AWS F1)
 
-    - Open Run Summary with Vitis Analyzer by double-clicking on `wide_vadd_system > wide_vadd > Emulation-HW > SystemDebugger_wide_vadd_system_wide_vadd > Run Summary (xclbin)` in the *Assistant* view
-    - Select **System Diagram**. Notice that all ports (in1, in2, and out) are using one bank
-    - Click **Kernels** tab
-    - Check the `Port Data Width` parameter. All input and output ports are 512 bits wide whereas size (scalar) port is 32 bits wide
+   Check memory bank allocation for Alveo U200 and how it relates to AWS-F1 [here](https://github.com/aws/aws-fpga/blob/master/Vitis/docs/Alveo_to_AWS_F1_Migration.md#off-chip-ddr-memory)
 
-	![](./images/improving_performance/system_diagram.png)
-
-    - Select **Platform Diagram** in the left panel
-
-    Observe that there are four DDR4 memory banks and three PLRAM banks. In this design, `DDR[1]` is used for all operands, which is located in SLR2 (AWS)
-
-    Check memory bank allocation for Alveo U200 and how it relates to AWS-F1 [here](https://github.com/aws/aws-fpga/blob/master/Vitis/docs/Alveo_to_AWS_F1_Migration.md#off-chip-ddr-memory)
-
-	![](./images/improving_performance/platform_diagram.png)
+   ![](./images/improving_performance/platform_diagram.png)
 
 1. Click on **Timeline Trace**
 
-1. Scroll and zoom to find the data transfers. As the two input operand share a memory controller, notice that the read operations alternate between one or the other and do not overlap. 
+1. Scroll and zoom to find the data transfers. The three operands share the same AXI4-MM adapter, both inputs compete in read channel (resource contention). On the other hand, the write channel is independent but it is still mapped to the same memory bank.
 
-	![](./images/improving_performance/single_controller_timeline.png)
+   ![](./images/improving_performance/single_controller_timeline.png)
+
+1. The **Profile Summary** reports that the kernel takes 0.035 ms to execute
+
+   | Operation                       | Naive    |
+   |---------------------------------|----------|
+   | Kernel Execution - enqueue task | 0.035 ms |
+   | Compute Unit execution time     | 0.032 ms |
 
 1. Close Vitis Analyzer
 
-### Use multiple memory banks
+### Maximize memory bandwidth and vectorize computation
 
-There are four DDR4 memory banks available in an AWS-F1 instance. In the previous section, only one bank was used. As we have three operands (two read and one write) it may be possible to improve performance by using more memory banks are used, allowing simultaneous data access and maximizing the bandwidth available for each of the kernel ports. For example the topology shown in following figure could be used to increase the bandwidth available to each port.
+The host code is executing a 4,096 element vector addition on the vadd kernel. Let us apply optimization techniques to improve the execution time. In this section, we will only consider the latency in clock cycles. Latency in this context means how many cycles it takes for the kernel to be able to process the next 4,096 elements. The 4,096 elements number is only for evaluation purposes and is specified with the `LOOP_TRIPCOUNT` directive.
 
-![](./images/improving_performance/multi_banks.png)
+1. On the Assistant view, right click on `wide_vadd_system > wide_vadd_kernels > Emulation-HW > krnl_vadd[C/C++]` and then click Open HLS Project
 
-This will allow simultaneous memory accesses to different external memory banks. 
+   ![](./images/improving_performance/open_vitis_hls.png)
 
-To connect a kernel to multiple memory banks, you need to assign each kernel's port to a different memory bank. Note that DDR controllers may be physically located in different SLRs (Super Logic Regions) on the FPGA. A kernel with routing that crosses SLR regions can be more difficult to build and meet timing. This should be taken into account in a real design. Where multiple memory banks are located in a single SLR
+   Notice that the Vitis HLS project can only be open once the kernel is synthesized
 
-1. Assign memory banks as shown in figure below
+1. Click `OK` when prompted to Launch Vitis HLS
 
-    - Right click `wide_vadd_system > wide_vadd_system_hw_link > Emulation-HW > binary_container_1` in *Assistant* view, select `Settings`
-    - Assign 
-      - in1 to DDR[0]
-      - in2 to DDR[2]
-      - out to DDR[1]
+   ![](./images/improving_performance/launch_vitis_hls.png)
 
-    ![](./images/improving_performance/Using_multiple_banks.png)
+1. In the **Synthesis Summary** analyze the **Performance & Resource Estimates**
 
-    * Click Apply and Close
+   ![](./images/improving_performance/perf_estimate_0.png)
 
-1. Build Emulation-HW
+   The most internal loop *vadd1* has a latency of 8,265 cycles.
 
-    This will take about 10 minutes. 
+   Notice that the II violation is because the tool is unable to schedule both read operations on the bus request due to limited memory ports (Resource Limitation).
 
-    After build completes, open the **Run Configurations** click **Run**  
+   The suggestion is to consider using a memory core with more ports or partitioning the array.
 
-    Notice that the kernel wait time has reduced from about 8 seconds (single memory bank) to 7 seconds (three memory banks) indicating performance improvement. Note that this is only a Hardware Emulation - results should be verified in the Hardware flow too.
+1. In the Explore view expand Source and double-click on the `krnl_vadd.cpp` file to open it
 
+   ![](./images/improving_performance/open_vadd_kernel.png)
 
-```
-   -- Parallelizing the Data Path --
+1. In the `krnl_vadd.cpp` file, uncomment lines 45, 46 and 47, and save the file
 
-   Loading ../binary_container_1.xclbin to program the board
+   This will assign one AXI4-MM adapter to each argument
 
-   INFO: [HW-EM 01] Hardware emulation runs simulation underneath....
-   Running kernel test XRT-allocated buffers and wide data path:
+1. Synthesize the kernel by clicking the C synthesis button (![alt tag](./images/Fig-run.png))
 
+1. Click OK on the default C Synthesis - Active Solution window
 
-   OCL-mapped contiguous buffer example complete successfully!
+1. In the **Synthesis Summary** analyze the **Performance & Resource Estimates**
 
-   --------------- Key execution times ---------------
-   OpenCL Initialization              : 23538.045 ms
-   Allocate contiguous OpenCL buffers :    6.350 ms
-   Set kernel arguments               :    9.937 ms
-   Map buffers to user space pointers :    0.283 ms
-   Populating buffer inputs           :    0.276 ms
-   Software VADD run                  :    0.163 ms
-   Memory object migration enqueue    :    3.612 ms
-   OCL Enqueue task                   :    2.114 ms
-   Wait for kernel to complete        : 7000.736 ms
-   Read back computation results      :    1.389 ms
-   INFO::[ Vitis-EM 22 ] [Time elapsed: 0 minute(s) 32 seconds, Emulation time: 0.0747283 ms]
-   Data transfer between kernel(s) and global memory(s)
-   wide_vadd_1:m_axi_gmem-DDR[0]          RD = 128.000 KB             WR = 0.000 KB        
-   wide_vadd_1:m_axi_gmem1-DDR[2]          RD = 128.000 KB             WR = 0.000 KB        
-   wide_vadd_1:m_axi_gmem2-DDR[1]          RD = 0.000 KB               WR = 128.000 KB  
-```
+   ![](./images/improving_performance/perf_estimate_1.png)
 
-1. Check generated kernel interface
+   The most internal loop *vadd1* has a latency of 4,098 cycles. More than 2x faster by just assigning exclusive resources to each argument.
 
-    - Open Run Summary with Vitis Analyzer by double-clicking on `wide_vadd_system > wide_vadd > Emulation-HW > SystemDebugger_wide_vadd_system_wide_vadd > Run Summary (xclbin)` in the *Assistant* view
-    - Select System Diagram
-    - Click **Kernels** tab
+1. Analyze the HW Interfaces
 
-    Notice all ports (in1, in2, and out) are using different memory banks
+   ![](./images/improving_performance/hw_interfaces.png)
 
-    ![](./images/improving_performance/multibank_system_diagram.png)
+   The tool is able to map 32-bit wide operands from software to 32-bit wide operands in hardware. However, we are under utilizing the bus as the memory controller has a 512-bit width bus. Therefore there is an opportunity to fit 16 operands in a 512-bit vector.
+
+1. In the `krnl_vadd.cpp` file, comment line 51 and uncomment line 52 then save the file and synthesize (![alt tag](./images/Fig-run.png))
+
+   This change in the bounds specifies to the tool that elements is a multiple of 16. Given this guidance the tool is able to fit 16 operands in a 512-bit vector. If the loop bound is known at synthesis and if the operands bitwidth is multiple of it, the compiler will perform this optimization automatically.
+
+   ![](./images/improving_performance/hw_wide_interfaces.png)
+
+   Notice that even though we are reading more operands in parallel the latency has not changed.
+
+1. In the `krnl_vadd.cpp` file, uncomment line 54 then save the file and synthesize (![alt tag](./images/Fig-run.png))
+
+   The `UNROLL` directive transforms the loop and create *N* instances of the same operation, thus applying vectorization. In this case, we are unrolling by 16, the same number of operands we can fit in a 512-bit vector.
+
+1. In the **Synthesis Summary** analyze the **Performance & Resource Estimates**
+
+   ![](./images/improving_performance/perf_estimate_2.png)
+
+   The most internal loop *vadd1* has a latency of 258 cycles. Almost 16x faster than without vectorization.
+
+   Note that the kernel uses 90 BRAMs, we can reduce this number by mapping two arguments to the same AXI4-MM adapter.
+
+1. In the `krnl_vadd.cpp` file modify line 47 to map out to `bundle=gem0` and synthesize (![alt tag](./images/Fig-run.png))
+
+   Read and write are independent channels in an AXI4-MM interface, therefore this change will not have an impact on the Latency.
+
+   Now the kernel uses 60 BRAMs, 33% less than before.
+
+1. Close Vitis HLS
+
+1. In Vitis, rebuild the project by selecting `wide_vadd_system` in the *Explorer* view and clicking on the build (![alt tag](./images/Fig-build.png)) button
+
+1. After build completes, in the Assistant view select **wide\_vadd\_system** and click on the Run (![alt tag](./images/Fig-run.png)) button and then select `SystemDebugger_wide_vadd_system (System Project Debug)`
+
+1. In the *Assistant* view, double-clicking on `wide_vadd_system > wide_vadd > Emulation-HW > SystemDebugger_wide_vadd_system_wide_vadd > Run Summary (xclbin)`
 
 1. Click on **Timeline Trace**
 
-1. Scroll and zoom to find the data transfers. Observe that the two input operands are read in parallel. While this is an improvement, output memory writes do not overlap the inputs, and the read the "gaps" between subsequent transfers indicate there is still potential for further optimization which will be addressed in the next labs. 
+   ![](./images/improving_performance/single_controller_multiple_adapters_timeline.png)
 
-	![](./images/improving_performance/multibank_controller_timeline.png)
+   Note that now in1 and in2 are in independent read channels, however access do not overlap. This is due to resource contention as they both access the same memory bank. On the other hand, the write operation overlaps with some of the read operations.
+
+1. Click on **Profile Summary** and get the Kernel execution time
+
+   | Operation                       | Naive    | Optimized Kernel |
+   |---------------------------------|----------|------------------|
+   | Kernel Execution - enqueue task | 0.035 ms | 0.006 ms         |
+   | Compute Unit execution time     | 0.032 ms | 0.003 ms         |
+
+### Optimize the system - Use multiple Memory banks
+
+In the previous section, only one memory bank is used. As we have three operands (two read and one write) it may be possible to improve performance by using more memory banks, allowing simultaneous data access and maximizing the bandwidth available for each of the kernel ports. In an AWS-F1 accelerator card, there are four DDR4 memory banks available let us leverage them to reduce resource contention.
+
+To connect a kernel to multiple memory banks, you need to assign each kernel's port to a memory bank. Note that DDR controllers may be physically located in different SLRs (Super Logic Regions) on the FPGA. A kernel with routing that crosses SLR regions can be more difficult to build and meet timing. This should be taken into account in a real design, where multiple memory banks are located in different SLRs.
+
+1. In the *Assistant* view, right click on `wide_vadd_system > wide_vadd_system_hw_link > Emulation-HW` and then click Settings
+
+   ![](./images/improving_performance/link_settings.png)
+
+1. In the Binary Container Settings windows, expand `wide_vadd_system_hw_link > Emulation-HW` and click **binary_container_1**
+
+1. Assign the arguments of the `krnl_vadd` to the following memory banks
+
+   - in1 to DDR[0]
+   - in2 to DDR[2]
+   - out to DDR[1]
+
+   ![](./images/improving_performance/Using_multiple_banks.png)
+
+   The SLR column is automatically populated after a memory bank is selected
+
+1. Click **Apply and Close**
+
+1. Rebuild the project by selecting `wide_vadd_system` in the *Explorer* view and clicking on the build (![alt tag](./images/Fig-build.png)) button
+
+1. After build completes, in the Assistant view select **wide\_vadd\_system** and click on the Run (![alt tag](./images/Fig-run.png)) button and then select `SystemDebugger_wide_vadd_system (System Project Debug)`
+
+1. In the *Assistant* view, double-clicking on `wide_vadd_system > wide_vadd > Emulation-HW > SystemDebugger_wide_vadd_system_wide_vadd > Run Summary (xclbin)`
+
+1. Click on **Timeline Trace**
+
+   ![](./images/improving_performance/multibank_controller_timeline.png)
+
+   Note that now each argument is mapped to a different memory bank and there is overlap in the read operations.
+
+1. Click on **Profile Summary** and get the Kernel execution time
+
+   | Operation                       | Naive    | Optimized Kernel | Optimized Kernel + 3 memory Banks |
+   |---------------------------------|----------|------------------|-----------------------------------|
+   | Kernel Execution - enqueue task | 0.035 ms | 0.006 ms         | 0.007 ms                          |
+   | Compute Unit execution time     | 0.032 ms | 0.003 ms         | 0.002 ms                          |
+
+   This time the kernel execution is slighter slower even though the compute unit is faster. This is because the host code is communicating with three different memory banks.
+
+1. Open **System Diagram**
+
+   ![](./images/improving_performance/multibank_system_diagram.png)
+
+   Notice all ports (in1, in2, and out) are using different memory banks
 
 1. Close Vitis Analyzer
+
+This configuration may be problematic in terms of achieving higher frequency as the kernel is accessing memory banks from different SLRs.
+
+As an exercise for the reader, assign `out` to DDR[0] (or DDR[2]) and analyze the results. This configuration will utilize memory banks that are in the same SLR. Hint, results below.
+
+| Operation                       | Naive    | Optimized Kernel | Optimized Kernel + 3 memory Banks | Optimized Kernel + 2 memory Banks |
+|---------------------------------|----------|------------------|-----------------------------------|-----------------------------------|
+| Kernel Execution - enqueue task | 0.035 ms | 0.006 ms         | 0.007 ms                          | 0.007 ms                          |
+| Compute Unit execution time     | 0.032 ms | 0.003 ms         | 0.002 ms                          | 0.002 ms                          |
 
 ## Conclusion
 
-From a simple vadd application, we explored steps to increase system performance:
-- Expand kernel interface width
-- Assign dedicated memory controller
-- Use Vitis Analyzer to view the result
+From a simple vadd application, we explored steps to optimize kernel and system performance by:
+- Using Vitis HLS directives to use multiple AXI4-MM adapters, widen the kernel buses and unrolling the computation loop.
+- Assign dedicated memory controller for the arguments
+- Use Vitis Analyzer to review the result
+
+The kernel was highly optimized as well as the system. However, the data movement is dominant. To truly achieve acceleration the application has to have a high compute intensity.
+
+The compute intensity ratio is defined as:
+
+$$compute\_intensity =\frac{compute\_operations}{memory\_accesses}$$
+
+The bigger this number is, the more opportunities to achieve acceleration.
 
 ---------------------------------------
 <p align="center">Copyright&copy; 2021 Xilinx</p>
