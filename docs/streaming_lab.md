@@ -75,11 +75,11 @@ However, in this lab we will use the transposed direct version, which is an impr
 
    ![](./images/streaming_lab/hardware_functions.png)
 
-1. *Explore* view, right-click on `streaming_lab_system_hw_link` and select `Import Sources...`
+1. In the *Explore* view, right-click on `streaming_lab_system_hw_link` and select `Import Sources...`
 
 1. Browse to `~/xup_compute_acceleration/sources/streaming_lab` and add `linking.cfg` file
 
-1. In the field Into folder, click `Browse...` and select `streaming_lab_system_hw_link [pl]`, then click **OK** and **Finish**
+1. In the field *Into folder:*, click `Browse...` and select `streaming_lab_system_hw_link [pl]`, then click **OK** and **Finish**
 
    ![](./images/streaming_lab/import_cfg.png)
 
@@ -104,13 +104,13 @@ However, in this lab we will use the transposed direct version, which is an impr
 
 ### Run software emulation
 
-1. In the **Assistant** view, select *streaming\_lab\_system* and build the application by clicking hammer
+1. In the *Assistant* view, select *streaming\_lab\_system* and build the application by clicking the build (![alt tag](./images/Fig-build.png)) button
 
 1. In the *Explorer* view, right-click on *streaming\_lab\_system* and select `Run As > Run Configurations...`
 
 1. In the *Program Arguments* make sure that *Automatically add binary container(s) to arguments* is selected.
 
-1. Click *Apply* and then *Run*
+1. Click **Apply** and then **Run**
 
 1. The console output will report
 
@@ -136,19 +136,19 @@ However, in this lab we will use the transposed direct version, which is an impr
 
 1. Double-click `streaming_lab`
 
-1. In the `Arguments` box include include this `${project_loc:streaming_lab_system}/Emulation-SW/binary_container_1.xclbin 16 debug`
+1. In the `Arguments` box include include: `${project_loc:streaming_lab_system}/Emulation-SW/binary_container_1.xclbin 16 debug`
 
    ![](./images/streaming_lab/program_args_sw_emu.png)
 
 1. Click **OK** to set the arguments, click **OK** again, then click **Apply**, and finally click **Run**
 
-   Notice that this time the results are shown with sample number, sw and hw computed values
+   Notice that this time the results are shown with sample number, sw and hw computed results
 
 ### Run hardware emulation
 
 1. Select or open the `Hardware Kernel Project Settings` view and change *Active build* configuration to: **Emulation-HW**
 
-1. In the **Assistant** view, select *streaming\_lab\_system* and build the application by clicking ![alt tag](./images/Fig-build.png) button
+1. In the *Assistant* view, select *streaming\_lab\_system* and build the application by clicking the build ![alt tag](./images/Fig-build.png) button
 
 1. Once compiled, Run the Emulation-HW, only specify the binary container as argument
 
@@ -213,7 +213,7 @@ Since the Hardware build and AFI availability for AWS takes a considerable amoun
 
    Note, this will only build the host code.
 
-1. Copy the provided awsxclbin file
+1. Copy the precompiled bitstream solution
 
    ```sh
    cp ~/xup_compute_acceleration/solutions/streaming_lab/* ~/workspace/streaming_lab/Hardware/
@@ -226,7 +226,7 @@ Since the Hardware build and AFI availability for AWS takes a considerable amoun
    ./streaming_lab binary_container_1.awsxclbin
    ```
 
-1. The FPGA bitstream will be downloaded and the host application will be executed showing output similar to:
+1. The FPGA bitstream will be downloaded and the host application will be executed showing an output similar to:
 
    ```console
    Found Platform
@@ -244,7 +244,7 @@ Since the Hardware build and AFI availability for AWS takes a considerable amoun
 
 ## Conclusion
 
-In this lab, you used Vitis to implement an FIR filter using streaming kernels. Using a configuration file specifies how the streaming interfaces are connected between the kernels. You also analyzed the system diagram and the timeline trace. 
+In this lab, you used Vitis to implement an FIR filter using streaming kernels. A configuration file specifies how the streaming interfaces are connected between the kernels. You also analyzed the system diagram and the timeline trace.
 
 ---------------------------------------
 <p align="center">Copyright&copy; 2021 Xilinx</p>
