@@ -202,6 +202,12 @@ Before changing the target it is a good idea to remove temporary files
 rm -rf _x/ *.log *.jou *.pb *xclbin* *.json *.png *.csv *.*summary*
 ```
 
+## Vision Library Using PYNQ
+
+Using the notebooks provided in the `sources/vision_lab/src/pynq` directory you can run:
+
+- Hardware emulation of a L1 vision primitive using the `vision_emulation.ipynb` notebook
+- On real hardware using the `vision.ipynb` notebook
 
 ## Conclusion
 
