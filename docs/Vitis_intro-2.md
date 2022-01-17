@@ -94,7 +94,7 @@ In order to see a *Timeline Trace*, you need to enable it in the *Run configurat
 
 1. Click on the **Timeline Trace**
 
-   Scroll and Zoom (20-40 seconds in the image below) and observe the events that occurred. Note that data is processed in smaller chunks in the kernel and in a sequential manner. Notice the Only events related to the FPGA hardware are shown. No host events are visible in this view
+   Scroll and Zoom (25-35 seconds in the image below) and observe the events that occurred. Note that data is processed in smaller chunks in the kernel and in a sequential manner. Notice the Only events related to the FPGA hardware are shown. No host events are visible in this view
 
    ![](images/Vitis_intro/hw_emu_application_timeline.png)
 
@@ -117,6 +117,8 @@ In order to see a *Timeline Trace*, you need to enable it in the *Run configurat
 
    ![](images/Vitis_intro/hw_emu_profile_kernel_transfer.png)
 
+     Notice that the number of transfers is 256 in the write channel, this is because Vitis is optimizing the write channel applying bursts to move 16 elements for each transfer with a single request. Transferring data in bursts hides the memory access latency and improves bandwidth usage and efficiency of the memory controller. This optimization cannot be applied to the read channel because of a memory bank limitation, as you will see in the next lab.
+
    - Host Data Transfer
 
    ![](images/Vitis_intro/hw_emu_profile_host_data_transfers.png)
@@ -129,7 +131,7 @@ In order to see a *Timeline Trace*, you need to enable it in the *Run configurat
 
 ### Host profiling
 
-1. In order to see host events, enable OpenCL trace again for a HW emulation run. In the *Assistant* view, right click on **vadd\_system**  select **Run > Run configurations...**. Notice a new configuration is created for the HW emulation
+1. In order to see host events, enable OpenCL trace again for a HW emulation run. In the *Assistant* view, right click on **vadd\_system**  select **Run > Run Configurations...**. Notice a new configuration is created for the HW emulation
 
 1. In the *Xilinx Runtime Profiling* section, click on the `Edit...` button, then select the **OpenCL trace** option and click **OK**
 
@@ -141,7 +143,7 @@ In order to see a *Timeline Trace*, you need to enable it in the *Run configurat
 
 ## Run the system in hardware
 
-Building the hardware can take 1-2 hours. You will test the design in hardware using a prebuilt binaries. You will also setup the run configuration so you can run the application and then analyze results from GUI.
+Building the hardware can take 1-2 hours. You will test the design in hardware using a prebuilt binary. You will also setup the run configuration so you can run the application and then analyze results from GUI.
 
 If you wish to rebuild the hardware later, see the [Appendix](#appendix-build-full-hardware) below for instructions on how to do this.
 
@@ -210,7 +212,7 @@ If you wish to rebuild the hardware later, see the [Appendix](#appendix-build-fu
 
 1. Close the Analyzer when finished
 
-1. In the *Explorer* view, review the `xrt.ini` file within the `vadd > SystemDebugger_vadd_system_vadd > Hardware` folder
+1. In the *Explorer* view, review the `xrt.ini` file within the `vadd_system > vadd [x86] > Hardware` folder
 
    Earlier, when you set kernel profiling and trace settings, the `xrt.ini` file is automatically generated. During the execution, this file is used to generate the profile and application timeline data which are seen using Vitis Analyzer. Find our more about this file [here](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/profilingapplication.html#ariaid-title3).
 
@@ -223,16 +225,12 @@ If you wish to rebuild the hardware later, see the [Appendix](#appendix-build-fu
    xrt_trace=false
    data_transfer_trace=coarse
    stall_trace=off
-   trace_buffer_size=1M
-   continuous_trace=false
    app_debug=true
-   [Emulation]
-   debug_mode=off
    ```
 
 ## Conclusion
 
-In this lab you ran the vector add kernel using the hardware emulation flow, and reviewed the reports. Then, you used a precompiled solution to download the application and kernel onto the AWS F1 instance and validated the functionality in hardware. You also analyzed profile and application timeline reports generated during running the application in actual hardware.
+In this lab you ran the vector add kernel using the hardware emulation flow, and reviewed the reports. Then, you used a precompiled solution to download the application and kernel onto the AWS F1 instance and validated the functionality in hardware. You also analyzed profile and application timeline reports generated when running the application in actual hardware.
 
 ---------------------------------------
 
@@ -258,23 +256,17 @@ Note that building the project can take around two hours. Skip this step in a tu
 
 1. Click **Apply and Close**
 
-1. Build the project by selecting **vadd\_system** in `Assistant` view and clicking the build button 
+1. Build the project by selecting **vadd\_system** in *Assistant* view and clicking the build button (![](./images/Fig-build.png))
 
-   This will build the project under the **Hardware** directory. The built project will include **vadd** (executable) file along with **binary\_container\_1.xclbin** file
+   This will build the project under the **Hardware** directory. The built project will include **vadd** (executable) file along with the **binary\_container\_1.xclbin** file
 
 1. A `binary_container_1.xclbin` and `vadd` application will be generated in the `vadd/Hardware` directory
 
-#### Test on AWS (create AFI)
+### Test on AWS (create AFI)
 
 Before the design can be run on AWS F1 an AFI (Amazon FPGA Image) is required
 
 Once the full system is built, you can create an AFI by following the steps listed in [create an AFI](Creating_AFI.md)
-
-Copy the necessary files to the appropriate directory using the following commands:
-
-```sh
-cp binary_container_1.awsxclbin ~/workspace/vadd/Hardware
-```
 
 ---------------------------------------
 <p align="center">Copyright&copy; 2021 Xilinx</p>
