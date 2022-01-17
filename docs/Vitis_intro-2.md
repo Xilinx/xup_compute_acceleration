@@ -117,6 +117,8 @@ In order to see a *Timeline Trace*, you need to enable it in the *Run configurat
 
    ![](images/Vitis_intro/hw_emu_profile_kernel_transfer.png)
 
+     Notice that the number of transfers is 256 in the write channel, this is because Vitis is optimizing the write channel applying bursts to move 16 elements for each transfer with a single request. Transferring data in bursts hides the memory access latency and improves bandwidth usage and efficiency of the memory controller. This optimization cannot be applied to the read channel because of a memory bank limitation, as you will see in the next lab.
+
    - Host Data Transfer
 
    ![](images/Vitis_intro/hw_emu_profile_host_data_transfers.png)
