@@ -185,7 +185,7 @@ The host code is executing a 4,096 element vector addition on the vadd kernel. L
 
    Note that the kernel uses 90 BRAMs, we can reduce this number by mapping two arguments to the same AXI4-MM adapter.
 
-1. In the `krnl_vadd.cpp` file modify line 47 to map out to `bundle=gem0` and synthesize (![alt tag](./images/Fig-run.png))
+1. In the `krnl_vadd.cpp` file modify line 47 to map out to `bundle=gmem0` and synthesize (![alt tag](./images/Fig-run.png))
 
    Read and write are independent channels in an AXI4-MM interface, therefore this change will not have an impact on the Latency.
 
