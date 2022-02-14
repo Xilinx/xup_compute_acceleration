@@ -6,11 +6,15 @@ layout: default
 
 1. [Download Vitis Unified Software](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/vitis.html)
 
-1. [Vitis Unified Software Documentation](https://www.xilinx.com/html_docs/xilinx2020_1/vitis_doc/index.html)
+1. [Vitis Unified Software Documentation](https://docs.xilinx.com/v/u/en-US/ug1416-vitis-documentation)
 
-1. [Vitis Community Forum](https://forums.xilinx.com/t5/Vitis-Acceleration-SDAccel-SDSoC/bd-p/tools_v)
+1. [Vitis Community Forum](https://support.xilinx.com/s/topic/0TO2E000000YKYAWA4/vitis-acceleration-acceleration?language=en_US)
 
-1. Read the Get Moving with Alveo articles, start here [Get Moving with Alveo: Acceleration Basics](https://developer.xilinx.com/en/articles/acceleration-basics.html), find the other articles in the series [here](https://developer.xilinx.com/en/articles.html)
+1. Check out the Get Moving with Alveo articles, start here [Get Moving with Alveo: Acceleration Basics](https://developer.xilinx.com/en/articles/acceleration-basics.html), find the other articles in the series [here](https://developer.xilinx.com/en/articles.html)
+
+1. Check out [Design Principles for Software Programmers](https://docs.xilinx.com/r/en-US/ug1399-vitis-hls/Design-Principles-for-Software-Programmers)
+
+1. Check out [Designing Efficient Kernels](https://docs.xilinx.com/r/en-US/ug1399-vitis-hls/Designing-Efficient-Kernels)
 
 1. [Adaptive Computing Developer YouTube channel](https://www.youtube.com/channel/UCkzIS3hJplxSbVRxRQJW4Ow)
 

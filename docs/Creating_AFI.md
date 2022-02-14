@@ -18,7 +18,7 @@ To execute the application on F1, the following files are needed:
 
 The awsxclbin is an Amazon specific version of the FPGA binary file (xclbin) produced by the Vitis software.
 
-The awsxclbin can be created by running the *create\_vitis\_afi.sh* script which is included in the [aws-fpga GitHub repository](https://github.com/aws/aws-fpga).
+The awsxclbin can be created by running the *create\_vitis\_afi.sh* script which is included in the [aws-fpga GitHub repository](https://github.com/aws/aws-fpga/tree/master/Vitis#2-create-an-amazon-fpga-image-afi).
 
 The script can be found in the following location in the aws-fpga repository:
 
@@ -26,20 +26,31 @@ The script can be found in the following location in the aws-fpga repository:
 $VITIS_DIR/tools/create_vitis_afi.sh
 ```
 
-Before running the commands below, make sure the Vitis setup script has been sourced (the following command assumes the aws-fpga Git repository is cloned to the user home area)
+1. Before running the commands below, make sure the Vitis setup script has been sourced (the following command assumes the aws-fpga Git repository is cloned to the user home area)
 
-```sh
-source $AWS_FPGA_REPO_DIR/vitis_setup.sh
-```
+   ```sh
+   source ~/aws-fpga/vitis_setup.sh
+   ```
 
-* Create an AFI by running the `create_vitis_afi.sh` script and wait for the completion of the AFI creation process
+1. Set up S3 bucket region
 
-```sh
-$VITIS_DIR/tools/create_vitis_afi.sh –xclbin=<filename>.xclbin –s3_bucket=<bucket-name> -s3_dcp_key=<dcp-folder-name> -s3_logs_key=<logs-folder-name>
-```
-In the above command, set your *xclbin* file as `<filename>`; the Amazon S3 `<bucket-name>`, `<dcp-folder-name>`, and `<logs-folder-name>` with the names you had given when running CLI script.  You can choose any valid folder name for the dcp and logs folder. The Amazon S3 bucket name should match an S3 bucket you have set up.
+   For instance:
 
-Learn more about setting up S3 buckets [here](https://github.com/aws/aws-fpga/blob/master/Vitis/docs/Setup_AWS_CLI_and_S3_Bucket.md)  
+   ```sh
+   aws configure set region us-east-1
+   ```
+
+   Note: the region may change for your instance. This command will create/update the `~/.aws/config` file
+
+1. Create an AFI by running the `create_vitis_afi.sh` script and wait for the completion of the AFI creation process
+
+   ```sh
+   $VITIS_DIR/tools/create_vitis_afi.sh -xclbin=<filename>.xclbin -s3_bucket=<bucket-name> -s3_dcp_key=<dcp-folder-name> -s3_logs_key=<logs-folder-name>
+   ```
+
+   In the above command, set your *xclbin* file as `<filename>`; the Amazon S3 `<bucket-name>`, `<dcp-folder-name>`, and `<logs-folder-name>` with the names you had given when running CLI script.  You can choose any valid folder name for the dcp and logs folder. The Amazon S3 bucket name should match an S3 bucket you have set up.
+
+   Learn more about setting up S3 buckets [here](https://github.com/aws/aws-fpga/blob/master/Vitis/docs/Setup_AWS_CLI_and_S3_Bucket.md)
 
 The `create_vitis_afi.sh` script does the following:
 

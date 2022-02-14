@@ -4,9 +4,6 @@ docs:
 - title: Create an AFI
   url: Creating_AFI.html
 
-- title: AFI AWS-Educate
-  url: Creating_AFI_AWSEducate.html
-
 - title: Resources
   url: resources.html
 

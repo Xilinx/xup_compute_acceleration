@@ -81,20 +81,22 @@ echo "source /opt/xilinx/xrt/setup.sh" >> ~/.bashrc
 source ~/.bashrc
 ```
 
-### Clone AWS-FPGA repository
+### Clone AWS-FPGA repository and set variables
 
 1. Open a terminal
 
-1. Execute the following to clone the *aws-fpga* repository and setup the Xilinx tools. `aws-fpga` includes the AWS F1 tools, Hardware Development Kit (HDK) and documentation
+1. If you are using the Xilinx provided instances then execute the following to clone the *aws-fpga* repository and setup the Xilinx tools. `aws-fpga` includes the AWS F1 tools, Hardware Development Kit (HDK) and documentation
 
    ```sh
-   git clone https://github.com/aws/aws-fpga $AWS_FPGA_REPO_DIR -b v1.4.16
-   echo "export PLATFORM_REPO_PATHS=$AWS_FPGA_REPO_DIR/Vitis/aws_platform/xilinx_aws-vu9p-f1_shell-v04261818_201920_2/" >> ~/.bashrc
+   cd ~
+   git clone https://github.com/aws/aws-fpga -b v1.4.21
+   echo "export PLATFORM_REPO_PATHS=~/aws-fpga/Vitis/aws_platform/xilinx_aws-vu9p-f1_shell-v04261818_201920_2/" >> ~/.bashrc
    echo "source /opt/xilinx/xrt/setup.sh" >> ~/.bashrc
+   echo "source $XILINX_VITIS/settings64.sh" >> ~/.bashrc
    git clone https://github.com/Xilinx/xup_compute_acceleration.git
    source ~/.bashrc
-   source $AWS_FPGA_REPO_DIR/vitis_setup.sh
-   source $AWS_FPGA_REPO_DIR/vitis_runtime_setup.sh
+   source ~/aws-fpga/vitis_setup.sh
+   source ~/aws-fpga/vitis_runtime_setup.sh
    ```
 
    The previous commands will: 
@@ -104,10 +106,14 @@ source ~/.bashrc
    - Source XRT
    - Source AWS F1 tools
 
-   For more details see: https://github.com/aws/aws-fpga/blob/master/Vitis/README.md
+1. If you are using the AWSEducate instances then execute the following to clone the *xup\_compute\_acceleration* repository. No additional variables need to be set as the provided AMI has all necessary files including `aws-fpga` repository cloning, the AWS F1 tools, Hardware Development Kit (HDK) and documentation
 
+   ```sh
+   git clone https://github.com/Xilinx/xup_compute_acceleration.git
+   ```
 
-  Note that `AWS_FPGA_REPO_DIR` is defined in /etc/profile.d/aws-f1.sh
+   The previous command will: 
+   - Clone this repository to get source code and solutions
 
 For more details see: https://github.com/aws/aws-fpga/blob/master/Vitis/README.md
 

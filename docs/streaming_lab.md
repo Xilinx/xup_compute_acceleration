@@ -7,12 +7,11 @@ layout: default
 
 ## Introduction
 
-In this lab you will create an streaming kernel which implements a Finite Impulse Response (FIR) filter of 73 taps. However, most of the Alveo/AWS F1 shells do not support direct streaming connection between the host and kernels. [QDMA shells](https://forums.xilinx.com/t5/Adaptable-Advantage-Blog/Improve-Your-Data-Center-Performance-With-The-New-QDMA-Shell/ba-p/990371), unlike XDMA, support direct streaming connections. In order to support the streaming kernel, you will include datamovers kernels which will translate from memory mapped to stream and vice versa.
+In this lab you will create an streaming kernel which implements a Finite Impulse Response (FIR) filter of 73 taps. However, Alveo/AWS F1 shells do not support direct streaming connection between the host and kernels. In order to support the streaming kernel, you will include datamover kernels which will translate from memory mapped to stream and vice versa.
 
 The following image depicts the three kernels that will be use and how they are connected together.
 
 ![](./images/streaming_lab/kernels_connections.png)
-
 
 This labs guides you through the steps to:
 
@@ -24,9 +23,12 @@ This labs guides you through the steps to:
 
 This lab has been verified in the following platforms (platform containing the string 2018 are not supported)
 
-* xilinx_aws-vu9p-f1_shell-v04261818\_201920\_2
-* xilinx\_u280\_xdma\_201920\_2
-* xilinx\_u250\_qdma\_201920\_1
+* xilinx_aws-vu9p-f1_shell-v04261818_201920_2
+* xilinx_u50_gen3x16_xdma_201920_3
+* xilinx_u55c_gen3x16_xdma_2_202110_1
+* xilinx_u200_gen3x16_xdma_1_202110_1
+* xilinx_u250_gen3x16_xdma_3.1_202020_1
+* xilinx_u280_xdma_201920_2
 
 
 ## FIR
@@ -45,63 +47,78 @@ However, in this lab we will use the transposed direct version, which is an impr
 
 ### Create Vitis project
 
+1. Create a new Vitis *Application Project*
 
-1. If you have a previous Vitis session open, close it
-1. In the terminal run
-
-   ```sh
-   export LIBRARY_PATH=$LIBRARY_PATH:/usr/lib/x86_64-linux-gnu
-   ```
-1. Launch Vitis
-1. Create a new *Application Project*
 1. In the *Platform* window select AWS F1 platform
+
 1. In the *Application Project Details* type *streaming_lab*
+
 1. Finally, select *Empty Application*
 
 ### Add source code and hardware functions
 
 1. In the *Explore* view, right-click on `streaming_lab_system > streaming_lab > src` and select `Import Sources...`
-1. Browse to `~/xup_compute_acceleration/sources/streaming_lab` and add `host.cpp, xcl2.cpp, and xcl2.hpp` files
+
+1. Browse to `~/xup_compute_acceleration/sources/streaming_lab` and add `host.cpp, xcl2.cpp and xcl2.hpp` files
+
 1. In the *Explore* view, right-click on `streaming_lab_system > streaming_lab_kernels > src` and select `Import Sources...`
+
 1. Browse to `~/xup_compute_acceleration/sources/streaming_lab` and add `krnl_fir.cpp, krnl_mm2s.cpp, and krnl_s2mm.hpp` files
+
 1. Double-click on `streaming_lab_system > streaming_lab_kernels > streaming_lab_kernels.prj`
-1. In the `Hardware Functions` view, click the *Add Hardware Function* button icon (![alt tag](./images/Fig-hw_button.png))
+
+1. In the `Hardware Functions` view, click the *Add Hardware Function* (![alt tag](./images/Fig-hw_button.png)) button icon
+
 1. Select `krnl_fir`, `krnl_mm2s` and `krnl_s2mm` and click **OK**
+
 1. Check that the kernels are included within the *Hardware Functions* panel
 
-    ![](./images/streaming_lab/hardware_functions.png)
+   ![](./images/streaming_lab/hardware_functions.png)
+
+1. In the *Explore* view, right-click on `streaming_lab_system_hw_link` and select `Import Sources...`
+
+1. Browse to `~/xup_compute_acceleration/sources/streaming_lab` and add `linking.cfg` file
+
+1. In the field *Into folder:*, click `Browse...` and select `streaming_lab_system_hw_link [pl]`, then click **OK** and **Finish**
+
+   ![](./images/streaming_lab/import_cfg.png)
 
 1. In the *Assistant* view, right-click on `streaming_lab_system > streaming_lab_system_hw_link > Emulation-SW > binary_container_1` and select `Settings...`
-1. In the *V++ linker options:* field type `--config ~/xup_compute_acceleration/sources/streaming_lab/linking.cfg -j 8` and click *Apply and Close*
 
-    ![](./images/streaming_lab/linking.png)
+1. In the *V++ command line options:* field type `--config ../linking.cfg` and click *Apply and Close*
 
-    The linker option will take effect for all configurations.
+   ![](./images/streaming_lab/linking.png)
+
+   The linker option will take effect for all configurations.
 
 1. Open and analyze the source code of the kernels and host application
 
-    - `krnl_mm2s.cpp`: reads data from global memory and generates an stream
-    - `krnl_s2mm.cpp`: reads data from an stream and stores the data in global memory
-    - `krnl_fir.cpp`: implements a digital bandpass FIR filter using the transposed form. There are 73 coefficients that are static
-    - `host.cpp`: creates the test vector, instantiates and run the FIR filter
+   - `krnl_mm2s.cpp`: reads data from global memory and generates a stream
+   - `krnl_s2mm.cpp`: reads data from an stream and stores the data in global memory
+   - `krnl_fir.cpp`: implements a digital bandpass FIR filter using the transposed form. There are 73 coefficients that are static
+   - `host.cpp`: creates the test vector, instantiates and run the FIR filter
 
 1. Open and analyze `linking.cfg` file.
 
-    This file provides information to the tool on how to connect the streaming connections as well as the memory interfaces
+   This file provides information to the tool on how to connect the streaming connections as well as the memory interfaces
 
 ### Run software emulation
 
-1. In the **Assistant** view, select *streaming\_lab\_system* and build the application by clicking hammer
-1. Run the Emulation-SW: in the *Explorer* view right-click on *streaming\_lab* and select `Run As > Run Configurations...`
-1. In the *Arguments* tab make sure *Automatically add binary container(s) to arguments* is selected.
-1. Click *Apply* and then *Run*
+1. In the *Assistant* view, select *streaming\_lab\_system* and build the application by clicking the build (![alt tag](./images/Fig-build.png)) button
+
+1. In the *Explorer* view, right-click on *streaming\_lab\_system* and select `Run As > Run Configurations...`
+
+1. In the *Program Arguments* make sure that *Automatically add binary container(s) to arguments* is selected.
+
+1. Click **Apply** and then **Run**
+
 1. The console output will report
 
    ```console
    Found Platform
    Platform Name: Xilinx
-   INFO: Reading ../binary_container_1.xclbin
-   Loading: '../binary_container_1.xclbin'
+   INFO: Reading <path>/binary_container_1.xclbin
+   Loading: '<path>/binary_container_1.xclbin'
    Trying to program device[0]: xilinx_aws-vu9p-f1_shell-v04261818_201920_2
    Device[0]: program successful!
    Running FIR filter with 128 samples, each sample is a 32-bit signed element
@@ -110,23 +127,38 @@ However, in this lab we will use the transposed direct version, which is an impr
    Computing Software results...
    TEST PASSED
    ```
-1. Set the program arguments, setting the number of samples to 16 and enabling debug through the Run Configuration. Invoke the Run Configuration, click **Edit...** button of the *Program Arguments*, double-click the current entry and enter `../binary_container_1.xclbin 16 debug`
-1. Click **OK** to set the arguments, click **OK** again,  click **Apply**, and then click **Run**
 
-    Notice that this time the results are shown with sample number, sw and hw computed values
+#### Change program arguments
+
+1. In the *Explorer* view, right-click on *streaming\_lab\_system* and select `Run As > Run Configurations...`
+
+1. In the *Program Arguments* click `Edit...`
+
+1. Double-click `streaming_lab`
+
+1. In the `Arguments` box include include: `${project_loc:streaming_lab_system}/Emulation-SW/binary_container_1.xclbin 16 debug`
+
+   ![](./images/streaming_lab/program_args_sw_emu.png)
+
+1. Click **OK** to set the arguments, click **OK** again, then click **Apply**, and finally click **Run**
+
+   Notice that this time the results are shown with sample number, sw and hw computed results
 
 ### Run hardware emulation
 
 1. Select or open the `Hardware Kernel Project Settings` view and change *Active build* configuration to: **Emulation-HW**
-1. In the **Assistant** view, select *streaming\_lab\_system* and build the application by clicking ![alt tag](./images/Fig-build.png)
+
+1. In the *Assistant* view, select *streaming\_lab\_system* and build the application by clicking the build ![alt tag](./images/Fig-build.png) button
+
 1. Once compiled, Run the Emulation-HW, only specify the binary container as argument
+
 1. The console output will report
 
    ```console
    Found Platform
    Platform Name: Xilinx
-   INFO: Reading ../binary_container_1.xclbin
-   Loading: '../binary_container_1.xclbin'
+   INFO: Reading <path>/binary_container_1.xclbin
+   Loading: '<path>/binary_container_1.xclbin'
    Trying to program device[0]: xilinx_aws-vu9p-f1_shell-v04261818_201920_2
    INFO: [HW-EM 01] Hardware emulation runs simulation underneath. Using a large data set will result .............
    Device[0]: program successful!
@@ -144,19 +176,19 @@ However, in this lab we will use the transposed direct version, which is an impr
    krnl_mm2s_1:m2s-->krnl_fir_1:x               8.000 KB   
    ```
 
-    Notice that not only the data memory mapped data transfer is reported, but also, the streaming data transfer. Once again, you can rerun the application with different arguments.
+   Notice that not only the data memory mapped data transfer is reported, but also, the streaming data transfer. Once again, you can rerun the application with different arguments.
 
-1. In the `Assistant` view expand *streaming\_lab\_system > streaming\_lab > Emulation-HW -> SystemDebugger\_streaming\_lab\_system\_streaming\_lab* and double click `Run Summary (xclbin)`
+1. In the *Assistant* view expand *streaming\_lab\_system > streaming\_lab [Host] > Emulation-HW -> SystemDebugger\_streaming\_lab\_system\_streaming\_lab* and double click `Run Summary (xclbin)`
 
-1. In Vitis Analyzer, click `System Diagram` and notice the memory mapped and streaming connection (dotted lines)
+1. In the Vitis Analyzer, click `System Diagram` and notice the memory mapped and streaming connection (dotted lines)
 
-    ![](./images/streaming_lab/system_diagram.png)
+   ![](./images/streaming_lab/system_diagram.png)
 
-1. Open `Timeline Trace` and explore the host and kernel timeline. If you don't see host activity then go to Run Configurations and change runtime configuration to enable Host Code tracing
+1. Open `Timeline Trace` and explore the host and kernel timeline. If you do not see host activity then go to Run Configurations and change runtime configuration to enable Host Code tracing
 
-    ![](./images/streaming_lab/hw_emu_timeline.png)
+   ![](./images/streaming_lab/hw_emu_timeline.png)
 
-    Note that when the FIR filter starts producing data it never starves. This is because the design uses two different memory banks. You can explore how the memory bank assignation impacts the performance by editing the `linking.cfg` file, re building and rerunning the application.
+   Note that when the FIR filter starts producing data it never starves. This is because the design uses two different memory banks. You can explore how the memory bank assignation impacts the performance by editing the `linking.cfg` file, re building and rerunning the application.
 
 ### Analysis
 
@@ -175,30 +207,33 @@ Here is the list of the coefficients that are optimized.
 
 Since the Hardware build and AFI availability for AWS takes a considerable amount of time, a precompiled and preregistered AWS version is provided for you. Use the precompiled solution directory to verify the functionality
 
-1. Create a solution testing directory, if not yet created, called `sol-test` in the home directory, and copy the files from the provided solution director using the following commands:
+1. Change *Active build configuration:* to **Hardware**
+
+1. In the *Assistant* view, right-click on `straming_lab_system > streaming_lab [Host]` and select Build
+
+   Note, this will only build the host code.
+
+1. Copy the precompiled bitstream solution
 
    ```sh
-   mkdir ~/sol-test
-   mkdir ~/sol-test/streaming_lab
-   cp ~/xup_compute_acceleration/solutions/streaming_lab/* ~/sol-test/streaming_lab/.
-   chmod +x ~/sol-test/streaming_lab/streaming_lab
+   cp ~/xup_compute_acceleration/solutions/streaming_lab/* ~/workspace/streaming_lab/Hardware/
    ```
 
 1. Run the application and analyze the output using the following commands:
 
    ```sh
-   cd ~/sol-test/streaming_lab
+   cd ~/workspace/streaming_lab/Hardware/
    ./streaming_lab binary_container_1.awsxclbin
    ```
 
-1. The FPGA bitstream will be downloaded and the host application will be executed showing output similar to:
+1. The FPGA bitstream will be downloaded and the host application will be executed showing an output similar to:
 
    ```console
    Found Platform
    Platform Name: Xilinx
    INFO: Reading binary_container_1.awsxclbin
    Loading: 'binary_container_1.awsxclbin'
-   Trying to program device[0]: xilinx_aws-vu9p-f1_dynamic_5_0
+   Trying to program device[0]: xilinx_aws-vu9p-f1_shell-v04261818_201920_2
    Device[0]: program successful!
    Running FIR filter with 4194304 samples, each sample is a 32-bit signed element
    Launching Hardware Kernels...
@@ -206,6 +241,10 @@ Since the Hardware build and AFI availability for AWS takes a considerable amoun
    Computing Software results...
    TEST PASSED
    ```
+
+## Conclusion
+
+In this lab, you used Vitis to implement an FIR filter using streaming kernels. A configuration file specifies how the streaming interfaces are connected between the kernels. You also analyzed the system diagram and the timeline trace.
 
 ---------------------------------------
 <p align="center">Copyright&copy; 2021 Xilinx</p>
