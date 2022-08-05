@@ -191,15 +191,14 @@ Known issues:
 1. Copy and paste the following commands to your terminal (make sure to hit enter to run the last command):
 
    ```sh
-   cd ~
-   git clone https://github.com/aws/aws-fpga -b v1.4.21
+   git clone https://github.com/aws/aws-fpga -b v1.4.21 aws-fpga
+   git clone https://github.com/Xilinx/xup_compute_acceleration xup_compute_acceleration
    echo "export PLATFORM_REPO_PATHS=~/aws-fpga/Vitis/aws_platform/xilinx_aws-vu9p-f1_shell-v04261818_201920_2/" >> ~/.bashrc
    echo "source /opt/xilinx/xrt/setup.sh" >> ~/.bashrc
    echo "source $XILINX_VITIS/settings64.sh" >> ~/.bashrc
-   git clone https://github.com/Xilinx/xup_compute_acceleration.git
+   echo "source ~/aws-fpga/vitis_setup.sh" >> ~/.bashrc
+   echo "source ~/aws-fpga/vitis_runtime_setup.sh" >> ~/.bashrc
    source ~/.bashrc
-   source ~/aws-fpga/vitis_setup.sh
-   source ~/aws-fpga/vitis_runtime_setup.sh
    ```
 
    This will 
