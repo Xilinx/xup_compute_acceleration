@@ -60,7 +60,7 @@ After completing this lab (part 1 and part 2), you will learn how to:
 
 1. Select `xilinx_aws-vu9p-f1_shell-v04261818_201920_2` platform and click **Next >**
 
-   If you do not see this platform, check you followed the [lab set up instructions](setup_xup_aws_workshop.md#lab-setup) to set the `PLATFORM_REPO_PATHS` variable. You can select the platform by clickingthe  `+` button and browsing to `~/aws-fpga/Vitis/aws_platform/` and selecting `xilinx_aws-vu9p-f1_shell-v04261818_201920_2`
+   If you do not see this platform, check you followed the [lab set up instructions](setup_xup_aws_workshop.md#lab-setup) to set the `PLATFORM_REPO_PATHS` variable. You can select the platform by clicking the  `+` button and browsing to `~/aws-fpga/Vitis/aws_platform/` and selecting `xilinx_aws-vu9p-f1_shell-v04261818_201920_2`
 
    ![New Application Project Platform](./images/Vitis_intro/select_platform.png)
 
