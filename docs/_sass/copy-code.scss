@@ -1,0 +1,37 @@
+// initial sample from https://www.aleksandrhovhannisyan.com/blog/how-to-add-a-copy-to-clipboard-button-to-your-jekyll-blog/
+// Modifications from https://github.com/gojimmypi/gojimmypi.github.io/blob/master/_sass/partials/components/_codeheader.scss
+
+.code-header {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.copy-code-button {
+    display: grid;
+    grid-auto-flow: column;
+    align-items: center;
+    grid-column-gap: 4px;
+    border: 5px;
+    cursor: pointer;
+    font-size: .85rem;
+    padding: 4px 8px;
+
+    &::before {
+        content: "Copy";
+    }
+
+    &::after {
+        content: "📋";
+        display: block;
+    }
+    // This class will be toggled via JavaScript
+    &.copied {
+        &::before {
+            content: "Copied!";
+        }
+
+        &::after {
+            content: "✔️";
+        }
+    }
+}
