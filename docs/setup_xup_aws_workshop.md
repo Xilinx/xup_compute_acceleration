@@ -190,6 +190,7 @@ Known issues:
 
 1. Copy and paste the following commands to your terminal (make sure to hit enter to run the last command):
 
+   {% include codeHeader.html %}
    ```sh
    git clone https://github.com/aws/aws-fpga -b v1.4.21 aws-fpga
    git clone https://github.com/Xilinx/xup_compute_acceleration xup_compute_acceleration
