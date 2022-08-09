@@ -119,4 +119,4 @@ You can regenerate the `.awsxclbin` file as long as you have access to `*agfi_id
    ```
 
 ---------------------------------------
-<p align="center">Copyright&copy; 2021 Xilinx</p>
+<p class="copyright">Copyright&copy; 2021 Xilinx</p>

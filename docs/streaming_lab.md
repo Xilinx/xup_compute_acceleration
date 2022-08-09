@@ -247,4 +247,4 @@ Since the Hardware build and AFI availability for AWS takes a considerable amoun
 In this lab, you used Vitis to implement an FIR filter using streaming kernels. A configuration file specifies how the streaming interfaces are connected between the kernels. You also analyzed the system diagram and the timeline trace.
 
 ---------------------------------------
-<p align="center">Copyright&copy; 2021 Xilinx</p>
+<p class="copyright">Copyright&copy; 2021 Xilinx</p>

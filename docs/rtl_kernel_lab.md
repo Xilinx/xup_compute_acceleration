@@ -306,4 +306,4 @@ After completing this lab, you will be able to:
 In this lab, you used the RTL Kernel wizard to create an example RTL adder kernel. You configured the template and saw the example code that was automatically generated. You performed HW emulation and analyzed the application timeline.
 
 ---------------------------------------
-<p align="center">Copyright&copy; 2021 Xilinx</p>
+<p class="copyright">Copyright&copy; 2021 Xilinx</p>

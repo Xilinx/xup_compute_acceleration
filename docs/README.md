@@ -87,4 +87,4 @@ These labs are intended for hardware designers who may want to use RTL to build 
 	This lab will show you how to incorporate kernels having streaming interfaces.
 
 ---------------------------------------
-<p align="center">Copyright&copy; 2021 Xilinx</p>
+<p class="copyright">Copyright&copy; 2021 Xilinx</p>

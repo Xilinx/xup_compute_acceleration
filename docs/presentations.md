@@ -40,4 +40,4 @@ PYNQ introduction, and short lab companion videos that cover topics that are not
 2. In Vitis, the host application can be written in C or C++ and uses the OpenCL API or the [XRT](https://github.com/Xilinx/XRT) (Xilinx Runtime Library) to interact with the accelerated hardware functions running on the FPGA. The accelerated hardware functions (also referred to as 'hardware kernels', or just 'kernels') can be written in C, C++, OpenCL or RTL
 
 ---------------------------------------
-<p align="center">Copyright&copy; 2021 Xilinx</p>
+<p class="copyright">Copyright&copy; 2021 Xilinx</p>
