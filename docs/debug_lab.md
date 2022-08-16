@@ -20,7 +20,7 @@ After completing this lab, you will be able to:
 
 ### Open Vitis and import the project
 
-To save time on compilation, a precompiled project will be provided with the Chipscope debug cores already included in the design.  See [Appendix](#steps-to-add-chipscope-debug-core-and-build-the-design) to learn how to add ChipScope debug cores
+To save time on compilation, a precompiled project will be provided with the ChipScope debug cores already included in the design.  See [Appendix](#steps-to-add-chipscope-debug-core-and-build-the-design) to learn how to add ChipScope debug cores
 
 **Note: If you are doing this lab in a new workspace, you must add the targeted platform first after opening Vitis**
 
@@ -91,7 +91,7 @@ Each computer may have a different value for *xvc_pub.\** so you will need to ch
    debug_hw --xvc_pcie /dev/xfpga/xvc_pub.u513 --hw_server
    ```
 
-   The Virtual JTAG XVC Server will start listening to TCP port **10200** in this case. This is the port you will need to [connect to from Vivado   (#connecting-vivado-to-xvc). Note the *hw_server* is listening to TCP port 3121. See example output below
+   The Virtual JTAG XVC Server will start listening to TCP port **10200** in this case. This is the port you will need to [connect to from Vivado](#connecting-vivado-to-xvc). Note the *hw_server* is listening to TCP port 3121. See example output below
 
    ```sh
    launching xvc_pcie...

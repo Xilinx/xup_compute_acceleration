@@ -22,6 +22,8 @@ layout: default
 
 1. [The ZYNQ Book](http://www.zynqbook.com/), the earlier chapters of the book cover basic concepts, such as pipeline and dataflow.
 
+1. [Migrating from CUDA to Vitis](https://www.xilinx.com/developer/articles/migrating-from-cuda-to-vitis.html)
+
 1. Xilinx Run Time ([XRT](https://github.com/Xilinx/XRT))
 
 1. [PYNQ Project](http://www.pynq.io/)
