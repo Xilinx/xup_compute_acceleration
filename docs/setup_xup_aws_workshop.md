@@ -90,7 +90,7 @@ You can also ssh to AWS instances (E.g. using PuTTY) if you only need a terminal
 
 NICE DCV is recommended by Amazon for use with AWS instances. This is also the recommended way to connect to your instance for this tutorial.
 
-* Download and install [NICE DCV client](https://download.nice-dcv.com) (Windows|Mac|Linux)
+- Download and install [NICE DCV client](https://download.nice-dcv.com) (Windows\|Mac\|Linux)
 
 The NICE DCV session has already been started on the pre-configured instance. See the [Appendix](#set-up-the-nice-dcv-session) for details on how to setup a NICE DCV session - for example if you wanted to set up your own AWS instance after this tutorial.
 

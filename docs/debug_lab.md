@@ -91,7 +91,7 @@ debug_hw --xvc_pcie /dev/xfpga/xvc_pub.u513 --hw_server
 
 The Virtual JTAG XVC Server will start listening to TCP port **10200** in this case. This is the port you will need to [connect to from Vivado](#connecting-vivado-to-xvc). Note the *hw_server* is listening to TCP port 3121. See example output below
 
-```sh
+```console
 launching xvc_pcie...
 xvc_pcie -d /dev/xfpga/xvc_pub.u513 -s TCP::10200
 launching hw_server...
