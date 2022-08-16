@@ -92,7 +92,7 @@ git clone https://github.com/Xilinx/Vitis_Libraries.git -b v2021.1_rel --depth 1
     - `--log_dir`: specify a directory to copy internally generated log files to
     - `--config`: configuration file
 
-	 Note: when compiling for hardware you need to define `__SDSVHLS__` macro, which is used to guard certain part of the code. In this example we need to define `HLS_NO_XIL_FPO_LIB` macro as well, this macro disables the use of bit-accurate, floating-point simulation models, instead using the faster (although not bit-accurate) implementation from your local system. Both macros are included in [vision_config.ini](https://github.com/Zacarhay/xup_compute_acceleration/blob/master/sources/vision_lab/src/vision_config.ini) file. This macros can be also passed to `v++` as `-D__SDSVHLS__ -DHLS_NO_XIL_FPO_LIB`.
+	 Note: when compiling for hardware you need to define `__SDSVHLS__` macro, which is used to guard certain part of the code. In this example we need to define `HLS_NO_XIL_FPO_LIB` macro as well, this macro disables the use of bit-accurate, floating-point simulation models, instead using the faster (although not bit-accurate) implementation from your local system. Both macros are included in [vision_config.ini](https://github.com/Xilinx/xup_compute_acceleration/blob/master/sources/vision_lab/src/vision_config.ini) file. This macros can be also passed to `v++` as `-D__SDSVHLS__ -DHLS_NO_XIL_FPO_LIB`.
 
 ### Build host code
 
@@ -241,7 +241,7 @@ xclbinutil --info --input vision_example.xclbin > vision_example_xclbin.info
 
 With a text editor open `vision_example_xclbin.info` file, look for the kernel section.
 
-Skip lines until you find Kernel information. Note that the `Signature` is the function prototype. There are only three ports because we used `bundle = control` for the scalar arguments. If you look at the `Instance` section, you will notice that both `image_in` and `image_out` are connected to the `bank 0 (DDR4)` as described in the [connectivity_aws.ini](https://github.com/Zacarhay/xup_compute_acceleration/blob/master/sources/vision_lab/src/connectivity_aws.ini) file. There is an optimization opportunity in that regard. Observe how the scalar arguments are mapped to `S_AXI_CONTROL` and their offset. You can find a snapshot of `vision_example.xclbin` content below.
+Skip lines until you find Kernel information. Note that the `Signature` is the function prototype. There are only three ports because we used `bundle = control` for the scalar arguments. If you look at the `Instance` section, you will notice that both `image_in` and `image_out` are connected to the `bank 0 (DDR4)` as described in the [connectivity_aws.ini](https://github.com/Xilinx/xup_compute_acceleration/blob/master/sources/vision_lab/src/connectivity_aws.ini) file. There is an optimization opportunity in that regard. Observe how the scalar arguments are mapped to `S_AXI_CONTROL` and their offset. You can find a snapshot of `vision_example.xclbin` content below.
 
 ```
 Kernel: resize_blur_rgb
