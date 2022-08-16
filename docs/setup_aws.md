@@ -46,7 +46,7 @@ Each time you start an instance, you will need to start vncserver
 vncserver -geometry 1920x1080
 ```
 
-1. You can choose your preferred geometry (screensize)
+1. You can choose your preferred geometry (screen size)
 
 1. You should see a status message in the terminal once *vncserver* has started.
 
@@ -75,7 +75,7 @@ Note that the XRT tools are installed (/opt/xilinx/xrt) but are not included on 
 
 ```sh
 sudo chmod 777 /opt/xilinx/xrt/setup.sh
-#Source XRT everytime a new terminal is open
+#Source XRT every time a new terminal is open
 echo "source /opt/xilinx/xrt/setup.sh" >> ~/.bashrc
 #Reload .bashrc in the current terminal
 source ~/.bashrc

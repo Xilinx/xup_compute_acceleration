@@ -209,7 +209,7 @@ Since the Hardware build and AFI availability for AWS takes a considerable amoun
 
 1. Change *Active build configuration:* to **Hardware**
 
-1. In the *Assistant* view, right-click on `straming_lab_system > streaming_lab [Host]` and select Build
+1. In the *Assistant* view, right-click on `streaming_lab_system > streaming_lab [Host]` and select Build
 
    Note, this will only build the host code.
 

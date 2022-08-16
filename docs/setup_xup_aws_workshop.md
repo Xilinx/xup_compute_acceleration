@@ -190,27 +190,27 @@ Known issues:
 
 1. Copy and paste the following commands to your terminal (make sure to hit enter to run the last command):
 
-   ```sh
-   cd ~
-   git clone https://github.com/aws/aws-fpga -b v1.4.21
-   echo "export PLATFORM_REPO_PATHS=~/aws-fpga/Vitis/aws_platform/xilinx_aws-vu9p-f1_shell-v04261818_201920_2/" >> ~/.bashrc
-   echo "source /opt/xilinx/xrt/setup.sh" >> ~/.bashrc
-   echo "source $XILINX_VITIS/settings64.sh" >> ~/.bashrc
-   git clone https://github.com/Xilinx/xup_compute_acceleration.git
-   source ~/.bashrc
-   source ~/aws-fpga/vitis_setup.sh
-   source ~/aws-fpga/vitis_runtime_setup.sh
-   ```
+{% include codeHeader.html %}
+```sh
+git clone https://github.com/aws/aws-fpga -b v1.4.21 aws-fpga
+git clone https://github.com/Xilinx/xup_compute_acceleration xup_compute_acceleration
+echo "export PLATFORM_REPO_PATHS=~/aws-fpga/Vitis/aws_platform/xilinx_aws-vu9p-f1_shell-v04261818_201920_2/" >> ~/.bashrc
+echo "source /opt/xilinx/xrt/setup.sh" >> ~/.bashrc
+echo "source $XILINX_VITIS/settings64.sh" >> ~/.bashrc
+echo "source ~/aws-fpga/vitis_setup.sh" >> ~/.bashrc
+echo "source ~/aws-fpga/vitis_runtime_setup.sh" >> ~/.bashrc
+source ~/.bashrc
+```
 
-   This will 
+This will 
 
-   * Clone the *aws-fpga* repository to your home area. `aws-fpga` includes the AWS F1 tools, Hardware Development Kit (HDK) and documentation.
+* Clone the *aws-fpga* repository to your home area. `aws-fpga` includes the AWS F1 tools, Hardware Development Kit (HDK) and documentation.
 
-   * Setup the *AWS platform* path, and add XRT and Vitis setup scripts to your .bashrc file. This means they will be available in every new terminal session you open. 
+* Setup the *AWS platform* path, and add XRT and Vitis setup scripts to your .bashrc file. This means they will be available in every new terminal session you open.
 
-    - Clone this repository to get source code for the labs
-    - Source ~/bashrc to refresh this terminal session 
-    - Source AWS Vitis setup scripts. This are setup scripts that need to be run once to configure the aws-fpga and Vitis tools. 
+- Clone this repository to get source code for the labs
+- Source ~/bashrc to refresh this terminal session
+- Source AWS Vitis setup scripts. This are setup scripts that need to be run once to configure the aws-fpga and Vitis tools.
 
 You will see a lot of messages in the terminal. The last line should read:
 
