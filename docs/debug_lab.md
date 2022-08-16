@@ -283,4 +283,4 @@ In this lab, you used the ChipScope Debug bridge and cores to perform hardware d
 1. Build the design
 
 -------------------------------------------------
-<p align="center">Copyright&copy; 2021 Xilinx</p>
+<p class="copyright">Copyright&copy; 2021 Xilinx</p>

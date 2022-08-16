@@ -269,4 +269,4 @@ Before the design can be run on AWS F1 an AFI (Amazon FPGA Image) is required
 Once the full system is built, you can create an AFI by following the steps listed in [create an AFI](Creating_AFI.md)
 
 ---------------------------------------
-<p align="center">Copyright&copy; 2021 Xilinx</p>
+<p class="copyright">Copyright&copy; 2021 Xilinx</p>

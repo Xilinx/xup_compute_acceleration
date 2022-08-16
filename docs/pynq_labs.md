@@ -45,4 +45,4 @@ We recommend watching the short companion videos that cover topics that are not 
 * [Packaging Your Designs ![alt text](assets/images/youtube.png)](https://youtu.be/S2oSliWHpsA)
 
 ---------------------------------------
-<p align="center">Copyright&copy; 2021 Xilinx</p>
+<p class="copyright">Copyright&copy; 2021 Xilinx</p>

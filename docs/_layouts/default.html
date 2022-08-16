@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="{{ site.lang | default: " en-US " }}">
+<html lang="{{ site.lang | default: "en-US" }}">
 
 <head>
     <meta charset="utf-8">
@@ -17,38 +17,38 @@
 <body>
     <nav>
         <div class="logo">
-            <a href="https://www.xilinx.com/support/university.html"><center><img alt="" src="assets/images/TLogoW.png" style="display: block" width="120px" border="0"></center></a>
+            <a href="https://www.xilinx.com/support/university.html"><img class="logoimg" alt="" src="assets/images/TLogoW.png"></a>
         </div>
         <label for="btn" class="icon">
         <span class="fa fa-bars"></span>
     </label>
         <input type="checkbox" id="btn">
         <ul class="navbar-ul">
-            <li><label for="btn-4" class="show ">Main Menu </label></li>
+            <li><label class="show ">Main Menu </label></li>
             <li class="listedpages "><a style="color:white; " href="index.html ">Quick Start</a></li>
             <li class="listedpages "><a style="color:white; " href="presentations.html ">Presentations</a> </li>
 
-            <li><label for="btn-1 " class="show ">Setup </label></li>
+            <li><label class="show ">Setup </label></li>
 
             {% for item in site.data.setup_sidebar.docs %}
             <li class="listedpages "><a style="color:white; " href="{{ item.url }} ">{{ item.title }}</a></li>
             {% endfor %}
 
 
-            <li><label for="btn-1 " class="show ">Hands-on Labs </label></li>
+            <li><label class="show ">Hands-on Labs </label></li>
             {% for item in site.data.labs_sidebar.docs %}
             <li class="listedpages "><a style="color:white; " href="{{ item.url }} ">{{ item.title }}</a></li>
             {% endfor %}
 
-            <li><label for="btn-1 " class="show ">PYNQ </label></li>
+            <li><label class="show ">PYNQ </label></li>
             <li class="listedpages "><a style="color:white; " href="pynq_labs.html ">PYNQ Labs</a></li>
 
-            <li><label for="btn-1 " class="show ">Advanced </label></li>
+            <li><label class="show ">Advanced </label></li>
             {% for item in site.data.advanced_sidebar.docs %}
             <li class="listedpages "><a style="color:white; " href="{{ item.url }} ">{{ item.title }}</a></li>
             {% endfor %}
 
-            <li><label for="btn-1 " class="show ">Appendix </label></li>
+            <li><label class="show ">Appendix </label></li>
             {% for item in site.data.appendix_sidebar.docs %}
             <li class="listedpages"><a style="color:white; " href="{{ item.url }} ">{{ item.title }}</a></li>
             {% endfor %}

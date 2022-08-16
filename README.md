@@ -21,4 +21,4 @@ This version of the tutorial has been verified for the following environments
 You can contact us by email [xup@xilinx.com](mailto:xup@xilinx.com)
 
 ---------------------------------------
-<p align="center">Copyright&copy; 2021 Xilinx</p>
+<p class="copyright">Copyright&copy; 2021 Xilinx</p>

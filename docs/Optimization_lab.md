@@ -443,4 +443,4 @@ This will build the project under the **Hardware** directory. The built project 
 Once the full system is built, you should [create an AWS F1 AFI](Creating_AFI.md) to run this example in AWS-F1.
 
 ---------------------------------------
-<p align="center">Copyright&copy; 2021 Xilinx</p>
+<p class="copyright">Copyright&copy; 2021 Xilinx</p>

@@ -100,6 +100,17 @@ h6 {
     margin: 36px 0 10px
 }
 
+img.logoimg {
+    display: block;
+    width: 120px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+p.copyright{
+    text-align: center;
+}
+
 p,
 ul,
 ol,
@@ -308,17 +319,6 @@ a.buttons {
 
 a.github {
     background: url(../images/mask-small.png) no-repeat 1px
-}
-
-a.youtube {
-    background: url(../images/youtube.png) no-repeat 1px;
-    background-position: right;
-    padding: 2px 2px 2px 28px
-}
-
-a.pynq {
-    background: url(../images/pynq.png) no-repeat 1px;
-    padding: 2px 2px 2px 55px
 }
 
 section {

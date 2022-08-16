@@ -280,4 +280,4 @@ The previous command will:
    sudo systemctl stop firewalld
    ```
 ---------------------------------------
-<p align="center">Copyright&copy; 2021 Xilinx</p>
+<p class="copyright">Copyright&copy; 2021 Xilinx</p>

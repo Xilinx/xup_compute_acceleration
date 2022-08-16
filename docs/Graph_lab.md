@@ -342,4 +342,4 @@ Since compilation for hardware target will take a long time, the FPGA binary is 
 In this lab, you used Makefile provided by the repository from the command line to create an FPGA binary file with one kernel and compile the host application. You performed software and hardware emulations and analyzed the output images. You then run the provided solution in hardware and analyze the output.
 
 ---------------------------------------
-<p align="center">Copyright&copy; 2021 Xilinx</p>
+<p class="copyright">Copyright&copy; 2021 Xilinx</p>

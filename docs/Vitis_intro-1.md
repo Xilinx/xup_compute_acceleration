@@ -150,4 +150,4 @@ You can leave the project open as you will continue from this step in the second
 In this lab, you used Vitis to create a vector add project using the provided source code. You then ran the design using the software emulation flow.
 
 ---------------------------------------
-<p align="center">Copyright&copy; 2021 Xilinx</p>
+<p class="copyright">Copyright&copy; 2021 Xilinx</p>
