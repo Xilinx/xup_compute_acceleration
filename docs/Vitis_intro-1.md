@@ -120,8 +120,6 @@ After completing this lab (part 1 and part 2), you will learn how to:
 
    This step compiles each of the kernels, links them, and compiles the host application
 
-   Click *Continue* if you see an *Unsupported Operating System* warning
-
 1. Run Software Emulation
 
    To launch software emulation, select `vadd_system` either in the **Assistant** view or in the **Explorer** view and then click on the run button ![](./images/Fig-run.png)
