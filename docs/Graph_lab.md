@@ -43,7 +43,7 @@ git clone https://github.com/Xilinx/Vitis_Libraries.git -b v2021.1_rel --depth 1
    patch -s -p0 < ~/xup_compute_acceleration/sources/graph_lab/graph.patch
    ```
 
-   This patch a) sets the AWS-F1 platform as default, b) specifies to use DDR memory (instead of HMB) and c) enables profiling as well as debug
+   This patch a) sets the AWS-F1 platform as default, b) specifies to use DDR memory (instead of HBM) and c) enables profiling as well as debug
 
 1. Copy `xrt.ini`
 
@@ -195,8 +195,12 @@ git clone https://github.com/Xilinx/Vitis_Libraries.git -b v2021.1_rel --depth 1
 
 1. Close the simulator output by selecting **File > Exit** in the Vivado window
 
-1. Start the vitis_analyzer by executing `vitis_analyzer xclbin.run_summary`
+1. Start `vitis_analyzer` by executing 
 
+   ```sh
+   vitis_analyzer xclbin.run_summary
+   ```
+   
    Vitis Analyzer shows **Summary**, **System Diagram**, **Run Guidance**, **Profile Summary**, **Waveform** and **Timeline Trace** tabs on the left-hand side
 
 1. Click **System Diagram** and observe that all parameters are targeting DDR[0] bank
