@@ -315,7 +315,7 @@ In the *idct.cpp* file, locate lines 286-297. Note that two memory buffers, *mIn
 
 1. Change the run configuration by unchecking the **Use waveform for kernel debugging** option, and enable host tracing by clicking on the **Edit...* button of the *Xilinx Runtime Profiling* and clicking **OpenCL trace** check box for the *Host Trace*, click **Apply**, and then click **Run**
 
-1. In the *Assistant* view, expand *optimization\_lab\_system > optimization\_lab\_kernels > Emulation-HW > SystemDebugger\_optimization\_lab\_system\_optimization\_lab*  and double-click the **Run Summary (xclbin)**
+1. In the *Assistant* view, expand *optimization\_lab\_system > optimization\_lab > Emulation-HW > SystemDebugger\_optimization\_lab\_system\_optimization\_lab*  and double-click the **Run Summary (xclbin)**
 
 1. On *Vitis Analyzer* window click on **Timeline Trace**
 
