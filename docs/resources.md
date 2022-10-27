@@ -10,6 +10,8 @@ layout: default
 
 1. [Vitis Community Forum](https://support.xilinx.com/s/topic/0TO2E000000YKYAWA4/vitis-acceleration-acceleration?language=en_US)
 
+1. [Vitis Unified Software Platform Documentation: Application Acceleration Development](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration)
+
 1. Check out the Get Moving with Alveo articles, start here [Get Moving with Alveo: Acceleration Basics](https://developer.xilinx.com/en/articles/acceleration-basics.html), find the other articles in the series [here](https://developer.xilinx.com/en/articles.html)
 
 1. Check out [Design Principles for Software Programmers](https://docs.xilinx.com/r/en-US/ug1399-vitis-hls/Design-Principles-for-Software-Programmers)
