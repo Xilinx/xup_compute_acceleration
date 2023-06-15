@@ -10,7 +10,7 @@ This lab guides you through the steps involved in creating a Vitis project using
 
 ### References
 
-For more details on the Vitis IDE see the Vitis documentation for [Creating a Vitis IDE Project](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/creatingvitisideproject.html#cpe1508968036414).
+For more details on the Vitis IDE see the Vitis documentation for [Creating a Vitis IDE Project](https://docs.xilinx.com/r/2021.1-English/ug1393-vitis-application-acceleration/Creating-a-Vitis-IDE-Project).
 
 
 ### Description of example application
