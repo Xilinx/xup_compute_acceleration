@@ -8,17 +8,17 @@ layout: default
 
 | Title | YouTube Link | PDF Link |
 | --- | --- | ---- |
-| Xilinx Platforms Introduction | [![alt text](assets/images/youtube.png) Xilinx Platforms Introduction](https://youtu.be/sb9qcgOcTDY) | [![alt text](images/pdf.png)](https://www.xilinx.com/support/documentation/university/Vitis-Workshops/2019_2/xilinx_platforms_introduction.pdf) |
-| Intro to Vitis for Acceleration Platforms | [![alt text](assets/images/youtube.png) Intro to Vitis for Acceleration Platforms](https://youtu.be/t6CvKG0NzcM) | [![alt text](images/pdf.png)](https://www.xilinx.com/support/documentation/university/Vitis-Workshops/2019_2/vitis_introduction.pdf) |
-| Vitis Tool Flow | [![alt text](assets/images/youtube.png) Vitis Tool Flow](https://youtu.be/ObfOSltWWEM) | [![alt text](images/pdf.png)](https://www.xilinx.com/support/documentation/university/Vitis-Workshops/2019_2/vitis_toolflow.pdf) |
-| Open CL Execution Model | [![alt text](assets/images/youtube.png) Open CL Execution Model](https://youtu.be/z1Yk6jctJeY) | [![alt text](images/pdf.png)](https://www.xilinx.com/support/documentation/university/Vitis-Workshops/2019_2/vitis_opencl_execution_model.pdf) |
-| Vitis Design Analysis | [![alt text](assets/images/youtube.png) Vitis Design Analysis](https://youtu.be/N941PGe9q_c) | [![alt text](images/pdf.png)](https://www.xilinx.com/support/documentation/university/Vitis-Workshops/2019_2/vitis_design_analysis.pdf) |
-| Vitis Design Methodology | [![alt text](assets/images/youtube.png) Vitis Design Methodology](https://youtu.be/W-O66ASW_ls) | [![alt text](images/pdf.png)](https://www.xilinx.com/support/documentation/university/Vitis-Workshops/2019_2/vitis_design_methodology.pdf) |
-| Host Code Optimization | [![alt text](assets/images/youtube.png) Host Code Optimization](https://youtu.be/6SqQ-tgMREg) | [![alt text](images/pdf.png)](https://www.xilinx.com/support/documentation/university/Vitis-Workshops/2019_2/vitis_host_code_optimization.pdf) |
-| Kernel Optimization | [![alt text](assets/images/youtube.png) Kernel Optimization](https://youtu.be/BD7nXF0umpo) | [![alt text](images/pdf.png)](https://www.xilinx.com/support/documentation/university/Vitis-Workshops/2019_2/vitis_kernel_optimizations.pdf) |
-| Vitis Accelerated Libraries | [![alt text](assets/images/youtube.png) Vitis Accelerated Libraries](https://youtu.be/bqttBaih_Ao) | [![alt text](images/pdf.png)](https://www.xilinx.com/support/documentation/university/Vitis-Workshops/2019_2/vitis_accelerated_libraries.pdf) |
-| Vitis hardware debug |   | [![alt text](images/pdf.png)](https://www.xilinx.com/support/documentation/university/Vitis-Workshops/2019_2/vitis_hardware_debug.pdf)|
-| Vitis RTL kernels Accelerated Libraries  |   | [![alt text](images/pdf.png)](https://www.xilinx.com/support/documentation/university/Vitis-Workshops/2019_2/vitis_rtl_kernels.pdf) |
+| Xilinx Platforms Introduction | [![alt text](assets/images/youtube.png) Xilinx Platforms Introduction](https://youtu.be/sb9qcgOcTDY) | [![alt text](images/pdf.png)](https://www.amd.com/content/dam/amd/en/documents/university/workshops/vitis/2019_2/amd_platforms_introduction.pdf) |
+| Intro to Vitis for Acceleration Platforms | [![alt text](assets/images/youtube.png) Intro to Vitis for Acceleration Platforms](https://youtu.be/t6CvKG0NzcM) | [![alt text](images/pdf.png)](https://www.amd.com/content/dam/amd/en/documents/university/workshops/vitis/2019_2/vitis_introduction.pdf) |
+| Vitis Tool Flow | [![alt text](assets/images/youtube.png) Vitis Tool Flow](https://youtu.be/ObfOSltWWEM) | [![alt text](images/pdf.png)](https://www.amd.com/content/dam/amd/en/documents/university/workshops/vitis/2019_2/vitis_toolflow.pdf) |
+| Open CL Execution Model | [![alt text](assets/images/youtube.png) Open CL Execution Model](https://youtu.be/z1Yk6jctJeY) | [![alt text](images/pdf.png)](https://www.amd.com/content/dam/amd/en/documents/university/workshops/vitis/2019_2/vitis_opencl_execution_model.pdf) |
+| Vitis Design Analysis | [![alt text](assets/images/youtube.png) Vitis Design Analysis](https://youtu.be/N941PGe9q_c) | [![alt text](images/pdf.png)](https://www.amd.com/content/dam/amd/en/documents/university/workshops/vitis/2019_2/vitis_design_analysis.pdf) |
+| Vitis Design Methodology | [![alt text](assets/images/youtube.png) Vitis Design Methodology](https://youtu.be/W-O66ASW_ls) | [![alt text](images/pdf.png)](https://www.amd.com/content/dam/amd/en/documents/university/workshops/vitis/2019_2/vitis_design_methodology.pdf) |
+| Host Code Optimization | [![alt text](assets/images/youtube.png) Host Code Optimization](https://youtu.be/6SqQ-tgMREg) | [![alt text](images/pdf.png)](https://www.amd.com/content/dam/amd/en/documents/university/workshops/vitis/2019_2/vitis_host_code_optimization.pdf) |
+| Kernel Optimization | [![alt text](assets/images/youtube.png) Kernel Optimization](https://youtu.be/BD7nXF0umpo) | [![alt text](images/pdf.png)](https://www.amd.com/content/dam/amd/en/documents/university/workshops/vitis/2019_2/vitis_kernel_optimizations.pdf) |
+| Vitis Accelerated Libraries | [![alt text](assets/images/youtube.png) Vitis Accelerated Libraries](https://youtu.be/bqttBaih_Ao) | [![alt text](images/pdf.png)](https://www.amd.com/content/dam/amd/en/documents/university/workshops/vitis/2019_2/vitis_accelerated_libraries.pdf) |
+| Vitis hardware debug |   | [![alt text](images/pdf.png)](https://www.amd.com/content/dam/amd/en/documents/university/workshops/vitis/2019_2/vitis_hardware_debug.pdf)|
+| Vitis RTL kernels Accelerated Libraries  |   | [![alt text](images/pdf.png)](https://www.amd.com/content/dam/amd/en/documents/university/workshops/vitis/2019_2/vitis_rtl_kernels.pdf) |
 
 # PYNQ
 
